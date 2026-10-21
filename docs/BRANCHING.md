@@ -36,7 +36,7 @@ Das Repo ist privat und im kostenlosen GitHub-Plan. Dort gibt es **keinen server
 | CI `checks` | GitHub Actions, jeder PR + Push | Secret-Scan, Typecheck, Lint, Tests, Content-Validierung, Build |
 | Dependabot | GitHub | Sicherheits-Alerts, automatische Security-PRs, wöchentliche Updates gegen `staging` |
 | Actions-Richtlinie | GitHub | nur GitHub-eigene Actions, **SHA-Pinning erzwungen**, Workflow-Token nur mit Leserechten |
-| Merge-Arten | GitHub | nur *Squash* und *Merge-Commit* (kein Rebase), Branches werden nach dem Merge gelöscht |
+| Merge-Arten | GitHub | nur *Squash* und *Merge-Commit* (kein Rebase). Arbeits-Branches löscht `gh pr merge --delete-branch`; die automatische Löschung ist bewusst aus, weil sie bei Release-/Rückführungs-PRs `staging` oder `prod` löschen würde |
 
 Die Hooks werden durch `npm install` aktiviert (`prepare` → `core.hooksPath`). Notfall-Override: `--no-verify`, nur bewusst verwenden.
 
@@ -83,7 +83,7 @@ gh pr merge --squash --delete-branch
 
 ```bash
 gh pr create --base prod --head staging --title "release: v0.2.0" --body "…"
-gh pr merge --merge                         # „Create a merge commit“
+gh pr merge --merge                         # „Create a merge commit“ – OHNE --delete-branch!
 git fetch && git tag -a v0.2.0 origin/prod -m "…" && git push origin v0.2.0   # optional
 ```
 

@@ -9,7 +9,7 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "data:import": "tsx scripts/data-import.ts",
     "content:build": "tsx scripts/content-build.ts",
     "db:start": "supabase start",

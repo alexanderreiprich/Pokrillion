@@ -1,17 +1,23 @@
 #!/bin/sh
-# Blocks direct commits on the long-lived branches. See docs/BRANCHING.md.
-# Allowed: concluding a merge (MERGE_HEAD) or a squash merge (SQUASH_MSG) into them.
+# Local guards, see docs/BRANCHING.md. Emergency override: git commit --no-verify
+git_dir=$(git rev-parse --git-dir)
+
+# 1. No direct commits on the long-lived branches (merges into them are fine).
 branch=$(git symbolic-ref --short HEAD 2>/dev/null)
 case "$branch" in
   prod|staging)
-    git_dir=$(git rev-parse --git-dir)
-    if [ -f "$git_dir/MERGE_HEAD" ] || [ -f "$git_dir/SQUASH_MSG" ]; then
-      exit 0
+    if [ ! -f "$git_dir/MERGE_HEAD" ] && [ ! -f "$git_dir/SQUASH_MSG" ]; then
+      echo "✗ Direkte Commits auf '$branch' sind nicht erlaubt."
+      echo "  Arbeits-Branch anlegen, z. B.: git switch -c feature/<name>   (docs/BRANCHING.md)"
+      exit 1
     fi
-    echo "✗ Direkte Commits auf '$branch' sind nicht erlaubt."
-    echo "  Arbeits-Branch anlegen, z. B.: git switch -c feature/<name>"
-    echo "  Ablauf: docs/BRANCHING.md   (Notfall: git commit --no-verify)"
-    exit 1
     ;;
 esac
+
+# 2. No secrets in staged changes (stand-in for GitHub secret scanning).
+if command -v node >/dev/null 2>&1; then
+  node scripts/check-secrets.ts --staged || exit 1
+else
+  echo "⚠ node nicht gefunden – Secret-Check übersprungen."
+fi
 exit 0

@@ -17,7 +17,8 @@ Tägliches Pokémon-Trivia nach dem Vorbild von krillion.io. **Konzept, Architek
 
 - Branching-Strategie: `docs/BRANCHING.md`. `prod` = live, `staging` = abgenommen, Arbeit auf `feature/`, `fix/`, `hotfix/`, `refactor/`, `content/`, `chore/`, `docs/`, `test/`.
 - Nie direkt auf `prod` oder `staging` committen (Hook blockiert das); immer erst einen Arbeits-Branch von `staging` anlegen.
-- Commit-Nachrichten nach Conventional Commits (`feat:`, `fix:`, `content:`, …). Merges nach `staging` oder `prod` nur, wenn der User es sagt.
+- Commit-Nachrichten nach Conventional Commits (`feat:`, `fix:`, `content:`, …). Änderungen kommen per Pull Request (`gh pr create --base staging`); PRs mergen oder Releases nach `prod` nur, wenn der User es sagt.
+- CI-Check `checks` (`.github/workflows/ci.yml`) muss grün sein, bevor ein PR gemergt wird – den Job-Namen nicht ändern. Actions nur mit Commit-SHA pinnen (GitHub erzwingt das).
 
 ## Konventionen
 

@@ -17,7 +17,8 @@
       "25 Sekunden pro Frage. Falsche Antworten kosten 3 Sekunden.",
       "Eine Antwort pro Frage zählt. Die Meisterball-Antwort gibt 100 Punkte."
     ],
-    "tiers": "Fangstufen"
+    "tiers": "Fangstufen",
+    "endless": "Endlos-Modus"
   },
   "play": {
     "loading": "Ein wildes Quiz erscheint!",
@@ -81,5 +82,23 @@
     "network": "Keine Verbindung zum Server.",
     "generic": "Da ist etwas schiefgelaufen.",
     "retry": "Nochmal versuchen"
+  },
+  "endless": {
+    "title": "Endlos-Modus",
+    "intro": "Zufällige Fragen ohne Ende. Läuft die Zeit ab, verlierst du einen deiner 3 Pokébälle.",
+    "start": "Los geht's!",
+    "resume": "Runde fortsetzen",
+    "newRun": "Neue Runde",
+    "question": "Frage {n}",
+    "ballsLeft": "Noch {n} Bälle übrig",
+    "lastBall": "Letzter Ball!",
+    "noBalls": "Keine Bälle mehr!",
+    "over": "Runde vorbei",
+    "summary": "{score} Punkte in {n} Fragen",
+    "best": "Rekord: {best}",
+    "newBest": "Neuer Rekord!",
+    "again": "Nochmal",
+    "masterball": "Meisterball",
+    "exhausted": "Wow – du hast alle Fragen beantwortet!"
   }
 }

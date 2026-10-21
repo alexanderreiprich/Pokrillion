@@ -17,7 +17,8 @@
       "25 seconds per prompt. Wrong answers cost 3 seconds.",
       "One answer per prompt counts. The Master Ball answer scores 100."
     ],
-    "tiers": "Catch tiers"
+    "tiers": "Catch tiers",
+    "endless": "Endless mode"
   },
   "play": {
     "loading": "A wild quiz appeared!",
@@ -81,5 +82,23 @@
     "network": "Can't reach the server.",
     "generic": "Something went wrong.",
     "retry": "Try again"
+  },
+  "endless": {
+    "title": "Endless mode",
+    "intro": "Random prompts, no end. When time runs out you lose one of your 3 Poké Balls.",
+    "start": "Let's go!",
+    "resume": "Continue run",
+    "newRun": "New run",
+    "question": "Prompt {n}",
+    "ballsLeft": "{n} balls left",
+    "lastBall": "Last ball!",
+    "noBalls": "Out of balls!",
+    "over": "Run over",
+    "summary": "{score} points in {n} prompts",
+    "best": "Best: {best}",
+    "newBest": "New best!",
+    "again": "Play again",
+    "masterball": "Master Ball",
+    "exhausted": "Wow – you answered every prompt!"
   }
 }

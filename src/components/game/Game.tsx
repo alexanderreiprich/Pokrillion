@@ -107,6 +107,19 @@ export function Game({ lang, t }: { lang: Locale; t: GameTexts }) {
     setScreen({ kind: "reveal", result, correctedFrom, finished });
   }, []);
 
+  const playId = play?.playId;
+  const openPosition = screen.kind === "question" ? screen.question.position : null;
+  const guess = useCallback(
+    (input: string) => api.guess(playId!, openPosition!, input),
+    [playId, openPosition],
+  );
+  const onExpired = useCallback(() => {
+    api
+      .timeout(playId!, openPosition!)
+      .then((res) => onAnswered(res.result, null, res.finished))
+      .catch(fail);
+  }, [playId, openPosition, onAnswered, fail]);
+
   async function next() {
     if (!play) return;
     if (screen.kind === "reveal" && screen.finished) {
@@ -171,12 +184,13 @@ export function Game({ lang, t }: { lang: Locale; t: GameTexts }) {
       {screen.kind === "question" && play && (
         <QuestionView
           key={screen.question.position}
-          playId={play.playId}
           question={screen.question}
           initialDeadline={screen.deadline}
           lang={lang}
           t={t}
+          guess={guess}
           onAnswered={onAnswered}
+          onExpired={onExpired}
           onError={fail}
         />
       )}

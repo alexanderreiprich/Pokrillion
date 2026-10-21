@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import type { QuestionResult, StartQuestionResponse } from "@/lib/api/types";
-import { api, ApiClientError } from "@/lib/api/client";
+import type { GuessResponse, QuestionResult, StartQuestionResponse } from "@/lib/api/types";
+import { ApiClientError } from "@/lib/api/client";
 import type { Locale } from "@/lib/content/schema";
 import { fill } from "@/i18n/fill";
 import { DialogBox } from "@/components/DialogBox";
@@ -13,23 +13,30 @@ import { useNow } from "./use-now";
 
 type Feedback = { text: string; tone: "bad" | "neutral" };
 
+/**
+ * One question with timer and input. Mode-agnostic: daily and endless mode pass their own
+ * `guess` call and handle timeouts in `onExpired` (which must be safe to call twice).
+ */
 export function QuestionView({
-  playId,
   question,
   initialDeadline,
   lang,
   t,
+  guess,
   onAnswered,
+  onExpired,
   onError,
 }: {
-  playId: string;
   question: StartQuestionResponse;
   /** epoch ms when the timer hits zero */
   initialDeadline: number;
   lang: Locale;
   t: GameTexts;
-  /** `correctedFrom` is the raw input when a typo was forgiven. */
+  guess: (input: string) => Promise<GuessResponse>;
+  /** A valid answer. `correctedFrom` is the raw input when a typo was forgiven. */
   onAnswered: (result: QuestionResult, correctedFrom: string | null, finished: boolean) => void;
+  /** The timer ran out (on the client or according to the server). */
+  onExpired: () => void;
   onError: (err: unknown) => void;
 }) {
   const [deadline, setDeadline] = useState(initialDeadline);
@@ -47,11 +54,8 @@ export function QuestionView({
   useEffect(() => {
     if (!expired || timedOut.current) return;
     timedOut.current = true;
-    api
-      .timeout(playId, question.position)
-      .then((res) => onAnswered(res.result, null, res.finished))
-      .catch(onError);
-  }, [expired, playId, question.position, onAnswered, onError]);
+    onExpired();
+  }, [expired, onExpired]);
 
   async function submit(e: FormEvent) {
     e.preventDefault();
@@ -59,7 +63,7 @@ export function QuestionView({
     if (!value || busy || expired) return;
     setBusy(true);
     try {
-      const res = await api.guess(playId, question.position, value);
+      const res = await guess(value);
       switch (res.result) {
         case "valid":
           timedOut.current = true;
@@ -71,7 +75,7 @@ export function QuestionView({
           return;
         case "timeout":
           timedOut.current = true;
-          onAnswered({ position: question.position, points: 0, tier: "miss", entity: null }, null, res.finished);
+          onExpired();
           return;
         case "wrong_entity":
           setFeedback({ text: fill(t.play.wrongEntity, { name: res.entity.names[lang] }), tone: "bad" });

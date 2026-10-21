@@ -10,16 +10,13 @@ import type {
   TimeoutResponse,
 } from "@/lib/api/types";
 import type { Locale } from "@/lib/content/schema";
-import { evaluateGuess } from "@/lib/game/guess";
-import { normalize } from "@/lib/game/normalize";
 import { isPlayableDate } from "@/lib/game/puzzle-date";
 import { scoreAnswer } from "@/lib/game/scoring";
 import { tierForPoints } from "@/lib/game/tiers";
 import { isExpired, remainingSeconds, WRONG_GUESS_PENALTY_S } from "@/lib/game/timer";
-import { answerPriors, entityRefs, loadPuzzle, universeIndex, type Puzzle, type PuzzleQuestion } from "./content";
+import { answerPriors, entityRefs, loadPuzzle, type Puzzle, type PuzzleQuestion } from "./content";
 import { ApiError } from "./http";
-
-const MAX_INPUT_LENGTH = 100;
+import { judge } from "./judge";
 const TOP_ANSWERS = 5;
 
 interface PlayRow {
@@ -192,10 +189,6 @@ export async function submitGuess(
   position: number,
   rawInput: string,
 ): Promise<GuessResponse> {
-  const input = rawInput.trim().slice(0, MAX_INPUT_LENGTH);
-  const normalized = normalize(input);
-  if (!normalized) throw new ApiError("bad_request", "Leere Eingabe");
-
   const play = await requirePlay(playId, playerId);
   const puzzle = await requirePuzzle(play.puzzle_date);
   const q = questionAt(puzzle, position);
@@ -208,8 +201,7 @@ export async function submitGuess(
     return { result: "timeout", finished: await finish(playId, puzzle.questions.length) };
   }
 
-  const [index, priors] = await Promise.all([universeIndex(q.universe), answerPriors(q.id)]);
-  const outcome = evaluateGuess(index, new Set(priors.keys()), input);
+  const { input, normalized, outcome, priors } = await judge(q, rawInput);
   const entityId = outcome.result === "unknown" ? null : outcome.entityId;
 
   const logGuess = async (result: string, points: number | null) =>

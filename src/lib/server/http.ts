@@ -1,5 +1,6 @@
 import "server-only";
 import { cookies } from "next/headers";
+import { unstable_rethrow } from "next/navigation";
 import type { ApiErrorBody, ApiErrorCode } from "@/lib/api/types";
 
 const STATUS: Record<ApiErrorCode, number> = {
@@ -31,6 +32,8 @@ export async function respond<T>(fn: () => Promise<T>): Promise<Response> {
   try {
     return Response.json(await fn());
   } catch (err) {
+    // Let Next.js handle its own control-flow errors (e.g. bailing out of prerendering).
+    unstable_rethrow(err);
     const apiError = err instanceof ApiError ? err : null;
     if (!apiError) console.error(err);
     const body: ApiErrorBody = apiError

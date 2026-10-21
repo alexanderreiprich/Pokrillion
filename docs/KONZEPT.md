@@ -349,6 +349,22 @@ Die Vorlagen-Dateien (`*-colors`, `*-types`, `*-generations`, `*-forms`, `*-move
 
 Meisterball-Antworten sind bewusst „Aha“-Antworten: Bisasam (Gift), Glurak (Flug), Relaxo (schwarz), Karpador (rot), Skaraborn (blau), Biss (Unlicht), Charme (Fee), Evoli bei Feuerstein.
 
+### Kuratierungsansicht (`/de/admin`)
+
+Nur lesend; Ergebnisse werden als YAML zum Kopieren angeboten und per PR in `content/` übernommen. Datenquelle: Tagesrätsel **und** Endlos-Modus (Views `admin_guesses`, `admin_answers`, Funktionen `admin_*`).
+
+| Ansicht | Zeigt | Führt zu |
+|---|---|---|
+| Übersicht | Spiele, Abschlüsse, Ø Punkte, Endlos-Runden pro Tag | – |
+| Unbekannte Eingaben | häufigste nicht erkannte Eingaben, vermutlich gemeinte Entität (Abstand ≤ 3) bzw. „existiert als … (falsche Kategorie)“ | `content/aliases/*.yaml` (nur Abstand ≤ 2) |
+| Umstritten | echte Entitäten, die für eine Frage als falsch gewertet wurden | `answers.include` der Frage |
+| Fragen | gespielt, Timeout-Quote, Ø Punkte, Falsch-/Unbekannt-Eingaben | Schwierigkeit/Formulierung prüfen |
+| Frage-Detail | erwarteter vs. tatsächlicher Anteil je Antwort, Bekanntheits-Vorschlag, Punkte für den nächsten Spieler | `content/familiarity/*.yaml` |
+
+Bekanntheits-Vorschläge nutzen den geglätteten Anteil wie das Scoring (`answerShare`, Prior = 30 virtuelle Spieler) und erst ab 30 Antworten. Sie verschieben Werte also nur, wenn genug Daten da sind.
+
+**Zugang:** HTTP Basic Auth mit `ADMIN_PASSWORD` (Benutzername egal), geprüft im Proxy **und** erneut beim Datenzugriff (`requireAdmin`). Ohne gesetztes Passwort antwortet `/admin` mit 404. Antworten tragen `X-Robots-Tag: noindex` und `Cache-Control: no-store`.
+
 **Planungsregeln für den Tagesmix:** Kategorie-Quoten wie in Abschnitt 1, keine zwei Fragen mit demselben `group` am selben Tag (z. B. nicht zweimal „Farbe“), Cooldown pro Frage (Standard 120 Tage), Schwierigkeit aufsteigend sortiert.
 
 ---
@@ -423,7 +439,8 @@ Aufbau, Typografie und Komponenten folgen Krillion. Pokémon kommt über Szeneri
 ### Phase 2 – Wachstum
 - Anime-Kategorie: Fragen kuratieren und prüfen (Begleiter, Ash-Pokémon …), Anime-Quote im Tagesmix aktivieren
 - [x] Endlos-Modus (`/[lang]/endless`)
-- Archiv (vergangene Tage nachspielen), historischer Prior, Admin-/Review-Ansicht für unbekannte Eingaben
+- [x] Kuratierungsansicht (`/[lang]/admin`, siehe §8)
+- Archiv (vergangene Tage nachspielen), historischer Prior
 - Themen-Packs (z. B. „Nur Gen 1“), Accounts (Supabase Auth) + Freunde
 - OG-Images fürs Teilen (`opengraph-image.tsx`), PWA
 
@@ -434,6 +451,7 @@ Aufbau, Typografie und Komponenten folgen Krillion. Pokémon kommt über Szeneri
 ```
 docs/KONZEPT.md                Dieses Dokument
 content/
+  aliases/*.yaml               Zusätzliche Schreibweisen (auch für PokéAPI-Entitäten)
   questions/*.yaml             Fragen-Bank (pokedex, games, anime)
   entities/*.yaml              Kuratierte Entitäten (Anime-Charaktere, Höhlen …)
   familiarity/*.yaml           Bekanntheits-Overrides

@@ -33,7 +33,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   return (
     <html lang={lang} className={`${vt323.variable} ${pixelify.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
-        <main className="mx-auto flex w-full max-w-md flex-1 flex-col px-4 py-8">{children}</main>
+        <main className="flex w-full flex-1 flex-col px-4 py-8">{children}</main>
         <footer className="mx-auto w-full max-w-md px-4 pb-6 text-center text-base leading-snug text-drift/70">
           <p>{dict.footer.disclaimer}</p>
           <Link href={`/${other}`} className="mt-2 inline-block text-moonlight hover:underline">

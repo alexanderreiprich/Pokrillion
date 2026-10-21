@@ -1,0 +1,5 @@
+# Zusätzliche Schreibweisen für Pokémon (auch für generierte Daten aus der PokéAPI).
+# Vorschläge liefert die Kuratierungsansicht (/de/admin → Unbekannte Eingaben).
+# Normalisierung (Groß/klein, Akzente, Leerzeichen, Bindestriche) passiert automatisch – nur echte Varianten eintragen.
+
+pokemon:mr-mime: [Mister Mime]

@@ -56,6 +56,14 @@ Krillion hat Stufen von *Plankton* bis *Krillion*. Bei Pokrillion sind es Pokéb
 
 Die Meisterball-Antwort ist nicht einfach die seltenste. Sie wird kuratiert, wie bei Krillion: selten, aber eine, über die man sich freut („Ach, *das* ist gelb!“).
 
+### Endlos-Modus
+
+- Zufällige aktive Fragen ohne Tageslimit. Fragen der aktuellen Tagesrätsel (UTC-heute ± 1) werden gemieden, damit nichts gespoilert wird. Innerhalb einer Runde wiederholt sich keine Frage.
+- **3 Pokébälle als Leben:** Jede abgelaufene Zeit kostet einen Ball. Falsche Antworten kosten wie gewohnt 3 s.
+- Punkte wie im Tagesrätsel, aber `n(a)`/`N` zählen alle bisherigen Endlos-Antworten auf diese Frage (all-time statt pro Tag).
+- Pro Spieler ist höchstens eine Runde offen (Fortsetzen nach Reload). Der Rekord liegt lokal im Browser.
+- Tabellen `endless_runs`, `endless_questions`, `endless_guesses`; Funktionen `lock_endless_answer`, `endless_timeout`.
+
 ### Share-Text
 
 ```
@@ -251,6 +259,12 @@ guesses             Jede Eingabe (auch falsche)
 | `POST /play/:id/questions/:pos/guess` `{input}` | Antwort prüfen | `{result, entity?, points?, tier?, penaltyS, remainingS}` |
 | `POST /play/:id/questions/:pos/timeout` | Zeit abgelaufen | `{tier: "miss"}` |
 | `GET /play/:id/summary` | Auswertung nach der Runde | Punkte, Tiers, Top-Antworten pro Frage, Meisterball-Antworten, eigener Anteil |
+| `POST /endless` `{locale}` | neue Endlos-Runde (beendet eine offene) | Runde |
+| `GET /endless/current` | offene Runde des Spielers oder `null` | Runde \| `null` |
+| `GET /endless/:id` | Rundenstand inkl. beantworteter Fragen | Runde |
+| `POST /endless/:id/next` | nächste Zufallsfrage aufdecken (oder offene fortsetzen) | wie `start` |
+| `POST /endless/:id/questions/:seq/guess` | Antwort prüfen | wie `guess` |
+| `POST /endless/:id/questions/:seq/timeout` | Zeit abgelaufen, ein Ball weniger | `{result, lives, finished}` |
 | `GET /cron/schedule` | (Vercel Cron, `Authorization: Bearer $CRON_SECRET`) Puzzles 15 Tage im Voraus planen | `{created: [dates]}` |
 
 Die Prompts werden **erst beim Start der Frage** ausgeliefert. Sonst könnte man alle 7 Fragen vorab googeln.
@@ -398,8 +412,9 @@ Meisterball-Antworten sind bewusst „Aha“-Antworten: Bisasam (Gift), Glurak (
 
 ### Phase 2 – Wachstum
 - Anime-Kategorie: Fragen kuratieren und prüfen (Begleiter, Ash-Pokémon …), Anime-Quote im Tagesmix aktivieren
+- [x] Endlos-Modus (`/[lang]/endless`)
 - Archiv (vergangene Tage nachspielen), historischer Prior, Admin-/Review-Ansicht für unbekannte Eingaben
-- Unlimited-Modus, Themen-Packs (z. B. „Nur Gen 1“), Accounts (Supabase Auth) + Freunde
+- Themen-Packs (z. B. „Nur Gen 1“), Accounts (Supabase Auth) + Freunde
 - OG-Images fürs Teilen (`opengraph-image.tsx`), PWA
 
 ---

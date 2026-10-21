@@ -1,6 +1,8 @@
 import type {
   ApiErrorBody,
   ApiErrorCode,
+  EndlessRunResponse,
+  EndlessTimeoutResponse,
   GuessResponse,
   PlayResponse,
   StartQuestionResponse,
@@ -46,4 +48,13 @@ export const api = {
   timeout: (playId: string, position: number) =>
     call<TimeoutResponse>(`/play/${playId}/questions/${position}/timeout`),
   summary: (playId: string) => call<SummaryResponse>(`/play/${playId}/summary`, { method: "GET" }),
+
+  endlessCurrent: () => call<EndlessRunResponse | null>("/endless/current", { method: "GET" }),
+  endlessStart: (locale: string) => call<EndlessRunResponse>("/endless", { body: { locale } }),
+  endlessRun: (runId: string) => call<EndlessRunResponse>(`/endless/${runId}`, { method: "GET" }),
+  endlessNext: (runId: string) => call<StartQuestionResponse>(`/endless/${runId}/next`),
+  endlessGuess: (runId: string, seq: number, input: string) =>
+    call<GuessResponse>(`/endless/${runId}/questions/${seq}/guess`, { body: { input } }),
+  endlessTimeout: (runId: string, seq: number) =>
+    call<EndlessTimeoutResponse>(`/endless/${runId}/questions/${seq}/timeout`),
 };

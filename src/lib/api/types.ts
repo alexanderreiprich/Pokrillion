@@ -80,10 +80,38 @@ export type ApiErrorCode =
   | "not_started"
   | "already_answered"
   | "unfinished"
+  | "ended"
+  | "exhausted"
   | "unauthorized"
   | "internal";
 
 export interface ApiErrorBody {
   error: ApiErrorCode;
   message: string;
+}
+
+// --- endless mode -------------------------------------------------------------
+
+export interface EndlessResult extends QuestionResult {
+  /** `position` is the sequence number within the run */
+  category: QuestionCategory;
+  prompt: Names;
+  masterball: EntityRef;
+}
+
+export interface EndlessRunResponse {
+  runId: string;
+  lives: number;
+  maxLives: number;
+  score: number;
+  results: EndlessResult[];
+  /** Sequence number of a started but unanswered question (resume). */
+  openSeq: number | null;
+  ended: boolean;
+}
+
+export interface EndlessTimeoutResponse {
+  result: EndlessResult;
+  lives: number;
+  finished: boolean;
 }

@@ -15,6 +15,7 @@ const WOBBLE_MS = 1200;
 export function RevealView({
   result,
   correctedFrom,
+  note,
   isLast,
   lang,
   t,
@@ -22,6 +23,8 @@ export function RevealView({
 }: {
   result: QuestionResult;
   correctedFrom: string | null;
+  /** Extra line under the result, e.g. "2 balls left" in endless mode. */
+  note?: string;
   isLast: boolean;
   lang: Locale;
   t: GameTexts;
@@ -58,6 +61,7 @@ export function RevealView({
               ) : (
                 <span>{t.play.escaped}</span>
               )}
+              {note && <span className="text-lg text-ball-red-dark">{note}</span>}
               <span className="flex items-baseline justify-between">
                 <span style={{ color: result.tier === "miss" ? undefined : color }} className="font-display text-xl">
                   {t.tiers[result.tier]}

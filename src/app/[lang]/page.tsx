@@ -26,6 +26,9 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         >
           {dict.home.play}
         </Link>
+        <Link href={`/${lang}/endless`} className="text-xl text-moonlight hover:underline">
+          {dict.home.endless} →
+        </Link>
       </section>
 
       <section className="flex flex-col gap-3">

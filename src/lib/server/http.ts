@@ -12,6 +12,8 @@ const STATUS: Record<ApiErrorCode, number> = {
   not_started: 409,
   already_answered: 409,
   unfinished: 409,
+  ended: 409,
+  exhausted: 409,
   internal: 500,
 };
 

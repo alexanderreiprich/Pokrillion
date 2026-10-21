@@ -18,7 +18,8 @@
       "One answer per prompt counts. The Master Ball answer scores 100."
     ],
     "tiers": "Catch tiers",
-    "endless": "Endless mode"
+    "endless": "Endless mode",
+    "subline": "The daily Pokémon trivia"
   },
   "play": {
     "loading": "A wild quiz appeared!",
@@ -38,9 +39,11 @@
     "timeUp": "Time's up!",
     "next": "Next",
     "toSummary": "See results",
-    "time": "HP",
+    "time": "Time",
     "question": "Prompt {current}/{total}",
-    "points": "{points} pts"
+    "points": "{points} pts",
+    "hint": "The rarer, the more points",
+    "score": "Score"
   },
   "tiers": {
     "miss": "Got away!",
@@ -71,7 +74,9 @@
     "day": "day",
     "days": "days",
     "nextIn": "Next Pokrillion in {time}",
-    "home": "Back to start"
+    "home": "Back to start",
+    "catches": "Your catches",
+    "exp": "EXP"
   },
   "categories": {
     "pokedex": "Pokédex",
@@ -101,5 +106,14 @@
     "again": "Play again",
     "masterball": "Master Ball",
     "exhausted": "Wow – you answered every prompt!"
+  },
+  "menu": {
+    "open": "Open menu",
+    "close": "Close menu",
+    "title": "Menu",
+    "modes": "Game modes",
+    "daily": "Daily puzzle",
+    "endless": "Endless mode",
+    "language": "Language"
   }
 }

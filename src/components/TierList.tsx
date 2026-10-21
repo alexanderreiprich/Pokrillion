@@ -13,14 +13,22 @@ function range(index: number): string {
   return `${tier.minPoints}–${max}`;
 }
 
+/** The tiers as dashed lines, rarest at the bottom (Krillion's depth lines). */
 export function TierList({ labels }: { labels: Record<TierId, string> }) {
   return (
-    <ul className="grid grid-cols-2 gap-x-4 gap-y-1.5">
-      {[...TIERS].reverse().map((tier) => (
-        <li key={tier.id} className="flex items-center gap-2">
+    <ul className="flex flex-col gap-2.5">
+      {TIERS.map((tier, i) => (
+        <li key={tier.id} className="flex items-center gap-2.5 text-lg tracking-[0.12em] uppercase">
           <Pokeball size={18} color={TIER_COLOR[tier.id]} />
-          <span style={{ color: TIER_COLOR[tier.id] }}>{labels[tier.id]}</span>
-          <span className="ml-auto text-drift">{range(TIERS.indexOf(tier))}</span>
+          <span className="glow" style={{ color: TIER_COLOR[tier.id] }}>
+            {labels[tier.id]}
+          </span>
+          <span
+            aria-hidden
+            className="flex-1 border-t-2 border-dashed opacity-50"
+            style={{ borderColor: TIER_COLOR[tier.id] }}
+          />
+          <span className="text-drift tabular-nums">{range(i)}</span>
         </li>
       ))}
     </ul>

@@ -1,21 +1,25 @@
 @import "tailwindcss";
 
 /*
- * Design tokens – "Nachts im hohen Gras". See docs/KONZEPT.md §9.
+ * Design tokens – Krillion's look, at night in the tall grass. See docs/KONZEPT.md §9.
  * Dark only, like Krillion. Tier colours are shared with src/lib/game/tiers.ts ids.
  */
 @theme {
-  --color-night-950: #070b16;
-  --color-night-900: #0f1830;
-  --color-night-800: #16223f;
-  --color-line: #1f2c4d;
-  --color-moon: #e8f0ff;
-  --color-drift: #8fa3c8;
+  --color-night-950: #050a14;
+  --color-night-900: #101d33;
+  --color-night-800: #0b1526;
+  --color-ink: #060d1a;
+  --color-line: #1b3050;
+  --color-moon: #e8f1ff;
+  --color-drift: #7d93b8;
 
-  --color-ball-red: #ff3b4a;
-  --color-ball-red-dark: #b81f2c;
+  --color-ball-red: #ff4d5e;
+  --color-ball-red-light: #ff9aa5;
+  --color-ball-red-dark: #c4283b;
+  --color-ball-red-deep: #7a1626;
   --color-electric: #ffd23f;
-  --color-moonlight: #6fe7ff;
+  --color-moonlight: #4de3ff;
+  --color-warn: #ff9f43;
 
   --color-tier-miss: #4a5878;
   --color-tier-pokeball: #ff6b6b;
@@ -28,75 +32,254 @@
   --color-hp-mid: #f8d030;
   --color-hp-low: #f85838;
 
-  --color-dialog: #f8f8f0;
-  --color-dialog-ink: #282830;
-
   --font-pixel: var(--font-vt323), ui-monospace, monospace;
-  --font-display: var(--font-pixelify), var(--font-vt323), monospace;
 
   --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --animate-bob: bob 3.2s ease-in-out infinite;
+  --animate-flicker: flicker 5s step-end infinite;
+  --animate-boot: boot-bob 2.4s var(--ease-io) infinite;
+  --animate-pulse-soft: pulse-soft 1.6s ease-in-out infinite;
+  --animate-blink: blink 1s steps(1) infinite;
+  --animate-pop: pop-in 0.35s var(--ease-snap) both;
+  --animate-bloom: bloom 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+  --animate-card-in: card-in 0.7s cubic-bezier(0.2, 1.5, 0.4, 1) backwards;
+  --animate-rise: rise-in 0.5s var(--ease-snap) backwards;
+  --animate-dot: dot-pulse 1.4s var(--ease-io) infinite;
+  --animate-slam: slam 0.5s var(--ease-snap);
+  --animate-sweep: spin 2.4s linear infinite;
+  --animate-sweep-hot: spin 0.7s linear infinite;
+  --animate-throb: throb 0.55s var(--ease-io) infinite;
+  --animate-light-up: light-up 0.6s ease-out both;
+  --animate-sparkle: sparkle 1.2s ease-in-out infinite;
+  --animate-menu-in: menu-in 0.3s var(--ease-out-soft);
+
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-9px); }
+  }
+  @keyframes flicker {
+    0%, 93%, 95.5%, 100% { opacity: 1; }
+    93.6% { opacity: 0.7; }
+    94.4% { opacity: 0.94; }
+    95% { opacity: 0.62; }
+  }
+  @keyframes boot-bob {
+    0%, 100% { transform: translateY(0) rotate(-4deg); }
+    50% { transform: translateY(-9px) rotate(4deg); }
+  }
+  @keyframes pulse-soft {
+    50% { opacity: 0.45; }
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+  @keyframes pop-in {
+    from { opacity: 0; transform: scale(0.6); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes bloom {
+    0% { opacity: 0; filter: brightness(2.5); transform: scale(0.6); }
+    60% { opacity: 1; transform: scale(1.06); }
+    100% { opacity: 1; filter: brightness(1); transform: scale(1); }
+  }
+  @keyframes card-in {
+    0% { opacity: 0; transform: translateY(46px) scale(0.92); }
+  }
+  @keyframes rise-in {
+    0% { opacity: 0; transform: translateY(30px); }
+  }
+  @keyframes dot-pulse {
+    0%, 100% { transform: scale(1.05); }
+    50% { transform: scale(1.35); }
+  }
+  @keyframes slam {
+    35% { color: var(--color-electric); transform: scale(1.4) rotate(-2deg); }
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes throb {
+    0%, 100% { opacity: 0.15; }
+    50% { opacity: 0.85; }
+  }
+  @keyframes light-up {
+    0% { opacity: 0.3; filter: grayscale(1); }
+    40% { opacity: 1; filter: brightness(3); transform: scale(1.3); }
+    100% { opacity: 1; filter: brightness(1); transform: scale(1); }
+  }
+  @keyframes sparkle {
+    0%, 100% { filter: drop-shadow(0 0 0 transparent); }
+    50% { filter: drop-shadow(0 0 10px var(--color-tier-masterball)) drop-shadow(0 0 4px #fff); }
+  }
+  @keyframes menu-in {
+    from { transform: translateX(-100%); }
+  }
 }
 
 html {
   color-scheme: dark;
+  background-color: var(--color-night-950);
+  /* film grain over a night sky that darkens towards the grass */
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.65 0 0 0 0 0.78 0 0 0 0 1 0 0 0 0.025 0'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>"),
+    linear-gradient(#0d1e38 0%, #0a1729 21%, #0c1a2f 25%, #071223 33%, #050c18 55%, #030710 78%, #020409 100%);
+  background-attachment: fixed;
 }
 
 body {
-  background-color: var(--color-night-950);
-  /* moon glow + a few pixel stars */
-  background-image:
-    radial-gradient(ellipse 60% 40% at 50% -10%, rgb(111 231 255 / 0.12), transparent 70%),
-    radial-gradient(1px 1px at 12% 18%, rgb(232 240 255 / 0.5), transparent),
-    radial-gradient(1px 1px at 78% 9%, rgb(232 240 255 / 0.4), transparent),
-    radial-gradient(1px 1px at 63% 31%, rgb(232 240 255 / 0.3), transparent),
-    radial-gradient(1px 1px at 27% 42%, rgb(232 240 255 / 0.25), transparent);
-  background-attachment: fixed;
+  min-height: 100dvh;
+  position: relative;
   color: var(--color-moon);
   font-family: var(--font-pixel);
   font-size: 1.25rem;
   line-height: 1.3;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Classic in-game text box: light panel, double pixel frame. */
-@utility dialog-box {
-  background: var(--color-dialog);
-  color: var(--color-dialog-ink);
-  border: 4px solid var(--color-dialog-ink);
-  border-radius: 6px;
-  box-shadow:
-    inset 0 0 0 3px var(--color-dialog),
-    inset 0 0 0 6px #6878a8,
-    0 6px 0 rgb(0 0 0 / 0.35);
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-moonlight);
+    outline-offset: 2px;
+  }
 }
 
-/* Chunky arcade button with a hard drop shadow. */
-@utility pixel-button {
-  border: 3px solid var(--color-night-950);
-  border-radius: 4px;
+/* Small uppercase section label with a dashed rule running to the right. */
+@utility fathom {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-drift);
+  &::after {
+    content: "";
+    flex: 1;
+    border-top: 1px dashed rgb(125 147 184 / 0.22);
+  }
+}
+
+/* Red/cyan offset shadow, like a misaligned CRT. */
+@utility chroma {
+  text-shadow:
+    -4px 3px var(--color-ball-red),
+    4px -3px rgb(77 227 255 / 0.85),
+    0 0 30px rgb(77 227 255 / 0.35);
+}
+
+@utility chroma-sm {
+  text-shadow:
+    -2px 2px var(--color-ball-red),
+    2px -2px rgb(77 227 255 / 0.85),
+    0 0 14px rgb(77 227 255 / 0.3);
+}
+
+/* Soft neon glow in the current text colour. */
+@utility glow {
+  text-shadow: 0 0 12px color-mix(in srgb, currentColor 55%, transparent);
+}
+
+/* Main content card: deep panel, cyan ring, faint scanlines. */
+@utility panel {
+  position: relative;
+  background: rgb(16 29 51 / 0.93);
   box-shadow:
-    inset 0 -4px 0 var(--color-ball-red-dark),
-    0 5px 0 var(--color-night-950),
-    0 5px 0 3px rgb(111 231 255 / 0.15);
-  transition:
-    transform 0.08s var(--ease-out-soft),
-    box-shadow 0.08s var(--ease-out-soft);
+    0 0 0 3px rgb(77 227 255 / 0.25),
+    0 0 50px rgb(0 0 0 / 0.6),
+    inset 0 0 34px rgb(5 10 20 / 0.6);
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.06;
+    background: repeating-linear-gradient(0deg, transparent 0 2px, var(--color-moon) 2px 3px);
+  }
+}
+
+/* Small HUD box (score, list rows). */
+@utility pod {
+  background: linear-gradient(rgb(16 29 51 / 0.92), rgb(11 21 38 / 0.92));
+  box-shadow:
+    0 0 0 2px var(--color-ink),
+    0 0 0 4px var(--color-line),
+    inset 0 2px 0 rgb(232 241 255 / 0.06);
+}
+
+/* The red action button ("Throw!"). */
+@utility btn-primary {
+  cursor: pointer;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-night-950);
+  background: var(--color-ball-red);
+  box-shadow:
+    0 0 0 2px var(--color-night-950),
+    0 3px 0 2px var(--color-ball-red-deep),
+    0 0 16px rgb(255 77 94 / 0.45);
+  transition: transform 0.08s var(--ease-out-soft);
   &:active:not(:disabled) {
-    transform: translateY(4px);
+    transform: translateY(2px);
     box-shadow:
-      inset 0 -2px 0 var(--color-ball-red-dark),
-      0 1px 0 var(--color-night-950);
+      0 0 0 2px var(--color-night-950),
+      0 1px 0 2px var(--color-ball-red-deep);
+  }
+  &:disabled {
+    opacity: 0.55;
+    cursor: default;
   }
 }
 
-@keyframes blink-arrow {
-  50% {
-    opacity: 0;
+/* Big call to action: dark with a cyan ring that turns red on hover. */
+@utility btn-ring {
+  cursor: pointer;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-moon);
+  background: var(--color-night-900);
+  box-shadow:
+    0 0 0 3px var(--color-night-950),
+    0 0 0 6px var(--color-moonlight),
+    0 6px 0 6px #123048,
+    0 0 26px rgb(77 227 255 / 0.3);
+  transition:
+    transform 0.15s var(--ease-snap),
+    box-shadow 0.2s var(--ease-out-soft);
+  &:hover {
+    box-shadow:
+      0 0 0 3px var(--color-night-950),
+      0 0 0 6px var(--color-ball-red),
+      0 6px 0 6px #123048,
+      0 0 34px rgb(255 77 94 / 0.55);
+  }
+  &:active {
+    transform: translateY(3px);
   }
 }
 
-@utility animate-blink {
-  animation: blink-arrow 1s steps(1) infinite;
+/* Secondary button. */
+@utility btn-quiet {
+  cursor: pointer;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-moon);
+  background: var(--color-night-900);
+  box-shadow:
+    0 0 0 2px var(--color-night-950),
+    0 0 0 4px var(--color-line);
+  &:hover {
+    color: var(--color-moonlight);
+    box-shadow:
+      0 0 0 2px var(--color-night-950),
+      0 0 0 4px rgb(77 227 255 / 0.65);
+  }
+  &:active {
+    transform: translateY(2px);
+  }
 }
 
 /* Ball wobbles three times before the catch result shows (like in the games). */
@@ -118,24 +301,41 @@ body {
   animation: ball-wobble 1.2s ease-in-out both;
 }
 
-
-
-@keyframes pop-in {
-  from { opacity: 0; transform: scale(0.6); }
-  to { opacity: 1; transform: scale(1); }
+/* Backdrop: drifting moon rays and swaying grass (see components/Backdrop.tsx). */
+@keyframes rays-drift {
+  from { opacity: 0.75; transform: translateX(-3%); }
+  to { opacity: 1; transform: translateX(3%); }
 }
 
-@utility animate-pop {
-  animation: pop-in 0.35s var(--ease-snap) both;
+@keyframes grass-sway {
+  from { transform: skewX(-1.5deg); }
+  to { transform: skewX(1.5deg); }
 }
 
-@keyframes sparkle {
-  0%, 100% { filter: drop-shadow(0 0 0 transparent); }
-  50% { filter: drop-shadow(0 0 10px var(--color-tier-masterball)) drop-shadow(0 0 4px #fff); }
+@keyframes twinkle {
+  50% { opacity: 0.2; }
 }
 
-@utility animate-sparkle {
-  animation: sparkle 1.2s ease-in-out infinite;
+@utility moon-rays {
+  background-image:
+    linear-gradient(113deg, transparent 34%, rgb(150 205 255 / 0.09) 37.5%, transparent 42%),
+    linear-gradient(104deg, transparent 55%, rgb(150 205 255 / 0.06) 58%, transparent 62.5%),
+    linear-gradient(119deg, transparent 70%, rgb(180 220 255 / 0.05) 73%, transparent 77%);
+  mask-image: linear-gradient(rgb(0 0 0 / 0.95) 0%, rgb(0 0 0 / 0.4) 30%, transparent 56%);
+  animation: rays-drift 34s ease-in-out infinite alternate;
+}
+
+@utility animate-sway {
+  transform-origin: 50% 100%;
+  animation: grass-sway 7s ease-in-out infinite alternate;
+}
+
+@utility animate-twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+@utility scanlines {
+  background: repeating-linear-gradient(0deg, rgb(0 0 0 / 0.18) 0 1px, transparent 1px 3px);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -143,6 +343,7 @@ body {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }

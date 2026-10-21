@@ -180,7 +180,7 @@ Unbekannte Eingaben werden geloggt. So findet die Kuratierung fehlende Aliase un
 | Framework | **Next.js 16** (App Router, Turbopack, Cache Components) | Fullstack-TypeScript, SSR für Teilen und SEO |
 | Sprache | TypeScript (strict) | |
 | Styling | **Tailwind CSS 4** + CSS-Variablen als Design-Tokens | wie Krillion |
-| Fonts | `VT323` (UI, wie Krillion) + `Pixelify Sans` (Headlines) via `next/font/google` | Game-Boy-Retro-Gefühl |
+| Fonts | `VT323` via `next/font/google` | wie Krillion |
 | i18n | eigene Dictionaries + `app/[lang]` + `proxy.ts` | offizielles Next-16-Muster, keine Library nötig |
 | DB | **Supabase Postgres** | Free Tier reicht; Auth ist später einfach nachrüstbar |
 | Validierung | `zod` | Content-Schema und API-Payloads |
@@ -357,24 +357,33 @@ Meisterball-Antworten sind bewusst „Aha“-Antworten: Bisasam (Gift), Glurak (
 
 ### Vorbild Krillion (analysiert)
 
-- Dunkle „Tiefsee“-Palette (`abyss #050a14`, `shallow #101d33`, `line #1b2c47`), Neon-Akzente (Cyan `#4de3ff`, Pink `#ff5d8f`)
-- Pixelfont **VT323** für die gesamte UI, zentriertes Single-Column-Layout (`max-width ≈ 28rem`), mobil zuerst
-- Eigene Farbe pro Tier, verspielte Microcopy („descending…“), Slide-out-Menü
-- Easing mit Overshoot (`cubic-bezier(.34,1.56,.64,1)`) für knackige Reveals
+- Dunkle „Tiefsee“-Palette (`abyss #050a14`, `shallow #101d33`, `line #1b3050`), Neon-Akzente (Cyan `#4de3ff`, Pink `#ff5d8f`, Gold `#ffd166`), Texte mit Glow
+- Pixelfont **VT323** für alles, auch den Titel. Labels in Versalien mit weitem Buchstabenabstand (`.14–.3em`)
+- Eckige Panels ohne Rundungen; Rahmen als gestapelte `box-shadow`-Ringe, dazu Scanlines (CRT) und Vignette
+- Großer Titel mit rot/cyan versetztem Schatten, wippenden Buchstaben und leichtem Flackern
+- Spiel-Screen als Vollbild: HUD oben (Tiefe, Fortschrittspunkte, Punkte), Karte mit der Frage in der Mitte, Dock unten (runder „Sonar“-Timer, Eingabe mit Zündschnur-Balken, Pink-Button). Wenig Zeit: Rand pulsiert pink
+- Tier-Linien als gestrichelte Linien, die beim Erreichen in Tier-Farbe aufleuchten. Abschnitts-Labels („fathom“) mit gestrichelter Linie nach rechts
+- Slide-out-Menü links, Microcopy („descending…“), Easing mit Overshoot (`cubic-bezier(.34,1.56,.64,1)`)
 
-### Pokrillion-Übertragung: „Nachts im hohen Gras“
+### Pokrillion-Übertragung: Krillion-Look, nachts im hohen Gras
+
+Aufbau, Typografie und Komponenten folgen Krillion. Pokémon kommt über Szenerie, Farben und die Ball-Motive.
 
 | Element | Umsetzung |
 |---|---|
-| Palette | Nacht-/Höhlen-Blau `--night-950 #070b16`, `--night-900 #0f1830`, `--line #1f2c4d`; Akzente Pokéball-Rot `#ff3b4a`, Elektro-Gelb `#ffd23f`, Mondlicht-Cyan `#6fe7ff` |
+| Palette | Krillions Navy (`--night-950 #050a14`, `--night-900 #101d33`, `--line #1b3050`, `--drift #7d93b8`); Akzente Pokéball-Rot `#ff4d5e` (statt Pink), Mondlicht-Cyan `#4de3ff`, Elektro-Gelb `#ffd23f` |
 | Tier-Farben | Pokéball `#ff6b6b`, Superball `#4d8dff`, Hyperball `#ffd23f`, Shiny `#7cf5d5`, Meisterball `#b26bff`, Entkommen `#4a5878` |
-| Fonts | `VT323` für die UI, `Pixelify Sans` für Logo und Headlines |
-| **Fragen-Box** | im Stil des klassischen Spiel-Dialogfensters: helle Box, doppelter Pixelrahmen, blinkender `▼`-Pfeil, Text tippt sich ein |
-| **Timer = KP-Leiste** | grün → gelb → rot, wie die HP-Leiste im Kampf; bei −3 s „ruckelt“ sie |
-| **Punkte = EP-Leiste** | füllt sich nach jeder Frage |
-| Reveal | Ball-Wackeln (1–3×), dann „Gefangen!“ mit Tier-Farbe; beim Meisterball ein Glitzer-Effekt |
+| Font | nur `VT323` |
+| Hintergrund | `Backdrop.tsx`: Nachthimmel mit Körnung, Mondlicht-Strahlen, Sterne, Pixel-Mond und zwei Lagen wiegendes Pixel-Gras (alles SVG/CSS), darüber Scanlines und Vignette |
+| Utilities | `globals.css`: `panel`, `pod`, `btn-primary` (rot), `btn-ring` (Cyan-Ring, Hover rot), `btn-quiet`, `fathom`, `chroma`, `glow` |
+| Menü | `SiteMenu.tsx`: Hamburger oben links, `<dialog>` von links mit Spielmodi, Sprache (bleibt auf der Seite) und Disclaimer |
+| HUD | Fortschritt als 7 Mini-Pokébälle (beantwortet in Tier-Farbe, aktuell rot pulsierend), Punkte-Pod rechts. Endlos: verbleibende Bälle |
+| **Fragen-Karte** | dunkle Krillion-Karte, Kategorie als rotes Label, Text tippt sich ein, blinkender `▼`-Pfeil aus dem Spiel-Dialogfenster |
+| **Timer = Pokéradar** | runder Scope mit Sweep, Sekunden in der Mitte, Ring in KP-Farben (grün → gelb → rot). Unter der Eingabe derselbe Wert als KP-Zündschnur. Ab 20 % Restzeit: rot, schneller Sweep, Rand pulsiert |
+| Reveal | Ball wackelt 3×, dann leuchtet die Stufe groß in Tier-Farbe auf. Darunter die Fang-Leiste: die Bälle bis zur erreichten Stufe leuchten nacheinander auf. Meisterball: Glitzer |
+| **Auswertung** | große Punktzahl, **EP-Leiste**, Bälle in Tier-Farbe, Fänge als Liste |
 | Microcopy | „Ein wildes Quiz erscheint!“ (Laden) · „Gefangen!“ · „Mist! Es ist entkommen!“ · „Das kennt der Pokédex nicht.“ |
-| Logo | Wortmarke „POKRILLION“ in Pixelfont, das „O“ als Pokéball; Tagline „eins zu einer Pokrillion“ |
+| Logo | Wortmarke „POKRILLION“ mit Farbversatz und wippenden Buchstaben, das „O“ als Pokéball; Tagline „eins zu einer Pokrillion“ |
 | Grafiken | **keine offiziellen Artworks oder Sprites im MVP.** Pokébälle und Effekte als eigene SVG/CSS-Pixelgrafik |
 
 ---
@@ -402,7 +411,8 @@ Meisterball-Antworten sind bewusst „Aha“-Antworten: Bisasam (Gift), Glurak (
 - [x] Lokales Supabase (`npm run db:start`), `.env.local`
 - [ ] Supabase-Cloud-Projekt anlegen
 - [x] Server-Logik (`src/lib/server/`) + Route Handlers aus Abschnitt 7, server-seitiger Timer
-- [x] Spiel-UI: Intro → 7× (Dialogbox mit Tipp-Effekt, KP-Timer, Eingabe, Ball-Wackeln) → Auswertung
+- [x] Spiel-UI: Intro → 7× (Fragen-Karte mit Tipp-Effekt, Pokéradar-Timer, Eingabe, Ball-Wackeln) → Auswertung
+- [x] Design an Krillion angeglichen (HUD, Dock, Menü, Szenerie)
 - [x] Share-Button, Resume nach Reload (Fortschritt liegt auf dem Server), Serie über localStorage, Countdown zum nächsten Rätsel
 - [x] Puzzle-Planer (`npm run schedule`) + Vercel Cron (`vercel.json`, täglich 03:00 UTC, 15 Tage Vorlauf)
 - [ ] Rate-Limit auf `/guess` (vor öffentlichem Go-live)

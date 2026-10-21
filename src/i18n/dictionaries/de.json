@@ -32,6 +32,7 @@
     "escaped": "Mist! Es ist entkommen!",
     "corrected": "(Tippfehler verziehen: „{input}“)",
     "wrongEntity": "{name} passt leider nicht. −3 s",
+    "wrongEntityAs": "„{input}“ erkannt als {name} – passt leider nicht. −3 s",
     "unknown": "Das kennt der Pokédex nicht. −3 s",
     "duplicate": "Hast du schon probiert.",
     "timeUp": "Die Zeit ist um!",

@@ -5,6 +5,7 @@ import type { GuessResponse, QuestionResult, StartQuestionResponse } from "@/lib
 import { ApiClientError } from "@/lib/api/client";
 import type { Locale } from "@/lib/content/schema";
 import { fill } from "@/i18n/fill";
+import { normalize } from "@/lib/game/normalize";
 import { DialogBox } from "@/components/DialogBox";
 import { HpBar } from "@/components/HpBar";
 import type { GameTexts } from "./Game";
@@ -77,9 +78,16 @@ export function QuestionView({
           timedOut.current = true;
           onExpired();
           return;
-        case "wrong_entity":
-          setFeedback({ text: fill(t.play.wrongEntity, { name: res.entity.names[lang] }), tone: "bad" });
+        case "wrong_entity": {
+          // Typos, the other language's name or aliases resolve to a name the player never typed.
+          const name = res.entity.names[lang];
+          const text =
+            normalize(value) === normalize(name)
+              ? fill(t.play.wrongEntity, { name })
+              : fill(t.play.wrongEntityAs, { input: value, name });
+          setFeedback({ text, tone: "bad" });
           break;
+        }
         case "unknown":
           setFeedback({ text: t.play.unknown, tone: "bad" });
           break;

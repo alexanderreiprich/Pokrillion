@@ -34,7 +34,8 @@ export function Pokeball({
   title,
 }: {
   color?: string;
-  size?: number;
+  /** px, or any SVG length such as "0.6em" */
+  size?: number | string;
   className?: string;
   title?: string;
 }) {

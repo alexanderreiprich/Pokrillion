@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import Link from "next/link";
 import type { PlayResponse, QuestionResult, StartQuestionResponse, SummaryResponse } from "@/lib/api/types";
 import { api, ApiClientError } from "@/lib/api/client";
 import type { Locale } from "@/lib/content/schema";
@@ -10,7 +9,8 @@ import { fill } from "@/i18n/fill";
 import { localIsoDate } from "@/lib/game/puzzle-date";
 import { currentStreak, type History } from "@/lib/game/streak";
 import { DialogBox } from "@/components/DialogBox";
-import { Pokeball } from "@/components/Pokeball";
+import { Boot, BootError } from "./Boot";
+import { Hud, HudLabel, ProgressBalls } from "./Hud";
 import { QuestionView } from "./QuestionView";
 import { RevealView } from "./RevealView";
 import { SummaryView } from "./SummaryView";
@@ -136,45 +136,37 @@ export function Game({ lang, t }: { lang: Locale; t: GameTexts }) {
 
   const total = play?.questionCount ?? 7;
   const current = screen.kind === "reveal" ? screen.result.position : nextPosition;
+  const tiers = Object.fromEntries((play?.results ?? []).map((r) => [r.position, r.tier]));
 
   return (
-    <div className="flex flex-col gap-6">
-      <header className="flex items-center justify-between">
-        <Link href={`/${lang}`} aria-label="Pokrillion">
-          <Pokeball size={32} />
-        </Link>
-        {(screen.kind === "question" || screen.kind === "reveal") && (
-          <>
-            <span className="text-drift">{fill(t.play.question, { current, total })}</span>
-            <span className="text-electric">{fill(t.play.points, { points: play?.totalScore ?? 0 })}</span>
-          </>
-        )}
-      </header>
-
-      {screen.kind === "loading" && (
-        <div className="flex flex-col items-center gap-4 py-16">
-          <Pokeball size={64} className="animate-wobble" />
-          <p className="text-drift">{t.play.loading}</p>
-        </div>
+    <main className="mx-auto flex w-full max-w-xl flex-1 flex-col px-3 pt-3 pb-[calc(12px+env(safe-area-inset-bottom))]">
+      {(screen.kind === "question" || screen.kind === "reveal") && (
+        <Hud score={play?.totalScore ?? 0} scoreLabel={t.play.score}>
+          <ProgressBalls total={total} tiers={tiers} current={current} />
+          <HudLabel>{fill(t.play.question, { current, total })}</HudLabel>
+        </Hud>
       )}
 
+      {screen.kind === "loading" && <Boot label={t.play.loading} />}
+
       {screen.kind === "error" && (
-        <div className="flex flex-col items-center gap-4 py-8">
-          <DialogBox arrow={false}>{screen.message}</DialogBox>
-          <button onClick={retry} className="pixel-button bg-ball-red px-6 py-1 font-display text-xl text-moon">
+        <BootError message={screen.message}>
+          <button onClick={retry} className="btn-ring px-6 pt-2.5 pb-2 text-xl">
             {t.errors.retry}
           </button>
-        </div>
+        </BootError>
       )}
 
       {screen.kind === "intro" && play && (
-        <div className="flex flex-col items-center gap-6 py-6 text-center">
-          <h2 className="font-display text-4xl text-electric">{fill(t.play.introTitle, { number: play.number })}</h2>
-          <DialogBox>{t.play.introText}</DialogBox>
+        <div className="flex flex-1 flex-col items-center justify-center gap-10 py-10 text-center">
+          <h1 className="chroma animate-flicker text-[clamp(40px,12vw,72px)] leading-none tracking-[0.04em] uppercase">
+            {fill(t.play.introTitle, { number: play.number })}
+          </h1>
+          <DialogBox className="w-full text-left text-2xl leading-tight">{t.play.introText}</DialogBox>
           <button
             autoFocus
             onClick={startNext}
-            className="pixel-button bg-ball-red px-10 py-2 font-display text-3xl text-moon hover:brightness-110"
+            className="btn-ring animate-bob px-10 pt-3.5 pb-3 text-[clamp(22px,6vw,28px)] [animation-duration:1.9s]"
           >
             {nextPosition === 1 ? t.play.start : fill(t.play.resume, { n: nextPosition })}
           </button>
@@ -208,6 +200,6 @@ export function Game({ lang, t }: { lang: Locale; t: GameTexts }) {
       )}
 
       {screen.kind === "summary" && <SummaryView data={screen.data} streak={screen.streak} lang={lang} t={t} />}
-    </div>
+    </main>
   );
 }

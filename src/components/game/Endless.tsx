@@ -10,7 +10,9 @@ import { fill } from "@/i18n/fill";
 import { DialogBox } from "@/components/DialogBox";
 import { Pokeball } from "@/components/Pokeball";
 import { TIER_COLOR } from "@/components/tier-colors";
+import { Boot, BootError } from "./Boot";
 import type { GameTexts } from "./Game";
+import { Hud, HudLabel } from "./Hud";
 import { QuestionView } from "./QuestionView";
 import { RevealView } from "./RevealView";
 
@@ -133,69 +135,61 @@ export function Endless({ lang, t }: { lang: Locale; t: EndlessTexts }) {
   const current = screen.kind === "question" ? screen.question.position : screen.kind === "reveal" ? screen.result.position : 0;
 
   return (
-    <div className="flex flex-col gap-6">
-      <header className="flex items-center justify-between">
-        <Link href={`/${lang}`} aria-label="Pokrillion">
-          <Pokeball size={32} />
-        </Link>
-        {inRun && run && (
-          <>
-            <span className="text-drift">{fill(t.endless.question, { n: current })}</span>
-            <span className="flex items-center gap-3">
-              <span className="flex gap-0.5" aria-label={fill(t.endless.ballsLeft, { n: run.lives })}>
-                {Array.from({ length: run.maxLives }, (_, i) => (
-                  <Pokeball key={i} size={18} className={i < run.lives ? undefined : "opacity-25 grayscale"} />
-                ))}
+    <main className="mx-auto flex w-full max-w-xl flex-1 flex-col px-3 pt-3 pb-[calc(12px+env(safe-area-inset-bottom))]">
+      {inRun && run && (
+        <Hud score={run.score} scoreLabel={t.play.score}>
+          <span className="flex gap-1.5" role="img" aria-label={fill(t.endless.ballsLeft, { n: run.lives })}>
+            {Array.from({ length: run.maxLives }, (_, i) => (
+              <span key={i} className={i < run.lives ? "drop-shadow-[0_0_5px_rgb(255_77_94/0.7)]" : "opacity-25 grayscale"}>
+                <Pokeball size={16} />
               </span>
-              <span className="text-electric">{fill(t.play.points, { points: run.score })}</span>
-            </span>
-          </>
-        )}
-      </header>
-
-      {screen.kind === "loading" && (
-        <div className="flex flex-col items-center gap-4 py-16">
-          <Pokeball size={64} className="animate-wobble" />
-          <p className="text-drift">{t.play.loading}</p>
-        </div>
+            ))}
+          </span>
+          <HudLabel>{fill(t.endless.question, { n: current })}</HudLabel>
+        </Hud>
       )}
 
+      {screen.kind === "loading" && <Boot label={t.play.loading} />}
+
       {screen.kind === "error" && (
-        <div className="flex flex-col items-center gap-4 py-8">
-          <DialogBox arrow={false}>{screen.message}</DialogBox>
-          <Link href={`/${lang}`} className="text-moonlight hover:underline">
+        <BootError message={screen.message}>
+          <Link href={`/${lang}`} className="btn-quiet px-5 pt-2.5 pb-2 text-base">
             {t.summary.home}
           </Link>
-        </div>
+        </BootError>
       )}
 
       {screen.kind === "intro" && (
-        <div className="flex flex-col items-center gap-6 py-6 text-center">
-          <h2 className="font-display text-4xl text-electric">{t.endless.title}</h2>
-          <DialogBox>{t.endless.intro}</DialogBox>
-          {run && !run.ended && (
+        <div className="flex flex-1 flex-col items-center justify-center gap-10 py-10 text-center">
+          <h1 className="chroma animate-flicker text-[clamp(40px,12vw,72px)] leading-none tracking-[0.04em] uppercase">
+            ∞ {t.endless.title}
+          </h1>
+          <DialogBox className="w-full text-left text-2xl leading-tight">{t.endless.intro}</DialogBox>
+          <div className="flex flex-col items-center gap-7">
+            {run && !run.ended && (
+              <button
+                autoFocus
+                onClick={() => {
+                  setScreen({ kind: "loading" });
+                  nextQuestion(run.runId);
+                }}
+                className="btn-ring animate-bob px-10 pt-3.5 pb-3 text-[clamp(22px,6vw,28px)] [animation-duration:1.9s]"
+              >
+                {t.endless.resume}
+              </button>
+            )}
             <button
-              autoFocus
-              onClick={() => {
-                setScreen({ kind: "loading" });
-                nextQuestion(run.runId);
-              }}
-              className="pixel-button bg-ball-red px-10 py-2 font-display text-3xl text-moon hover:brightness-110"
+              autoFocus={!run || run.ended}
+              onClick={startNew}
+              className={
+                run && !run.ended
+                  ? "btn-quiet px-5 pt-2.5 pb-2 text-base"
+                  : "btn-ring animate-bob px-10 pt-3.5 pb-3 text-[clamp(22px,6vw,28px)] [animation-duration:1.9s]"
+              }
             >
-              {t.endless.resume}
+              {run && !run.ended ? t.endless.newRun : t.endless.start}
             </button>
-          )}
-          <button
-            autoFocus={!run || run.ended}
-            onClick={startNew}
-            className={
-              run && !run.ended
-                ? "text-xl text-moonlight hover:underline"
-                : "pixel-button bg-ball-red px-10 py-2 font-display text-3xl text-moon hover:brightness-110"
-            }
-          >
-            {run && !run.ended ? t.endless.newRun : t.endless.start}
-          </button>
+          </div>
         </div>
       )}
 
@@ -227,54 +221,70 @@ export function Endless({ lang, t }: { lang: Locale; t: EndlessTexts }) {
       )}
 
       {screen.kind === "over" && (
-        <div className="flex flex-col gap-6">
-          <section className="flex flex-col items-center gap-2 text-center">
-            <h2 className="font-display text-2xl text-drift">
-              {screen.exhausted ? t.endless.exhausted : `${t.endless.title} · ${t.endless.over}`}
-            </h2>
-            <p className="text-7xl leading-none text-electric">{screen.run.score}</p>
-            <p className="text-drift">
+        <div className="flex flex-col gap-10 pt-14 pb-24">
+          <section className="animate-card-in flex flex-col items-center gap-2 text-center">
+            <p className="chroma-sm text-[27px] leading-none tracking-[0.06em] uppercase">
+              {screen.exhausted ? t.endless.exhausted : t.endless.title}
+            </p>
+            {!screen.exhausted && <p className="text-sm tracking-[0.3em] text-drift uppercase">{t.endless.over}</p>}
+            <p className="glow mt-2 text-[96px] leading-[0.8] text-ball-red tabular-nums">{screen.run.score}</p>
+            <p className="text-base tracking-[0.14em] text-drift uppercase">
               {fill(t.endless.summary, { score: screen.run.score, n: screen.run.results.length })}
             </p>
-            <p className={screen.newBest ? "font-display text-xl text-tier-shiny" : "text-drift"}>
+            <p
+              className={
+                screen.newBest
+                  ? "glow text-xl tracking-[0.2em] text-tier-shiny uppercase"
+                  : "text-base tracking-[0.14em] text-drift uppercase"
+              }
+            >
               {screen.newBest ? t.endless.newBest : fill(t.endless.best, { best: screen.best })}
             </p>
-            <button
-              autoFocus
-              onClick={startNew}
-              className="pixel-button mt-2 bg-ball-red px-8 py-1.5 font-display text-2xl text-moon hover:brightness-110"
-            >
+            <button autoFocus onClick={startNew} className="btn-primary mt-4 px-6 pt-3 pb-2.5 text-[19px]">
               {t.endless.again}
             </button>
           </section>
 
-          <ol className="flex flex-col gap-3">
-            {screen.run.results.map((r) => (
-              <li key={r.position} className="rounded-md border-2 border-line bg-night-900/80 p-3">
-                <p className="text-lg text-drift">
-                  {r.position}. {t.categories[r.category]}
-                </p>
-                <p className="mb-2 text-xl leading-tight">{r.prompt[lang]}</p>
-                <div className="flex items-center gap-3">
-                  <Pokeball size={24} color={TIER_COLOR[r.tier]} />
-                  <div className="flex-1">
-                    <p>{r.entity ? r.entity.names[lang] : t.summary.noAnswer}</p>
-                    <p className="text-lg text-drift">
-                      <span style={{ color: TIER_COLOR.masterball }}>{t.endless.masterball}:</span>{" "}
-                      {r.masterball.names[lang]}
+          <section className="flex flex-col gap-5">
+            <p className="fathom">{t.summary.catches}</p>
+            <ol className="flex flex-col gap-5">
+              {screen.run.results.map((r) => {
+                const color = TIER_COLOR[r.tier];
+                return (
+                  <li key={r.position} className="pod p-3">
+                    <p className="text-sm tracking-[0.2em] text-drift uppercase">
+                      <span className="text-ball-red">{String(r.position).padStart(2, "0")}</span> ·{" "}
+                      {t.categories[r.category]}
                     </p>
-                  </div>
-                  <span className="text-3xl text-electric">+{r.points}</span>
-                </div>
-              </li>
-            ))}
-          </ol>
+                    <p className="mt-1 mb-2 text-xl leading-tight">{r.prompt[lang]}</p>
+                    <div className="flex items-center gap-3">
+                      <span style={{ filter: `drop-shadow(0 0 6px ${color})` }}>
+                        <Pokeball size={24} color={color} />
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate">{r.entity ? r.entity.names[lang] : t.summary.noAnswer}</p>
+                        <p className="text-base text-drift">
+                          <span className="tracking-[0.08em] uppercase" style={{ color: TIER_COLOR.masterball }}>
+                            {t.endless.masterball}:
+                          </span>{" "}
+                          {r.masterball.names[lang]}
+                        </p>
+                      </div>
+                      <span className="glow text-3xl tabular-nums" style={{ color }}>
+                        +{r.points}
+                      </span>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </section>
 
-          <Link href={`/${lang}`} className="text-center text-moonlight hover:underline">
+          <Link href={`/${lang}`} className="btn-quiet self-center px-5 pt-2.5 pb-2 text-base">
             {t.summary.home}
           </Link>
         </div>
       )}
-    </div>
+    </main>
   );
 }

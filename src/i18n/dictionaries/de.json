@@ -18,7 +18,8 @@
       "Eine Antwort pro Frage zählt. Die Meisterball-Antwort gibt 100 Punkte."
     ],
     "tiers": "Fangstufen",
-    "endless": "Endlos-Modus"
+    "endless": "Endlos-Modus",
+    "subline": "Das tägliche Pokémon-Quiz"
   },
   "play": {
     "loading": "Ein wildes Quiz erscheint!",
@@ -38,9 +39,11 @@
     "timeUp": "Die Zeit ist um!",
     "next": "Weiter",
     "toSummary": "Zur Auswertung",
-    "time": "KP",
+    "time": "Zeit",
     "question": "Frage {current}/{total}",
-    "points": "{points} P"
+    "points": "{points} P",
+    "hint": "Je seltener, desto mehr Punkte",
+    "score": "Punkte"
   },
   "tiers": {
     "miss": "Entkommen!",
@@ -71,7 +74,9 @@
     "day": "Tag",
     "days": "Tage",
     "nextIn": "Nächstes Pokrillion in {time}",
-    "home": "Zur Startseite"
+    "home": "Zur Startseite",
+    "catches": "Deine Fänge",
+    "exp": "EP"
   },
   "categories": {
     "pokedex": "Pokédex",
@@ -101,5 +106,14 @@
     "again": "Nochmal",
     "masterball": "Meisterball",
     "exhausted": "Wow – du hast alle Fragen beantwortet!"
+  },
+  "menu": {
+    "open": "Menü öffnen",
+    "close": "Menü schließen",
+    "title": "Menü",
+    "modes": "Spielmodi",
+    "daily": "Tagesrätsel",
+    "endless": "Endlos-Modus",
+    "language": "Sprache"
   }
 }

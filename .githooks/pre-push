@@ -1,0 +1,14 @@
+#!/bin/sh
+# prod and staging only change through pull requests on GitHub (docs/BRANCHING.md).
+# GitHub can't enforce this for private repos on the free plan, so this hook does.
+# Emergency override: git push --no-verify
+while read -r local_ref local_sha remote_ref remote_sha; do
+  case "$remote_ref" in
+    refs/heads/prod|refs/heads/staging)
+      echo "✗ Push auf '${remote_ref#refs/heads/}' ist nicht erlaubt – Änderungen bitte per Pull Request."
+      echo "  git push -u origin <präfix>/<name> && gh pr create --base staging"
+      exit 1
+      ;;
+  esac
+done
+exit 0

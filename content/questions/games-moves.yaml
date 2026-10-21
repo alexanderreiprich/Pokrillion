@@ -1,0 +1,217 @@
+# Attacken nach Typ (aktueller Typ, z. B. Charme = Fee). Generiert, danach von Hand gepflegt.
+
+- id: games.move.normal
+  category: games
+  group: move
+  difficulty: 2
+  prompt:
+    de: Nenne eine Attacke vom Typ Normal
+    en: Name a Normal-type move
+  answers:
+    query: { kind: move, where: { type: normal } }
+  masterball: move:splash
+  source: PokéAPI moves
+
+- id: games.move.fighting
+  category: games
+  group: move
+  difficulty: 3
+  prompt:
+    de: Nenne eine Attacke vom Typ Kampf
+    en: Name a Fighting-type move
+  answers:
+    query: { kind: move, where: { type: fighting } }
+  masterball: move:high-jump-kick
+  source: PokéAPI moves
+
+- id: games.move.fire
+  category: games
+  group: move
+  difficulty: 2
+  prompt:
+    de: Nenne eine Attacke vom Typ Feuer
+    en: Name a Fire-type move
+  answers:
+    query: { kind: move, where: { type: fire } }
+  masterball: move:magma-storm
+  source: PokéAPI moves
+
+- id: games.move.ice
+  category: games
+  group: move
+  difficulty: 3
+  prompt:
+    de: Nenne eine Attacke vom Typ Eis
+    en: Name a Ice-type move
+  answers:
+    query: { kind: move, where: { type: ice } }
+  masterball: move:sheer-cold
+  source: PokéAPI moves
+
+- id: games.move.electric
+  category: games
+  group: move
+  difficulty: 2
+  prompt:
+    de: Nenne eine Attacke vom Typ Elektro
+    en: Name a Electric-type move
+  answers:
+    query: { kind: move, where: { type: electric } }
+  masterball: move:volt-tackle
+  source: PokéAPI moves
+
+- id: games.move.flying
+  category: games
+  group: move
+  difficulty: 3
+  prompt:
+    de: Nenne eine Attacke vom Typ Flug
+    en: Name a Flying-type move
+  answers:
+    query: { kind: move, where: { type: flying } }
+  masterball: move:sky-attack
+  source: PokéAPI moves
+
+- id: games.move.grass
+  category: games
+  group: move
+  difficulty: 2
+  prompt:
+    de: Nenne eine Attacke vom Typ Pflanze
+    en: Name a Grass-type move
+  answers:
+    query: { kind: move, where: { type: grass } }
+  masterball: move:spore
+  source: PokéAPI moves
+
+- id: games.move.ground
+  category: games
+  group: move
+  difficulty: 3
+  prompt:
+    de: Nenne eine Attacke vom Typ Boden
+    en: Name a Ground-type move
+  answers:
+    query: { kind: move, where: { type: ground } }
+  masterball: move:fissure
+  source: PokéAPI moves
+
+- id: games.move.poison
+  category: games
+  group: move
+  difficulty: 3
+  prompt:
+    de: Nenne eine Attacke vom Typ Gift
+    en: Name a Poison-type move
+  answers:
+    query: { kind: move, where: { type: poison } }
+  masterball: move:toxic
+  source: PokéAPI moves
+
+- id: games.move.bug
+  category: games
+  group: move
+  difficulty: 3
+  prompt:
+    de: Nenne eine Attacke vom Typ Käfer
+    en: Name a Bug-type move
+  answers:
+    query: { kind: move, where: { type: bug } }
+  masterball: move:u-turn
+  source: PokéAPI moves
+
+- id: games.move.dark
+  category: games
+  group: move
+  difficulty: 3
+  prompt:
+    de: Nenne eine Attacke vom Typ Unlicht
+    en: Name a Dark-type move
+  answers:
+    query: { kind: move, where: { type: dark } }
+  masterball: move:bite
+  source: PokéAPI moves
+
+- id: games.move.water
+  category: games
+  group: move
+  difficulty: 2
+  prompt:
+    de: Nenne eine Attacke vom Typ Wasser
+    en: Name a Water-type move
+  answers:
+    query: { kind: move, where: { type: water } }
+  masterball: move:crabhammer
+  source: PokéAPI moves
+
+- id: games.move.psychic
+  category: games
+  group: move
+  difficulty: 2
+  prompt:
+    de: Nenne eine Attacke vom Typ Psycho
+    en: Name a Psychic-type move
+  answers:
+    query: { kind: move, where: { type: psychic } }
+  masterball: move:rest
+  source: PokéAPI moves
+
+- id: games.move.dragon
+  category: games
+  group: move
+  difficulty: 3
+  prompt:
+    de: Nenne eine Attacke vom Typ Drache
+    en: Name a Dragon-type move
+  answers:
+    query: { kind: move, where: { type: dragon } }
+  masterball: move:twister
+  source: PokéAPI moves
+
+- id: games.move.rock
+  category: games
+  group: move
+  difficulty: 3
+  prompt:
+    de: Nenne eine Attacke vom Typ Gestein
+    en: Name a Rock-type move
+  answers:
+    query: { kind: move, where: { type: rock } }
+  masterball: move:rollout
+  source: PokéAPI moves
+
+- id: games.move.ghost
+  category: games
+  group: move
+  difficulty: 3
+  prompt:
+    de: Nenne eine Attacke vom Typ Geist
+    en: Name a Ghost-type move
+  answers:
+    query: { kind: move, where: { type: ghost } }
+  masterball: move:lick
+  source: PokéAPI moves
+
+- id: games.move.fairy
+  category: games
+  group: move
+  difficulty: 3
+  prompt:
+    de: Nenne eine Attacke vom Typ Fee
+    en: Name a Fairy-type move
+  answers:
+    query: { kind: move, where: { type: fairy } }
+  masterball: move:charm
+  source: PokéAPI moves
+
+- id: games.move.steel
+  category: games
+  group: move
+  difficulty: 3
+  prompt:
+    de: Nenne eine Attacke vom Typ Stahl
+    en: Name a Steel-type move
+  answers:
+    query: { kind: move, where: { type: steel } }
+  masterball: move:gyro-ball
+  source: PokéAPI moves

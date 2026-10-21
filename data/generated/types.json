@@ -1,0 +1,20 @@
+[
+  {"id":"type:normal","kind":"type","names":{"de":"Normal","en":"Normal"},"aliases":[],"attrs":{"generation":1},"familiarity":70},
+  {"id":"type:fighting","kind":"type","names":{"de":"Kampf","en":"Fighting"},"aliases":[],"attrs":{"generation":1},"familiarity":70},
+  {"id":"type:flying","kind":"type","names":{"de":"Flug","en":"Flying"},"aliases":[],"attrs":{"generation":1},"familiarity":70},
+  {"id":"type:poison","kind":"type","names":{"de":"Gift","en":"Poison"},"aliases":[],"attrs":{"generation":1},"familiarity":70},
+  {"id":"type:ground","kind":"type","names":{"de":"Boden","en":"Ground"},"aliases":[],"attrs":{"generation":1},"familiarity":70},
+  {"id":"type:rock","kind":"type","names":{"de":"Gestein","en":"Rock"},"aliases":[],"attrs":{"generation":1},"familiarity":70},
+  {"id":"type:bug","kind":"type","names":{"de":"Käfer","en":"Bug"},"aliases":[],"attrs":{"generation":1},"familiarity":70},
+  {"id":"type:ghost","kind":"type","names":{"de":"Geist","en":"Ghost"},"aliases":[],"attrs":{"generation":1},"familiarity":70},
+  {"id":"type:steel","kind":"type","names":{"de":"Stahl","en":"Steel"},"aliases":[],"attrs":{"generation":2},"familiarity":70},
+  {"id":"type:fire","kind":"type","names":{"de":"Feuer","en":"Fire"},"aliases":[],"attrs":{"generation":1},"familiarity":70},
+  {"id":"type:water","kind":"type","names":{"de":"Wasser","en":"Water"},"aliases":[],"attrs":{"generation":1},"familiarity":70},
+  {"id":"type:grass","kind":"type","names":{"de":"Pflanze","en":"Grass"},"aliases":[],"attrs":{"generation":1},"familiarity":70},
+  {"id":"type:electric","kind":"type","names":{"de":"Elektro","en":"Electric"},"aliases":[],"attrs":{"generation":1},"familiarity":70},
+  {"id":"type:psychic","kind":"type","names":{"de":"Psycho","en":"Psychic"},"aliases":[],"attrs":{"generation":1},"familiarity":70},
+  {"id":"type:ice","kind":"type","names":{"de":"Eis","en":"Ice"},"aliases":[],"attrs":{"generation":1},"familiarity":70},
+  {"id":"type:dragon","kind":"type","names":{"de":"Drache","en":"Dragon"},"aliases":[],"attrs":{"generation":1},"familiarity":70},
+  {"id":"type:dark","kind":"type","names":{"de":"Unlicht","en":"Dark"},"aliases":[],"attrs":{"generation":2},"familiarity":70},
+  {"id":"type:fairy","kind":"type","names":{"de":"Fee","en":"Fairy"},"aliases":[],"attrs":{"generation":6},"familiarity":70}
+]

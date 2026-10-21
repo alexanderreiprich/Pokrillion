@@ -1,0 +1,419 @@
+# Kuratierte Charaktere aus Spielen und Anime (nicht in der PokéAPI enthalten).
+# roles: companion-ash (Hauptcast, mit Ash gereist / Klassenkamerad), gym-leader-kanto, …
+# Quelle: Bulbapedia / Pokéwiki, manuell geprüft.
+
+# --- Ashs Begleiter -------------------------------------------------------
+- id: character:misty
+  kind: character
+  names: { de: Misty, en: Misty }
+  attrs: { roles: [companion-ash, gym-leader-kanto] }
+  familiarity: 95
+- id: character:brock
+  kind: character
+  names: { de: Rocko, en: Brock }
+  attrs: { roles: [companion-ash, gym-leader-kanto] }
+  familiarity: 95
+- id: character:tracey
+  kind: character
+  names: { de: Tracey, en: Tracey }
+  aliases: [Tracey Sketchit]
+  attrs: { roles: [companion-ash] }
+  familiarity: 25
+- id: character:may
+  kind: character
+  names: { de: Maike, en: May }
+  attrs: { roles: [companion-ash] }
+  familiarity: 60
+- id: character:max
+  kind: character
+  names: { de: Max, en: Max }
+  attrs: { roles: [companion-ash] }
+  familiarity: 50
+- id: character:dawn
+  kind: character
+  names: { de: Lucia, en: Dawn }
+  attrs: { roles: [companion-ash] }
+  familiarity: 60
+- id: character:iris
+  kind: character
+  names: { de: Lilia, en: Iris }
+  attrs: { roles: [companion-ash, champion] }
+  familiarity: 45
+- id: character:cilan
+  kind: character
+  names: { de: Benny, en: Cilan }
+  attrs: { roles: [companion-ash] }
+  familiarity: 40
+- id: character:serena
+  kind: character
+  names: { de: Serena, en: Serena }
+  attrs: { roles: [companion-ash] }
+  familiarity: 55
+- id: character:clemont
+  kind: character
+  names: { de: Citro, en: Clemont }
+  attrs: { roles: [companion-ash] }
+  familiarity: 40
+- id: character:bonnie
+  kind: character
+  names: { de: Heureka, en: Bonnie }
+  attrs: { roles: [companion-ash] }
+  familiarity: 40
+- id: character:lana
+  kind: character
+  names: { de: Lana, en: Lana }
+  attrs: { roles: [companion-ash] }
+  familiarity: 30
+- id: character:mallow
+  kind: character
+  names: { de: Maho, en: Mallow }
+  attrs: { roles: [companion-ash] }
+  familiarity: 30
+- id: character:kiawe
+  kind: character
+  names: { de: Kiawe, en: Kiawe }
+  attrs: { roles: [companion-ash] }
+  familiarity: 30
+- id: character:lillie
+  kind: character
+  names: { de: Lilly, en: Lillie }
+  attrs: { roles: [companion-ash] }
+  familiarity: 35
+- id: character:sophocles
+  kind: character
+  names: { de: Chrys, en: Sophocles }
+  attrs: { roles: [companion-ash] }
+  familiarity: 25
+- id: character:goh
+  kind: character
+  names: { de: Goh, en: Goh }
+  attrs: { roles: [companion-ash] }
+  familiarity: 40
+- id: character:chloe
+  kind: character
+  names: { de: Chloe, en: Chloe }
+  attrs: { roles: [companion-ash] }
+  familiarity: 25
+
+# --- Arenaleiter Kanto ----------------------------------------------------
+- id: character:lt-surge
+  kind: character
+  names: { de: Major Bob, en: Lt. Surge }
+  aliases: [Lieutenant Surge]
+  attrs: { roles: [gym-leader-kanto] }
+  familiarity: 70
+- id: character:erika
+  kind: character
+  names: { de: Erika, en: Erika }
+  attrs: { roles: [gym-leader-kanto] }
+  familiarity: 65
+- id: character:koga
+  kind: character
+  names: { de: Koga, en: Koga }
+  attrs: { roles: [gym-leader-kanto] }
+  familiarity: 60
+- id: character:janine
+  kind: character
+  names: { de: Janina, en: Janine }
+  attrs: { roles: [gym-leader-kanto] }
+  familiarity: 25
+- id: character:sabrina
+  kind: character
+  names: { de: Sabrina, en: Sabrina }
+  attrs: { roles: [gym-leader-kanto] }
+  familiarity: 65
+- id: character:blaine
+  kind: character
+  names: { de: Pyro, en: Blaine }
+  attrs: { roles: [gym-leader-kanto] }
+  familiarity: 60
+- id: character:giovanni
+  kind: character
+  names: { de: Giovanni, en: Giovanni }
+  attrs: { roles: [gym-leader-kanto] }
+  familiarity: 80
+- id: character:blue
+  kind: character
+  names: { de: Blau, en: Blue }
+  aliases: [Gary, Gary Eich, Gary Oak]
+  attrs: { roles: [gym-leader-kanto, champion] }
+  familiarity: 50
+
+# --- Weitere bekannte Charaktere (Universum, damit sie als „falsch“ erkannt werden) ---
+- id: character:ash
+  kind: character
+  names: { de: Ash, en: Ash }
+  aliases: [Ash Ketchum, Satoshi]
+  attrs: { roles: [] }
+  familiarity: 100
+- id: character:professor-oak
+  kind: character
+  names: { de: Professor Eich, en: Professor Oak }
+  aliases: [Eich, Oak, Prof. Eich, Prof. Oak]
+  attrs: { roles: [professor] }
+  familiarity: 90
+- id: character:jessie
+  kind: character
+  names: { de: Jessie, en: Jessie }
+  attrs: { roles: [team-rocket] }
+  familiarity: 85
+- id: character:james
+  kind: character
+  names: { de: James, en: James }
+  attrs: { roles: [team-rocket] }
+  familiarity: 85
+- id: character:nurse-joy
+  kind: character
+  names: { de: Schwester Joy, en: Nurse Joy }
+  aliases: [Joy]
+  attrs: { roles: [] }
+  familiarity: 80
+- id: character:officer-jenny
+  kind: character
+  names: { de: Officer Rocky, en: Officer Jenny }
+  aliases: [Rocky, Jenny]
+  attrs: { roles: [] }
+  familiarity: 70
+
+# --- Arenaleiter Johto (HGSS / GSK) ---------------------------------------
+- id: character:falkner
+  kind: character
+  names: { de: Falk, en: Falkner }
+  attrs: { roles: [gym-leader-johto] }
+  familiarity: 45
+- id: character:bugsy
+  kind: character
+  names: { de: Kai, en: Bugsy }
+  attrs: { roles: [gym-leader-johto] }
+  familiarity: 40
+- id: character:whitney
+  kind: character
+  names: { de: Bianka, en: Whitney }
+  attrs: { roles: [gym-leader-johto] }
+  familiarity: 55
+- id: character:morty
+  kind: character
+  names: { de: Jens, en: Morty }
+  attrs: { roles: [gym-leader-johto] }
+  familiarity: 45
+- id: character:chuck
+  kind: character
+  names: { de: Hartwig, en: Chuck }
+  attrs: { roles: [gym-leader-johto] }
+  familiarity: 35
+- id: character:jasmine
+  kind: character
+  names: { de: Jasmin, en: Jasmine }
+  attrs: { roles: [gym-leader-johto] }
+  familiarity: 45
+- id: character:pryce
+  kind: character
+  names: { de: Norbert, en: Pryce }
+  attrs: { roles: [gym-leader-johto] }
+  familiarity: 30
+- id: character:clair
+  kind: character
+  names: { de: Sandra, en: Clair }
+  attrs: { roles: [gym-leader-johto] }
+  familiarity: 45
+
+# --- Arenaleiter Hoenn (RSS / ORAS) ---------------------------------------
+- id: character:roxanne
+  kind: character
+  names: { de: Felizia, en: Roxanne }
+  attrs: { roles: [gym-leader-hoenn] }
+  familiarity: 40
+- id: character:brawly
+  kind: character
+  names: { de: Kamillo, en: Brawly }
+  attrs: { roles: [gym-leader-hoenn] }
+  familiarity: 35
+- id: character:wattson
+  kind: character
+  names: { de: Walter, en: Wattson }
+  attrs: { roles: [gym-leader-hoenn] }
+  familiarity: 40
+- id: character:flannery
+  kind: character
+  names: { de: Flavia, en: Flannery }
+  attrs: { roles: [gym-leader-hoenn] }
+  familiarity: 40
+- id: character:norman
+  kind: character
+  names: { de: Norman, en: Norman }
+  attrs: { roles: [gym-leader-hoenn] }
+  familiarity: 50
+- id: character:winona
+  kind: character
+  names: { de: Wibke, en: Winona }
+  attrs: { roles: [gym-leader-hoenn] }
+  familiarity: 35
+- id: character:tate
+  kind: character
+  names: { de: Ben, en: Tate }
+  attrs: { roles: [gym-leader-hoenn] }
+  familiarity: 30
+- id: character:liza
+  kind: character
+  names: { de: Svenja, en: Liza }
+  attrs: { roles: [gym-leader-hoenn] }
+  familiarity: 30
+- id: character:juan
+  kind: character
+  names: { de: Juan, en: Juan }
+  attrs: { roles: [gym-leader-hoenn] }
+  familiarity: 30
+- id: character:wallace
+  kind: character
+  names: { de: Wassili, en: Wallace }
+  attrs: { roles: [gym-leader-hoenn, champion] }
+  familiarity: 45
+
+# --- Arenaleiter Sinnoh (DPPt / SDLP) -------------------------------------
+- id: character:roark
+  kind: character
+  names: { de: Veit, en: Roark }
+  attrs: { roles: [gym-leader-sinnoh] }
+  familiarity: 40
+- id: character:gardenia
+  kind: character
+  names: { de: Silvana, en: Gardenia }
+  attrs: { roles: [gym-leader-sinnoh] }
+  familiarity: 40
+- id: character:maylene
+  kind: character
+  names: { de: Hilda, en: Maylene }
+  attrs: { roles: [gym-leader-sinnoh] }
+  familiarity: 35
+- id: character:crasher-wake
+  kind: character
+  names: { de: Wellenbrecher Marinus, en: Crasher Wake }
+  aliases: [Marinus, Wake]
+  attrs: { roles: [gym-leader-sinnoh] }
+  familiarity: 35
+- id: character:fantina
+  kind: character
+  names: { de: Lamina, en: Fantina }
+  attrs: { roles: [gym-leader-sinnoh] }
+  familiarity: 35
+- id: character:byron
+  kind: character
+  names: { de: Adam, en: Byron }
+  attrs: { roles: [gym-leader-sinnoh] }
+  familiarity: 30
+- id: character:candice
+  kind: character
+  names: { de: Frida, en: Candice }
+  attrs: { roles: [gym-leader-sinnoh] }
+  familiarity: 35
+- id: character:volkner
+  kind: character
+  names: { de: Volkner, en: Volkner }
+  attrs: { roles: [gym-leader-sinnoh] }
+  familiarity: 45
+
+# --- Champs (Liga-Champion der Hauptspiele) --------------------------------
+- id: character:lance
+  kind: character
+  names: { de: Siegfried, en: Lance }
+  attrs: { roles: [champion] }
+  familiarity: 70
+- id: character:steven
+  kind: character
+  names: { de: Troy, en: Steven }
+  aliases: [Troy Trumm, Steven Stone]
+  attrs: { roles: [champion] }
+  familiarity: 60
+- id: character:cynthia
+  kind: character
+  names: { de: Cynthia, en: Cynthia }
+  attrs: { roles: [champion] }
+  familiarity: 80
+- id: character:alder
+  kind: character
+  names: { de: Lauro, en: Alder }
+  attrs: { roles: [champion] }
+  familiarity: 30
+- id: character:diantha
+  kind: character
+  names: { de: Diantha, en: Diantha }
+  attrs: { roles: [champion] }
+  familiarity: 40
+- id: character:leon
+  kind: character
+  names: { de: Delion, en: Leon }
+  attrs: { roles: [champion] }
+  familiarity: 55
+- id: character:geeta
+  kind: character
+  names: { de: Sagitta, en: Geeta }
+  attrs: { roles: [champion] }
+  familiarity: 25
+- id: character:kukui
+  kind: character
+  names: { de: Professor Kukui, en: Professor Kukui }
+  aliases: [Kukui, Prof. Kukui]
+  attrs: { roles: [professor, champion] }
+  familiarity: 50
+
+# --- Professoren -----------------------------------------------------------
+- id: character:elm
+  kind: character
+  names: { de: Professor Lind, en: Professor Elm }
+  aliases: [Lind, Elm, Prof. Lind, Prof. Elm]
+  attrs: { roles: [professor] }
+  familiarity: 50
+- id: character:birch
+  kind: character
+  names: { de: Professor Birk, en: Professor Birch }
+  aliases: [Birk, Birch, Prof. Birk, Prof. Birch]
+  attrs: { roles: [professor] }
+  familiarity: 45
+- id: character:rowan
+  kind: character
+  names: { de: Professor Eibe, en: Professor Rowan }
+  aliases: [Eibe, Rowan, Prof. Eibe, Prof. Rowan]
+  attrs: { roles: [professor] }
+  familiarity: 40
+- id: character:juniper
+  kind: character
+  names: { de: Professorin Esche, en: Professor Juniper }
+  aliases: [Esche, Juniper, Prof. Esche, Prof. Juniper, Professor Esche]
+  attrs: { roles: [professor] }
+  familiarity: 40
+- id: character:sycamore
+  kind: character
+  names: { de: Professor Platan, en: Professor Sycamore }
+  aliases: [Platan, Sycamore, Prof. Platan, Prof. Sycamore]
+  attrs: { roles: [professor] }
+  familiarity: 40
+- id: character:magnolia
+  kind: character
+  names: { de: Professorin Magnolia, en: Professor Magnolia }
+  aliases: [Magnolia, Prof. Magnolia]
+  attrs: { roles: [professor] }
+  familiarity: 30
+- id: character:laventon
+  kind: character
+  names: { de: Professor Laven, en: Professor Laventon }
+  aliases: [Laven, Laventon, Prof. Laven, Prof. Laventon]
+  attrs: { roles: [professor] }
+  familiarity: 25
+- id: character:sada
+  kind: character
+  names: { de: Professorin Antiqua, en: Professor Sada }
+  aliases: [Antiqua, Sada, Prof. Antiqua, Prof. Sada, Professor Antiqua]
+  attrs: { roles: [professor] }
+  familiarity: 30
+- id: character:turo
+  kind: character
+  names: { de: Professor Futurus, en: Professor Turo }
+  aliases: [Futurus, Turo, Prof. Futurus, Prof. Turo]
+  attrs: { roles: [professor] }
+  familiarity: 30
+- id: character:willow
+  kind: character
+  names: { de: Professor Willow, en: Professor Willow }
+  aliases: [Willow, Prof. Willow]
+  attrs: { roles: [professor] }
+  familiarity: 30

@@ -1,0 +1,17 @@
+#!/bin/sh
+# Blocks direct commits on the long-lived branches. See docs/BRANCHING.md.
+# Allowed: concluding a merge (MERGE_HEAD) or a squash merge (SQUASH_MSG) into them.
+branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+case "$branch" in
+  prod|staging)
+    git_dir=$(git rev-parse --git-dir)
+    if [ -f "$git_dir/MERGE_HEAD" ] || [ -f "$git_dir/SQUASH_MSG" ]; then
+      exit 0
+    fi
+    echo "✗ Direkte Commits auf '$branch' sind nicht erlaubt."
+    echo "  Arbeits-Branch anlegen, z. B.: git switch -c feature/<name>"
+    echo "  Ablauf: docs/BRANCHING.md   (Notfall: git commit --no-verify)"
+    exit 1
+    ;;
+esac
+exit 0

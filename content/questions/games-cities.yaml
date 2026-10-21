@@ -1,0 +1,86 @@
+# Städte und Dörfer pro Region. Generiert, danach von Hand gepflegt.
+
+- id: games.city.kanto
+  category: games
+  group: city
+  difficulty: 2
+  prompt:
+    de: Nenne eine Stadt oder ein Dorf in Kanto
+    en: Name a city, town or village in Kanto
+  answers:
+    query: { kind: location, where: { region: kanto }, idMatches: "-(city|town|village)$" }
+    include: [location:cinnabar-island]
+  masterball: location:lavender-town
+  source: PokéAPI locations
+
+- id: games.city.johto
+  category: games
+  group: city
+  difficulty: 3
+  prompt:
+    de: Nenne eine Stadt oder ein Dorf in Johto
+    en: Name a city, town or village in Johto
+  answers:
+    query: { kind: location, where: { region: johto }, idMatches: "-(city|town|village)$" }
+  masterball: location:cianwood-city
+  source: PokéAPI locations
+
+- id: games.city.hoenn
+  category: games
+  group: city
+  difficulty: 3
+  prompt:
+    de: Nenne eine Stadt oder ein Dorf in Hoenn
+    en: Name a city, town or village in Hoenn
+  answers:
+    query: { kind: location, where: { region: hoenn }, idMatches: "-(city|town|village)$" }
+  masterball: location:pacifidlog-town
+  source: PokéAPI locations
+
+- id: games.city.sinnoh
+  category: games
+  group: city
+  difficulty: 3
+  prompt:
+    de: Nenne eine Stadt oder ein Dorf in Sinnoh
+    en: Name a city, town or village in Sinnoh
+  answers:
+    query: { kind: location, where: { region: sinnoh }, idMatches: "-(city|town|village)$" }
+  masterball: location:celestic-town
+  source: PokéAPI locations
+
+- id: games.city.unova
+  category: games
+  group: city
+  difficulty: 4
+  prompt:
+    de: Nenne eine Stadt oder ein Dorf in Einall
+    en: Name a city, town or village in Unova
+  answers:
+    query: { kind: location, where: { region: unova }, idMatches: "-(city|town|village)$" }
+  masterball: location:lacunosa-town
+  source: PokéAPI locations
+
+- id: games.city.kalos
+  category: games
+  group: city
+  difficulty: 4
+  prompt:
+    de: Nenne eine Stadt oder ein Dorf in Kalos
+    en: Name a city, town or village in Kalos
+  answers:
+    query: { kind: location, where: { region: kalos }, idMatches: "-(city|town|village)$" }
+  masterball: location:kiloude-city
+  source: PokéAPI locations
+
+- id: games.city.alola
+  category: games
+  group: city
+  difficulty: 4
+  prompt:
+    de: Nenne eine Stadt oder ein Dorf in Alola
+    en: Name a city, town or village in Alola
+  answers:
+    query: { kind: location, where: { region: alola }, idMatches: "-(city|town|village)$" }
+  masterball: location:seafolk-village
+  source: PokéAPI locations

@@ -1,0 +1,217 @@
+# Kategorie „Pokédex“: allgemeines Pokémon-Wissen, kuratierte Listen.
+# Vorlagen-Fragen (Farben, Typen, Generationen, Formen) liegen in pokedex-*.yaml.
+# Format & Regeln: docs/KONZEPT.md §8 · Schema: src/lib/content/schema.ts
+
+- id: pokedex.legendary
+  category: pokedex
+  difficulty: 2
+  prompt:
+    de: Nenne ein legendäres oder mysteriöses Pokémon
+    en: Name a Legendary or Mythical Pokémon
+  answers:
+    query:
+      - { kind: pokemon, where: { legendary: true } }
+      - { kind: pokemon, where: { mythical: true } }
+  masterball: pokemon:cosmog
+  source: PokéAPI pokemon_species.is_legendary / is_mythical
+
+- id: pokedex.starter
+  category: pokedex
+  difficulty: 1
+  prompt:
+    de: Nenne ein Starter-Pokémon (Grundform)
+    en: Name a starter Pokémon (first stage)
+  answers:
+    list:
+      - pokemon:bulbasaur
+      - pokemon:charmander
+      - pokemon:squirtle
+      - pokemon:chikorita
+      - pokemon:cyndaquil
+      - pokemon:totodile
+      - pokemon:treecko
+      - pokemon:torchic
+      - pokemon:mudkip
+      - pokemon:turtwig
+      - pokemon:chimchar
+      - pokemon:piplup
+      - pokemon:snivy
+      - pokemon:tepig
+      - pokemon:oshawott
+      - pokemon:chespin
+      - pokemon:fennekin
+      - pokemon:froakie
+      - pokemon:rowlet
+      - pokemon:litten
+      - pokemon:popplio
+      - pokemon:grookey
+      - pokemon:scorbunny
+      - pokemon:sobble
+      - pokemon:sprigatito
+      - pokemon:fuecoco
+      - pokemon:quaxly
+      # Let's Go / Gelb
+      - pokemon:pikachu
+      - pokemon:eevee
+  masterball: pokemon:chespin
+  source: https://bulbapedia.bulbagarden.net/wiki/Starter_Pokémon
+
+- id: pokedex.baby
+  category: pokedex
+  difficulty: 3
+  prompt:
+    de: Nenne ein Baby-Pokémon
+    en: Name a Baby Pokémon
+  answers:
+    query: { kind: pokemon, where: { baby: true } }
+  masterball: pokemon:mime-jr
+  source: PokéAPI pokemon_species.is_baby
+
+- id: pokedex.eeveelution
+  category: pokedex
+  difficulty: 1
+  prompt:
+    de: Nenne eine Entwicklung von Evoli
+    en: Name an Eevee evolution
+  answers:
+    list:
+      - pokemon:vaporeon
+      - pokemon:jolteon
+      - pokemon:flareon
+      - pokemon:espeon
+      - pokemon:umbreon
+      - pokemon:leafeon
+      - pokemon:glaceon
+      - pokemon:sylveon
+  masterball: pokemon:glaceon
+  source: https://bulbapedia.bulbagarden.net/wiki/Eeveelution
+
+- id: pokedex.fossil
+  category: pokedex
+  difficulty: 3
+  prompt:
+    de: Nenne ein Fossil-Pokémon
+    en: Name a Fossil Pokémon
+  answers:
+    list:
+      - pokemon:omanyte
+      - pokemon:omastar
+      - pokemon:kabuto
+      - pokemon:kabutops
+      - pokemon:aerodactyl
+      - pokemon:lileep
+      - pokemon:cradily
+      - pokemon:anorith
+      - pokemon:armaldo
+      - pokemon:cranidos
+      - pokemon:rampardos
+      - pokemon:shieldon
+      - pokemon:bastiodon
+      - pokemon:tirtouga
+      - pokemon:carracosta
+      - pokemon:archen
+      - pokemon:archeops
+      - pokemon:tyrunt
+      - pokemon:tyrantrum
+      - pokemon:amaura
+      - pokemon:aurorus
+      - pokemon:dracozolt
+      - pokemon:arctozolt
+      - pokemon:dracovish
+      - pokemon:arctovish
+  masterball: pokemon:arctovish
+  source: https://bulbapedia.bulbagarden.net/wiki/Fossil_Pokémon
+
+- id: pokedex.pseudo-legendary
+  category: pokedex
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon aus einer pseudo-legendären Entwicklungsreihe
+    en: Name a Pokémon from a pseudo-legendary evolution line
+  answers:
+    list:
+      - pokemon:dratini
+      - pokemon:dragonair
+      - pokemon:dragonite
+      - pokemon:larvitar
+      - pokemon:pupitar
+      - pokemon:tyranitar
+      - pokemon:bagon
+      - pokemon:shelgon
+      - pokemon:salamence
+      - pokemon:beldum
+      - pokemon:metang
+      - pokemon:metagross
+      - pokemon:gible
+      - pokemon:gabite
+      - pokemon:garchomp
+      - pokemon:deino
+      - pokemon:zweilous
+      - pokemon:hydreigon
+      - pokemon:goomy
+      - pokemon:sliggoo
+      - pokemon:goodra
+      - pokemon:jangmo-o
+      - pokemon:hakamo-o
+      - pokemon:kommo-o
+      - pokemon:dreepy
+      - pokemon:drakloak
+      - pokemon:dragapult
+      - pokemon:frigibax
+      - pokemon:arctibax
+      - pokemon:baxcalibur
+  masterball: pokemon:hakamo-o
+  source: https://bulbapedia.bulbagarden.net/wiki/Pseudo-legendary_Pokémon
+
+- id: pokedex.ultra-beast
+  category: pokedex
+  difficulty: 4
+  prompt:
+    de: Nenne eine Ultrabestie
+    en: Name an Ultra Beast
+  answers:
+    list:
+      - pokemon:nihilego
+      - pokemon:buzzwole
+      - pokemon:pheromosa
+      - pokemon:xurkitree
+      - pokemon:celesteela
+      - pokemon:kartana
+      - pokemon:guzzlord
+      - pokemon:poipole
+      - pokemon:naganadel
+      - pokemon:stakataka
+      - pokemon:blacephalon
+  masterball: pokemon:stakataka
+  source: https://bulbapedia.bulbagarden.net/wiki/Ultra_Beast
+
+- id: pokedex.paradox
+  category: pokedex
+  difficulty: 4
+  prompt:
+    de: Nenne ein Paradox-Pokémon
+    en: Name a Paradox Pokémon
+  answers:
+    list:
+      - pokemon:great-tusk
+      - pokemon:scream-tail
+      - pokemon:brute-bonnet
+      - pokemon:flutter-mane
+      - pokemon:slither-wing
+      - pokemon:sandy-shocks
+      - pokemon:roaring-moon
+      - pokemon:walking-wake
+      - pokemon:gouging-fire
+      - pokemon:raging-bolt
+      - pokemon:iron-treads
+      - pokemon:iron-bundle
+      - pokemon:iron-hands
+      - pokemon:iron-jugulis
+      - pokemon:iron-moth
+      - pokemon:iron-thorns
+      - pokemon:iron-valiant
+      - pokemon:iron-leaves
+      - pokemon:iron-boulder
+      - pokemon:iron-crown
+  masterball: pokemon:slither-wing
+  source: https://bulbapedia.bulbagarden.net/wiki/Paradox_Pokémon

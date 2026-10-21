@@ -1,0 +1,217 @@
+# Pokémon nach Typ (Standardform, aktueller Typ). Generiert, danach von Hand gepflegt.
+
+- id: pokedex.type.normal
+  category: pokedex
+  group: type
+  difficulty: 1
+  prompt:
+    de: Nenne ein Pokémon vom Typ Normal
+    en: Name a Normal-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: normal } }
+  masterball: pokemon:girafarig
+  source: PokéAPI pokemon_types (Standardform)
+
+- id: pokedex.type.fire
+  category: pokedex
+  group: type
+  difficulty: 1
+  prompt:
+    de: Nenne ein Pokémon vom Typ Feuer
+    en: Name a Fire-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: fire } }
+  masterball: pokemon:torkoal
+  source: PokéAPI pokemon_types (Standardform)
+
+- id: pokedex.type.water
+  category: pokedex
+  group: type
+  difficulty: 1
+  prompt:
+    de: Nenne ein Pokémon vom Typ Wasser
+    en: Name a Water-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: water } }
+  masterball: pokemon:corphish
+  source: PokéAPI pokemon_types (Standardform)
+
+- id: pokedex.type.grass
+  category: pokedex
+  group: type
+  difficulty: 1
+  prompt:
+    de: Nenne ein Pokémon vom Typ Pflanze
+    en: Name a Grass-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: grass } }
+  masterball: pokemon:ferrothorn
+  source: PokéAPI pokemon_types (Standardform)
+
+- id: pokedex.type.electric
+  category: pokedex
+  group: type
+  difficulty: 1
+  prompt:
+    de: Nenne ein Pokémon vom Typ Elektro
+    en: Name a Electric-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: electric } }
+  masterball: pokemon:rotom
+  source: PokéAPI pokemon_types (Standardform)
+
+- id: pokedex.type.ice
+  category: pokedex
+  group: type
+  difficulty: 2
+  prompt:
+    de: Nenne ein Pokémon vom Typ Eis
+    en: Name a Ice-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: ice } }
+  masterball: pokemon:jynx
+  source: PokéAPI pokemon_types (Standardform)
+
+- id: pokedex.type.fighting
+  category: pokedex
+  group: type
+  difficulty: 2
+  prompt:
+    de: Nenne ein Pokémon vom Typ Kampf
+    en: Name a Fighting-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: fighting } }
+  masterball: pokemon:hitmontop
+  source: PokéAPI pokemon_types (Standardform)
+
+- id: pokedex.type.poison
+  category: pokedex
+  group: type
+  difficulty: 2
+  prompt:
+    de: Nenne ein Pokémon vom Typ Gift
+    en: Name a Poison-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: poison } }
+  masterball: pokemon:bulbasaur
+  source: PokéAPI pokemon_types (Standardform)
+
+- id: pokedex.type.ground
+  category: pokedex
+  group: type
+  difficulty: 2
+  prompt:
+    de: Nenne ein Pokémon vom Typ Boden
+    en: Name a Ground-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: ground } }
+  masterball: pokemon:gligar
+  source: PokéAPI pokemon_types (Standardform)
+
+- id: pokedex.type.flying
+  category: pokedex
+  group: type
+  difficulty: 2
+  prompt:
+    de: Nenne ein Pokémon vom Typ Flug
+    en: Name a Flying-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: flying } }
+  masterball: pokemon:charizard
+  source: PokéAPI pokemon_types (Standardform)
+
+- id: pokedex.type.psychic
+  category: pokedex
+  group: type
+  difficulty: 1
+  prompt:
+    de: Nenne ein Pokémon vom Typ Psycho
+    en: Name a Psychic-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: psychic } }
+  masterball: pokemon:slowpoke
+  source: PokéAPI pokemon_types (Standardform)
+
+- id: pokedex.type.bug
+  category: pokedex
+  group: type
+  difficulty: 2
+  prompt:
+    de: Nenne ein Pokémon vom Typ Käfer
+    en: Name a Bug-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: bug } }
+  masterball: pokemon:shedinja
+  source: PokéAPI pokemon_types (Standardform)
+
+- id: pokedex.type.rock
+  category: pokedex
+  group: type
+  difficulty: 2
+  prompt:
+    de: Nenne ein Pokémon vom Typ Gestein
+    en: Name a Rock-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: rock } }
+  masterball: pokemon:sudowoodo
+  source: PokéAPI pokemon_types (Standardform)
+
+- id: pokedex.type.ghost
+  category: pokedex
+  group: type
+  difficulty: 2
+  prompt:
+    de: Nenne ein Pokémon vom Typ Geist
+    en: Name a Ghost-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: ghost } }
+  masterball: pokemon:spiritomb
+  source: PokéAPI pokemon_types (Standardform)
+
+- id: pokedex.type.dragon
+  category: pokedex
+  group: type
+  difficulty: 2
+  prompt:
+    de: Nenne ein Pokémon vom Typ Drache
+    en: Name a Dragon-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: dragon } }
+  masterball: pokemon:altaria
+  source: PokéAPI pokemon_types (Standardform)
+
+- id: pokedex.type.dark
+  category: pokedex
+  group: type
+  difficulty: 2
+  prompt:
+    de: Nenne ein Pokémon vom Typ Unlicht
+    en: Name a Dark-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: dark } }
+  masterball: pokemon:sableye
+  source: PokéAPI pokemon_types (Standardform)
+
+- id: pokedex.type.steel
+  category: pokedex
+  group: type
+  difficulty: 2
+  prompt:
+    de: Nenne ein Pokémon vom Typ Stahl
+    en: Name a Steel-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: steel } }
+  masterball: pokemon:mawile
+  source: PokéAPI pokemon_types (Standardform)
+
+- id: pokedex.type.fairy
+  category: pokedex
+  group: type
+  difficulty: 2
+  prompt:
+    de: Nenne ein Pokémon vom Typ Fee
+    en: Name a Fairy-type Pokémon
+  answers:
+    query: { kind: pokemon, where: { types: fairy } }
+  masterball: pokemon:azumarill
+  source: PokéAPI pokemon_types (Standardform)

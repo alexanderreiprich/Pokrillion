@@ -1,0 +1,158 @@
+# Formen und Entwicklungen. Generiert, danach von Hand gepflegt.
+
+- id: pokedex.form.mega
+  category: pokedex
+  group: form
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon mit Mega-Entwicklung
+    en: Name a Pokémon that can Mega Evolve
+  answers:
+    query: { kind: pokemon, where: { forms: mega } }
+  masterball: pokemon:audino
+  source: PokéAPI pokemon (Formen *-mega*)
+  notes: Enthält auch die Mega-Entwicklungen aus Legenden Z-A.
+
+- id: pokedex.form.alola
+  category: pokedex
+  group: form
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon mit Alola-Form
+    en: Name a Pokémon with an Alolan form
+  answers:
+    query: { kind: pokemon, where: { forms: alola } }
+  masterball: pokemon:persian
+  source: PokéAPI pokemon (Formen *-alola)
+
+- id: pokedex.form.galar
+  category: pokedex
+  group: form
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon mit Galar-Form
+    en: Name a Pokémon with a Galarian form
+  answers:
+    query: { kind: pokemon, where: { forms: galar } }
+  masterball: pokemon:stunfisk
+  source: PokéAPI pokemon (Formen *-galar)
+
+- id: pokedex.form.hisui
+  category: pokedex
+  group: form
+  difficulty: 4
+  prompt:
+    de: Nenne ein Pokémon mit Hisui-Form
+    en: Name a Pokémon with a Hisuian form
+  answers:
+    query: { kind: pokemon, where: { forms: hisui } }
+  masterball: pokemon:qwilfish
+  source: PokéAPI pokemon (Formen *-hisui)
+
+- id: pokedex.form.gmax
+  category: pokedex
+  group: form
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon mit Gigadynamax-Form
+    en: Name a Pokémon with a Gigantamax form
+  answers:
+    query: { kind: pokemon, where: { forms: gmax } }
+  masterball: pokemon:garbodor
+  source: PokéAPI pokemon (Formen *-gmax)
+
+- id: pokedex.evolution.trade
+  category: pokedex
+  group: evolution
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon aus einer Tausch-Entwicklung (davor oder danach)
+    en: Name a Pokémon from a trade evolution (before or after)
+  answers:
+    query: { kind: pokemon, where: { evoTrade: true } }
+  masterball: pokemon:slowking
+  source: PokéAPI pokemon_evolution (trigger trade)
+
+- id: pokedex.evolution.fire-stone
+  category: pokedex
+  group: evolution
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon aus einer Entwicklung per Feuerstein (davor oder danach)
+    en: Name a Pokémon from a Fire Stone evolution (before or after)
+  answers:
+    query: { kind: pokemon, where: { evoItems: fire-stone } }
+  masterball: pokemon:scovillain
+  source: PokéAPI pokemon_evolution (trigger use-item)
+
+- id: pokedex.evolution.water-stone
+  category: pokedex
+  group: evolution
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon aus einer Entwicklung per Wasserstein (davor oder danach)
+    en: Name a Pokémon from a Water Stone evolution (before or after)
+  answers:
+    query: { kind: pokemon, where: { evoItems: water-stone } }
+  masterball: pokemon:ludicolo
+  source: PokéAPI pokemon_evolution (trigger use-item)
+
+- id: pokedex.evolution.thunder-stone
+  category: pokedex
+  group: evolution
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon aus einer Entwicklung per Donnerstein (davor oder danach)
+    en: Name a Pokémon from a Thunder Stone evolution (before or after)
+  answers:
+    query: { kind: pokemon, where: { evoItems: thunder-stone } }
+  masterball: pokemon:eelektross
+  source: PokéAPI pokemon_evolution (trigger use-item)
+
+- id: pokedex.evolution.leaf-stone
+  category: pokedex
+  group: evolution
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon aus einer Entwicklung per Blattstein (davor oder danach)
+    en: Name a Pokémon from a Leaf Stone evolution (before or after)
+  answers:
+    query: { kind: pokemon, where: { evoItems: leaf-stone } }
+  masterball: pokemon:shiftry
+  source: PokéAPI pokemon_evolution (trigger use-item)
+
+- id: pokedex.evolution.moon-stone
+  category: pokedex
+  group: evolution
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon aus einer Entwicklung per Mondstein (davor oder danach)
+    en: Name a Pokémon from a Moon Stone evolution (before or after)
+  answers:
+    query: { kind: pokemon, where: { evoItems: moon-stone } }
+  masterball: pokemon:skitty
+  source: PokéAPI pokemon_evolution (trigger use-item)
+
+- id: pokedex.evolution.ice-stone
+  category: pokedex
+  group: evolution
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon aus einer Entwicklung per Eisstein (davor oder danach)
+    en: Name a Pokémon from a Ice Stone evolution (before or after)
+  answers:
+    query: { kind: pokemon, where: { evoItems: ice-stone } }
+  masterball: pokemon:vulpix
+  source: PokéAPI pokemon_evolution (trigger use-item)
+
+- id: pokedex.evolution.sun-stone
+  category: pokedex
+  group: evolution
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon aus einer Entwicklung per Sonnenstein (davor oder danach)
+    en: Name a Pokémon from a Sun Stone evolution (before or after)
+  answers:
+    query: { kind: pokemon, where: { evoItems: sun-stone } }
+  masterball: pokemon:whimsicott
+  source: PokéAPI pokemon_evolution (trigger use-item)

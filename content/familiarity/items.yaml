@@ -1,0 +1,48 @@
+# Bekanntheits-Overrides (1–100). Überschreiben die Heuristik aus `npm run data:import`.
+# Faustregel: 100 = kennt jeder · 70 = kennen Gelegenheitsfans · 40 = kennen Spieler der Generation · 15 = Nerd-Wissen
+# Schätzwerte (Stand 2026-10-21); echte Spielerdaten kalibrieren nach (Konzept §3).
+# Nicht gelistete Items: 30.
+
+item:poke-ball: 100
+item:master-ball: 95
+item:potion: 95
+item:great-ball: 90
+item:ultra-ball: 90
+item:fire-stone: 90
+item:super-potion: 85
+item:revive: 85
+item:water-stone: 85
+item:thunder-stone: 85
+item:leaf-stone: 80
+item:moon-stone: 80
+item:hyper-potion: 75
+item:antidote: 75
+item:max-potion: 70
+item:full-restore: 70
+item:oran-berry: 70
+item:helix-fossil: 70
+item:full-heal: 65
+item:max-revive: 60
+item:paralyze-heal: 60
+item:burn-heal: 60
+item:sitrus-berry: 60
+item:sun-stone: 60
+item:dome-fossil: 60
+item:awakening: 55
+item:ice-heal: 55
+item:fresh-water: 55
+item:moomoo-milk: 55
+item:pecha-berry: 55
+item:lum-berry: 55
+item:razz-berry: 55
+item:premier-ball: 50
+item:safari-ball: 50
+item:ether: 50
+item:elixir: 50
+item:lemonade: 50
+item:cheri-berry: 50
+item:rawst-berry: 50
+item:chesto-berry: 50
+item:shiny-stone: 50
+item:dusk-stone: 50
+item:ice-stone: 50

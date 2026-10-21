@@ -1,0 +1,48 @@
+# Kategorie „Anime“: Charaktere, Pokémon und Ereignisse aus der TV-Serie.
+# Zurückgestellt bis Phase 2 (siehe docs/KONZEPT.md §1): alle Fragen inaktiv, Listen noch ungeprüft.
+
+- id: anime.ash.companions
+  category: anime
+  active: false
+  group: ash
+  difficulty: 2
+  prompt:
+    de: Nenne einen Reisebegleiter von Ash
+    en: Name one of Ash's travelling companions
+  answers:
+    query: { kind: character, where: { roles: companion-ash } }
+  masterball: character:tracey
+  source: https://bulbapedia.bulbagarden.net/wiki/Ash_Ketchum#Traveling_companions
+  notes: Die Alola-Klassenkameraden zählen mit, weil sie dort den Hauptcast bilden.
+
+- id: anime.ash.pokemon.kanto
+  category: anime
+  active: false
+  group: ash
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon, das Ash in Kanto oder auf den Orange-Inseln besaß
+    en: Name a Pokémon Ash owned in Kanto or the Orange Islands
+  answers:
+    list:
+      - pokemon:pikachu
+      - pokemon:caterpie
+      - pokemon:metapod
+      - pokemon:butterfree
+      - pokemon:pidgeotto
+      - pokemon:pidgeot
+      - pokemon:bulbasaur
+      - pokemon:charmander
+      - pokemon:charmeleon
+      - pokemon:charizard
+      - pokemon:squirtle
+      - pokemon:krabby
+      - pokemon:kingler
+      - pokemon:primeape
+      - pokemon:muk
+      - pokemon:tauros
+      - pokemon:lapras
+      - pokemon:snorlax
+  masterball: pokemon:muk
+  source: https://bulbapedia.bulbagarden.net/wiki/List_of_Ash%27s_Pokémon
+  notes: "Review offen: Haunter bewusst nicht enthalten (nie gefangen)."

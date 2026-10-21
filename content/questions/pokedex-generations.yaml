@@ -1,0 +1,109 @@
+# Pokémon nach Generation (Debüt der Spezies). Generiert, danach von Hand gepflegt.
+
+- id: pokedex.generation.1
+  category: pokedex
+  group: generation
+  difficulty: 1
+  prompt:
+    de: Nenne ein Pokémon aus der 1. Generation (Kanto)
+    en: Name a Generation 1 Pokémon (Kanto)
+  answers:
+    query: { kind: pokemon, where: { generation: 1 } }
+  masterball: pokemon:tangela
+  source: PokéAPI pokemon_species.generation_id
+
+- id: pokedex.generation.2
+  category: pokedex
+  group: generation
+  difficulty: 2
+  prompt:
+    de: Nenne ein Pokémon aus der 2. Generation (Johto)
+    en: Name a Generation 2 Pokémon (Johto)
+  answers:
+    query: { kind: pokemon, where: { generation: 2 } }
+  masterball: pokemon:dunsparce
+  source: PokéAPI pokemon_species.generation_id
+
+- id: pokedex.generation.3
+  category: pokedex
+  group: generation
+  difficulty: 2
+  prompt:
+    de: Nenne ein Pokémon aus der 3. Generation (Hoenn)
+    en: Name a Generation 3 Pokémon (Hoenn)
+  answers:
+    query: { kind: pokemon, where: { generation: 3 } }
+  masterball: pokemon:spinda
+  source: PokéAPI pokemon_species.generation_id
+
+- id: pokedex.generation.4
+  category: pokedex
+  group: generation
+  difficulty: 2
+  prompt:
+    de: Nenne ein Pokémon aus der 4. Generation (Sinnoh)
+    en: Name a Generation 4 Pokémon (Sinnoh)
+  answers:
+    query: { kind: pokemon, where: { generation: 4 } }
+  masterball: pokemon:chatot
+  source: PokéAPI pokemon_species.generation_id
+
+- id: pokedex.generation.5
+  category: pokedex
+  group: generation
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon aus der 5. Generation (Einall)
+    en: Name a Generation 5 Pokémon (Unova)
+  answers:
+    query: { kind: pokemon, where: { generation: 5 } }
+  masterball: pokemon:stunfisk
+  source: PokéAPI pokemon_species.generation_id
+
+- id: pokedex.generation.6
+  category: pokedex
+  group: generation
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon aus der 6. Generation (Kalos)
+    en: Name a Generation 6 Pokémon (Kalos)
+  answers:
+    query: { kind: pokemon, where: { generation: 6 } }
+  masterball: pokemon:hawlucha
+  source: PokéAPI pokemon_species.generation_id
+
+- id: pokedex.generation.7
+  category: pokedex
+  group: generation
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon aus der 7. Generation (Alola)
+    en: Name a Generation 7 Pokémon (Alola)
+  answers:
+    query: { kind: pokemon, where: { generation: 7 } }
+  masterball: pokemon:komala
+  source: PokéAPI pokemon_species.generation_id
+
+- id: pokedex.generation.8
+  category: pokedex
+  group: generation
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon aus der 8. Generation (Galar)
+    en: Name a Generation 8 Pokémon (Galar)
+  answers:
+    query: { kind: pokemon, where: { generation: 8 } }
+  masterball: pokemon:falinks
+  source: PokéAPI pokemon_species.generation_id
+
+- id: pokedex.generation.9
+  category: pokedex
+  group: generation
+  difficulty: 3
+  prompt:
+    de: Nenne ein Pokémon aus der 9. Generation (Paldea)
+    en: Name a Generation 9 Pokémon (Paldea)
+  answers:
+    query: { kind: pokemon, where: { generation: 9 } }
+  masterball: pokemon:tatsugiri
+  source: PokéAPI pokemon_species.generation_id

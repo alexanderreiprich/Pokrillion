@@ -1,0 +1,61 @@
+# Teams aus den Spielen (Team Rocket … Team Star). Quelle: Bulbapedia „Villainous team“ + Team Yell/Star.
+- id: team:rocket
+  kind: team
+  names: { de: Team Rocket, en: Team Rocket }
+  aliases: [Rocket]
+  familiarity: 95
+- id: team:magma
+  kind: team
+  names: { de: Team Magma, en: Team Magma }
+  aliases: [Magma]
+  familiarity: 50
+- id: team:aqua
+  kind: team
+  names: { de: Team Aqua, en: Team Aqua }
+  aliases: [Aqua]
+  familiarity: 50
+- id: team:galactic
+  kind: team
+  names: { de: Team Galaktik, en: Team Galactic }
+  aliases: [Galaktik, Galactic]
+  familiarity: 45
+- id: team:plasma
+  kind: team
+  names: { de: Team Plasma, en: Team Plasma }
+  aliases: [Plasma]
+  familiarity: 45
+- id: team:flare
+  kind: team
+  names: { de: Team Flare, en: Team Flare }
+  aliases: [Flare]
+  familiarity: 40
+- id: team:skull
+  kind: team
+  names: { de: Team Skull, en: Team Skull }
+  aliases: [Skull]
+  familiarity: 40
+- id: team:yell
+  kind: team
+  names: { de: Team Yell, en: Team Yell }
+  aliases: [Yell]
+  familiarity: 30
+- id: team:star
+  kind: team
+  names: { de: Team Star, en: Team Star }
+  aliases: [Star]
+  familiarity: 30
+- id: team:rainbow-rocket
+  kind: team
+  names: { de: Team Rainbow Rocket, en: Team Rainbow Rocket }
+  aliases: [Rainbow Rocket]
+  familiarity: 20
+- id: team:cipher
+  kind: team
+  names: { de: Team Cipher, en: Team Cipher }
+  aliases: [Cipher, Crypto]
+  familiarity: 15
+- id: team:snagem
+  kind: team
+  names: { de: Team Snagem, en: Team Snagem }
+  aliases: [Snagem, Team Snatch]
+  familiarity: 10

@@ -1,0 +1,13 @@
+[
+  {"id":"region:kanto","kind":"region","names":{"de":"Kanto","en":"Kanto"},"aliases":[],"attrs":{},"familiarity":80},
+  {"id":"region:johto","kind":"region","names":{"de":"Johto","en":"Johto"},"aliases":[],"attrs":{},"familiarity":75},
+  {"id":"region:hoenn","kind":"region","names":{"de":"Hoenn","en":"Hoenn"},"aliases":[],"attrs":{},"familiarity":70},
+  {"id":"region:sinnoh","kind":"region","names":{"de":"Sinnoh","en":"Sinnoh"},"aliases":[],"attrs":{},"familiarity":65},
+  {"id":"region:unova","kind":"region","names":{"de":"Einall","en":"Unova"},"aliases":[],"attrs":{},"familiarity":60},
+  {"id":"region:kalos","kind":"region","names":{"de":"Kalos","en":"Kalos"},"aliases":[],"attrs":{},"familiarity":55},
+  {"id":"region:alola","kind":"region","names":{"de":"Alola","en":"Alola"},"aliases":[],"attrs":{},"familiarity":50},
+  {"id":"region:galar","kind":"region","names":{"de":"Galar","en":"Galar"},"aliases":[],"attrs":{},"familiarity":45},
+  {"id":"region:hisui","kind":"region","names":{"de":"Hisui","en":"Hisui"},"aliases":[],"attrs":{},"familiarity":40},
+  {"id":"region:paldea","kind":"region","names":{"de":"Paldea","en":"Paldea"},"aliases":[],"attrs":{},"familiarity":35},
+  {"id":"region:orre","kind":"region","names":{"de":"Orre","en":"Orre"},"aliases":[],"attrs":{},"familiarity":30}
+]

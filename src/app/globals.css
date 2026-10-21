@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens – "Nachts im hohen Gras". See docs/KONZEPT.md §9.
+ * Dark only, like Krillion. Tier colours are shared with src/lib/game/tiers.ts ids.
+ */
+@theme {
+  --color-night-950: #070b16;
+  --color-night-900: #0f1830;
+  --color-night-800: #16223f;
+  --color-line: #1f2c4d;
+  --color-moon: #e8f0ff;
+  --color-drift: #8fa3c8;
+
+  --color-ball-red: #ff3b4a;
+  --color-ball-red-dark: #b81f2c;
+  --color-electric: #ffd23f;
+  --color-moonlight: #6fe7ff;
+
+  --color-tier-miss: #4a5878;
+  --color-tier-pokeball: #ff6b6b;
+  --color-tier-superball: #4d8dff;
+  --color-tier-hyperball: #ffd23f;
+  --color-tier-shiny: #7cf5d5;
+  --color-tier-masterball: #b26bff;
+
+  --color-hp-high: #3ee07a;
+  --color-hp-mid: #f8d030;
+  --color-hp-low: #f85838;
+
+  --color-dialog: #f8f8f0;
+  --color-dialog-ink: #282830;
+
+  --font-pixel: var(--font-vt323), ui-monospace, monospace;
+  --font-display: var(--font-pixelify), var(--font-vt323), monospace;
+
+  --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-night-950);
+  /* moon glow + a few pixel stars */
+  background-image:
+    radial-gradient(ellipse 60% 40% at 50% -10%, rgb(111 231 255 / 0.12), transparent 70%),
+    radial-gradient(1px 1px at 12% 18%, rgb(232 240 255 / 0.5), transparent),
+    radial-gradient(1px 1px at 78% 9%, rgb(232 240 255 / 0.4), transparent),
+    radial-gradient(1px 1px at 63% 31%, rgb(232 240 255 / 0.3), transparent),
+    radial-gradient(1px 1px at 27% 42%, rgb(232 240 255 / 0.25), transparent);
+  background-attachment: fixed;
+  color: var(--color-moon);
+  font-family: var(--font-pixel);
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+/* Classic in-game text box: light panel, double pixel frame. */
+@utility dialog-box {
+  background: var(--color-dialog);
+  color: var(--color-dialog-ink);
+  border: 4px solid var(--color-dialog-ink);
+  border-radius: 6px;
+  box-shadow:
+    inset 0 0 0 3px var(--color-dialog),
+    inset 0 0 0 6px #6878a8,
+    0 6px 0 rgb(0 0 0 / 0.35);
+}
+
+/* Chunky arcade button with a hard drop shadow. */
+@utility pixel-button {
+  border: 3px solid var(--color-night-950);
+  border-radius: 4px;
+  box-shadow:
+    inset 0 -4px 0 var(--color-ball-red-dark),
+    0 5px 0 var(--color-night-950),
+    0 5px 0 3px rgb(111 231 255 / 0.15);
+  transition:
+    transform 0.08s var(--ease-out-soft),
+    box-shadow 0.08s var(--ease-out-soft);
+  &:active:not(:disabled) {
+    transform: translateY(4px);
+    box-shadow:
+      inset 0 -2px 0 var(--color-ball-red-dark),
+      0 1px 0 var(--color-night-950);
+  }
+}
+
+@keyframes blink-arrow {
+  50% {
+    opacity: 0;
+  }
+}
+
+@utility animate-blink {
+  animation: blink-arrow 1s steps(1) infinite;
+}
+
+/* Ball wobbles three times before the catch result shows (like in the games). */
+@keyframes ball-wobble {
+  0%, 100% { transform: rotate(0deg); }
+  10% { transform: rotate(-22deg); }
+  20% { transform: rotate(16deg); }
+  30% { transform: rotate(0deg); }
+  40% { transform: rotate(-22deg); }
+  50% { transform: rotate(16deg); }
+  60% { transform: rotate(0deg); }
+  70% { transform: rotate(-22deg); }
+  80% { transform: rotate(16deg); }
+  90% { transform: rotate(0deg); }
+}
+
+@utility animate-wobble {
+  transform-origin: 50% 85%;
+  animation: ball-wobble 1.2s ease-in-out both;
+}
+
+
+
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@utility animate-pop {
+  animation: pop-in 0.35s var(--ease-snap) both;
+}
+
+@keyframes sparkle {
+  0%, 100% { filter: drop-shadow(0 0 0 transparent); }
+  50% { filter: drop-shadow(0 0 10px var(--color-tier-masterball)) drop-shadow(0 0 4px #fff); }
+}
+
+@utility animate-sparkle {
+  animation: sparkle 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

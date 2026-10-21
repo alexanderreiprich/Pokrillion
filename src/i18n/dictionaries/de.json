@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "title": "Pokrillion – das tägliche Pokémon-Quiz",
+    "description": "7 Fragen. Seltene Antworten geben mehr Punkte. Jeden Tag neu."
+  },
+  "brand": {
+    "tagline": "eins zu einer Pokrillion"
+  },
+  "home": {
+    "today": "Pokrillion #{number}",
+    "play": "Los geht's!",
+    "comingSoon": "Startet am {date}",
+    "howTo": "So wird gespielt",
+    "rules": [
+      "Jeden Tag 7 Fragen – für alle dieselben.",
+      "Viele Antworten sind richtig. Je seltener deine, desto mehr Punkte.",
+      "25 Sekunden pro Frage. Falsche Antworten kosten 3 Sekunden.",
+      "Eine Antwort pro Frage zählt. Die Meisterball-Antwort gibt 100 Punkte."
+    ],
+    "tiers": "Fangstufen"
+  },
+  "play": {
+    "loading": "Ein wildes Quiz erscheint!",
+    "introTitle": "Pokrillion #{number}",
+    "introText": "7 Fragen, 25 Sekunden pro Frage. Je seltener deine Antwort, desto mehr Punkte.",
+    "start": "Los geht's!",
+    "resume": "Weiter mit Frage {n}",
+    "placeholder": "Deine Antwort …",
+    "submit": "Werfen!",
+    "caught": "Gefangen!",
+    "escaped": "Mist! Es ist entkommen!",
+    "corrected": "(Tippfehler verziehen: „{input}“)",
+    "wrongEntity": "{name} passt leider nicht. −3 s",
+    "unknown": "Das kennt der Pokédex nicht. −3 s",
+    "duplicate": "Hast du schon probiert.",
+    "timeUp": "Die Zeit ist um!",
+    "next": "Weiter",
+    "toSummary": "Zur Auswertung",
+    "time": "KP",
+    "question": "Frage {current}/{total}",
+    "points": "{points} P"
+  },
+  "tiers": {
+    "miss": "Entkommen!",
+    "pokeball": "Pokéball",
+    "superball": "Superball",
+    "hyperball": "Hyperball",
+    "shiny": "Shiny",
+    "masterball": "Meisterball"
+  },
+  "footer": {
+    "disclaimer": "Inoffizielles Fanprojekt. Pokémon und alle zugehörigen Namen sind Marken von Nintendo, Creatures Inc. und GAME FREAK inc.",
+    "language": "English"
+  },
+  "summary": {
+    "title": "Auswertung",
+    "total": "{score} von {max} Punkten",
+    "share": "Ergebnis teilen",
+    "copied": "Kopiert!",
+    "yourAnswer": "Deine Antwort",
+    "noAnswer": "– entkommen –",
+    "ofPlayers": "{pct} % der Spieler",
+    "player": "{n} Spieler",
+    "players": "{n} Spieler",
+    "top": "Häufigste Antworten",
+    "masterball": "Meisterball-Antwort",
+    "possible": "{n} mögliche Antworten",
+    "streak": "Serie: {n} {days}",
+    "day": "Tag",
+    "days": "Tage",
+    "nextIn": "Nächstes Pokrillion in {time}",
+    "home": "Zur Startseite"
+  },
+  "categories": {
+    "pokedex": "Pokédex",
+    "games": "Spiele",
+    "anime": "Anime"
+  },
+  "errors": {
+    "no_puzzle": "Für heute gibt es noch kein Rätsel. (Admin: npm run schedule)",
+    "network": "Keine Verbindung zum Server.",
+    "generic": "Da ist etwas schiefgelaufen.",
+    "retry": "Nochmal versuchen"
+  }
+}

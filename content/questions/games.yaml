@@ -1,0 +1,224 @@
+# Kategorie „Spiele“: Orte, Items, Charaktere und Editionen aus den Spielen (kuratiert).
+# Vorlagen-Fragen liegen in games-moves.yaml (Attacken nach Typ) und games-cities.yaml (Städte).
+
+# --- Orte & Welt -------------------------------------------------------------
+
+- id: games.location.cave
+  category: games
+  group: location
+  difficulty: 3
+  prompt:
+    de: Nenne eine Höhle aus einem Pokémon-Spiel
+    en: Name a cave from a Pokémon game
+  answers:
+    query: { kind: location, nameMatches: "cave|cavern|grotto|höhle|grotte|grötte" }
+    include:
+      - location:mt-moon
+      - location:rock-tunnel
+      - location:ice-path
+      - location:meteor-falls
+      - location:mt-coronet
+      - location:rusturf-tunnel
+      - location:victory-road
+      - location:dragons-den
+      - location:maniac-tunnel
+    exclude:
+      - location:hidden-grotto
+      - location:isle-of-armor-caves
+  masterball: location:cerulean-cave
+  source: PokéAPI locations + manuelle Ergänzung (Mondberg, Felstunnel, …)
+
+- id: games.region
+  category: games
+  difficulty: 1
+  prompt:
+    de: Nenne eine Region aus der Pokémon-Welt
+    en: Name a region of the Pokémon world
+  answers:
+    query: { kind: region }
+  masterball: region:orre
+  source: PokéAPI regions
+
+- id: games.edition
+  category: games
+  difficulty: 1
+  prompt:
+    de: Nenne eine Pokémon-Spieledition
+    en: Name a Pokémon game edition
+  answers:
+    query: { kind: game }
+  masterball: game:xd
+  source: PokéAPI versions (ohne DLCs)
+
+- id: games.team
+  category: games
+  difficulty: 2
+  prompt:
+    de: Nenne ein „Team“ aus den Pokémon-Spielen (z. B. Team Rocket)
+    en: Name a “Team” from the Pokémon games (e.g. Team Rocket)
+  answers:
+    query: { kind: team }
+    exclude: [team:rocket]
+  masterball: team:snagem
+  source: https://bulbapedia.bulbagarden.net/wiki/Villainous_team
+  notes: Team Rocket steht als Beispiel in der Frage und zählt deshalb nicht.
+
+# --- Items -------------------------------------------------------------------
+
+- id: games.item.ball
+  category: games
+  group: item
+  difficulty: 2
+  prompt:
+    de: Nenne eine Pokéball-Art
+    en: Name a type of Poké Ball
+  answers:
+    query: { kind: item, where: { category: [standard-balls, special-balls, apricorn-balls] } }
+  masterball: item:cherish-ball
+  source: PokéAPI item_categories
+
+- id: games.item.berry
+  category: games
+  group: item
+  difficulty: 2
+  prompt:
+    de: Nenne eine Beere
+    en: Name a Berry
+  answers:
+    query: { kind: item, where: { pocket: berries } }
+  masterball: item:nanab-berry
+  source: PokéAPI item_pockets (berries)
+
+- id: games.item.healing
+  category: games
+  group: item
+  difficulty: 2
+  prompt:
+    de: Nenne ein Item, das KP, AP oder Statusprobleme heilt
+    en: Name an item that restores HP, PP or cures status conditions
+  answers:
+    query: { kind: item, where: { category: [healing, status-cures, revival, pp-recovery] } }
+  masterball: item:lava-cookie
+  source: PokéAPI item_categories (healing, status-cures, revival, pp-recovery)
+  notes: Beeren zählen hier nicht – dafür gibt es games.item.berry.
+
+- id: games.item.evolution-stone
+  category: games
+  group: item
+  difficulty: 2
+  prompt:
+    de: Nenne einen Entwicklungsstein
+    en: Name an evolution stone
+  answers:
+    list:
+      - item:fire-stone
+      - item:water-stone
+      - item:thunder-stone
+      - item:leaf-stone
+      - item:moon-stone
+      - item:sun-stone
+      - item:shiny-stone
+      - item:dusk-stone
+      - item:dawn-stone
+      - item:ice-stone
+  masterball: item:dawn-stone
+  source: https://bulbapedia.bulbagarden.net/wiki/Evolution_stone
+
+- id: games.item.fossil
+  category: games
+  group: item
+  difficulty: 3
+  prompt:
+    de: Nenne ein Fossil (das Item, nicht das Pokémon)
+    en: Name a Fossil item (not the Pokémon)
+  answers:
+    query: { kind: item, where: { category: dex-completion }, nameMatches: "fossil|bernstein|amber" }
+  masterball: item:old-amber
+  source: PokéAPI item_categories (dex-completion)
+
+- id: games.item.mega-stone
+  category: games
+  group: item
+  difficulty: 4
+  prompt:
+    de: Nenne einen Mega-Stein
+    en: Name a Mega Stone
+  answers:
+    query: { kind: item, where: { category: mega-stones } }
+  masterball: item:audinite
+  source: PokéAPI item_categories (mega-stones)
+
+# --- Charaktere --------------------------------------------------------------
+
+- id: games.gym-leader.kanto
+  category: games
+  group: gym-leader
+  difficulty: 2
+  prompt:
+    de: Nenne einen Arenaleiter aus Kanto
+    en: Name a Kanto Gym Leader
+  answers:
+    query: { kind: character, where: { roles: gym-leader-kanto } }
+  masterball: character:janine
+  source: https://bulbapedia.bulbagarden.net/wiki/Gym_Leader#Kanto
+  notes: Inkl. Janina und Blau (Gen 2 / HGSS).
+
+- id: games.gym-leader.johto
+  category: games
+  group: gym-leader
+  difficulty: 3
+  prompt:
+    de: Nenne einen Arenaleiter aus Johto
+    en: Name a Johto Gym Leader
+  answers:
+    query: { kind: character, where: { roles: gym-leader-johto } }
+  masterball: character:pryce
+  source: https://bulbapedia.bulbagarden.net/wiki/Gym_Leader#Johto
+
+- id: games.gym-leader.hoenn
+  category: games
+  group: gym-leader
+  difficulty: 3
+  prompt:
+    de: Nenne einen Arenaleiter aus Hoenn
+    en: Name a Hoenn Gym Leader
+  answers:
+    query: { kind: character, where: { roles: gym-leader-hoenn } }
+  masterball: character:winona
+  source: https://bulbapedia.bulbagarden.net/wiki/Gym_Leader#Hoenn
+  notes: Ben und Svenja zählen einzeln; Wassili (R/S/ORAS) und Juan (Smaragd) zählen beide.
+
+- id: games.gym-leader.sinnoh
+  category: games
+  group: gym-leader
+  difficulty: 3
+  prompt:
+    de: Nenne einen Arenaleiter aus Sinnoh
+    en: Name a Sinnoh Gym Leader
+  answers:
+    query: { kind: character, where: { roles: gym-leader-sinnoh } }
+  masterball: character:fantina
+  source: https://bulbapedia.bulbagarden.net/wiki/Gym_Leader#Sinnoh
+
+- id: games.champion
+  category: games
+  difficulty: 3
+  prompt:
+    de: Nenne einen Champ einer Pokémon-Liga aus den Hauptspielen
+    en: Name a Pokémon League Champion from the main games
+  answers:
+    query: { kind: character, where: { roles: champion } }
+  masterball: character:alder
+  source: https://bulbapedia.bulbagarden.net/wiki/Champion
+  notes: Lilia (S2/W2) und Kukui (Alola) zählen; Blau als Champ in Rot/Blau.
+
+- id: games.professor
+  category: games
+  difficulty: 2
+  prompt:
+    de: Nenne einen Pokémon-Professor
+    en: Name a Pokémon Professor
+  answers:
+    query: { kind: character, where: { roles: professor } }
+  masterball: character:laventon
+  source: https://bulbapedia.bulbagarden.net/wiki/Pokémon_Professor

@@ -1,0 +1,31 @@
+# Bekanntheits-Overrides (1–100). Überschreiben die Heuristik aus `npm run data:import`.
+# Faustregel: 100 = kennt jeder · 70 = kennen Gelegenheitsfans · 40 = kennen Spieler der Generation · 15 = Nerd-Wissen
+# Schätzwerte (Stand 2026-10-21); echte Spielerdaten kalibrieren nach (Konzept §3).
+# Nicht gelistete Orte: Regions-Basiswert (Kanto 60, Johto/Hoenn 45, Sinnoh 40, sonst 30).
+
+location:pallet-town: 95
+location:mt-moon: 85
+location:viridian-city: 80
+location:cerulean-city: 80
+location:pewter-city: 75
+location:lavender-town: 75
+location:victory-road: 75
+location:vermilion-city: 70
+location:saffron-city: 70
+location:new-bark-town: 70
+location:goldenrod-city: 70
+location:celadon-city: 65
+location:cinnabar-island: 65
+location:littleroot-town: 65
+location:lumiose-city: 65
+location:fuchsia-city: 60
+location:violet-city: 60
+location:twinleaf-town: 60
+location:jubilife-city: 60
+location:ecruteak-city: 55
+location:castelia-city: 55
+location:azalea-town: 50
+location:olivine-city: 50
+location:blackthorn-city: 50
+location:cherrygrove-city: 50
+location:nimbasa-city: 50

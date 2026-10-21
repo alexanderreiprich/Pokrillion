@@ -1,0 +1,121 @@
+# Pokédex-Farben (offizielle Farbe aus dem Pokédex, nicht „gefühlte“ Farbe). Generiert, danach von Hand gepflegt.
+
+- id: pokedex.color.yellow
+  category: pokedex
+  group: color
+  difficulty: 1
+  prompt:
+    de: Nenne ein gelbes Pokémon
+    en: Name a yellow Pokémon
+  answers:
+    query: { kind: pokemon, where: { color: yellow } }
+  masterball: pokemon:lunatone
+  source: PokéAPI pokemon_colors (offizielle Pokédex-Farbe)
+
+- id: pokedex.color.red
+  category: pokedex
+  group: color
+  difficulty: 1
+  prompt:
+    de: Nenne ein rotes Pokémon
+    en: Name a red Pokémon
+  answers:
+    query: { kind: pokemon, where: { color: red } }
+  masterball: pokemon:magikarp
+  source: PokéAPI pokemon_colors (offizielle Pokédex-Farbe)
+
+- id: pokedex.color.blue
+  category: pokedex
+  group: color
+  difficulty: 1
+  prompt:
+    de: Nenne ein blaues Pokémon
+    en: Name a blue Pokémon
+  answers:
+    query: { kind: pokemon, where: { color: blue } }
+  masterball: pokemon:heracross
+  source: PokéAPI pokemon_colors (offizielle Pokédex-Farbe)
+
+- id: pokedex.color.green
+  category: pokedex
+  group: color
+  difficulty: 1
+  prompt:
+    de: Nenne ein grünes Pokémon
+    en: Name a green Pokémon
+  answers:
+    query: { kind: pokemon, where: { color: green } }
+  masterball: pokemon:scyther
+  source: PokéAPI pokemon_colors (offizielle Pokédex-Farbe)
+
+- id: pokedex.color.white
+  category: pokedex
+  group: color
+  difficulty: 2
+  prompt:
+    de: Nenne ein weißes Pokémon
+    en: Name a white Pokémon
+  answers:
+    query: { kind: pokemon, where: { color: white } }
+  masterball: pokemon:togepi
+  source: PokéAPI pokemon_colors (offizielle Pokédex-Farbe)
+
+- id: pokedex.color.brown
+  category: pokedex
+  group: color
+  difficulty: 1
+  prompt:
+    de: Nenne ein braunes Pokémon
+    en: Name a brown Pokémon
+  answers:
+    query: { kind: pokemon, where: { color: brown } }
+  masterball: pokemon:eevee
+  source: PokéAPI pokemon_colors (offizielle Pokédex-Farbe)
+
+- id: pokedex.color.purple
+  category: pokedex
+  group: color
+  difficulty: 2
+  prompt:
+    de: Nenne ein violettes Pokémon
+    en: Name a purple Pokémon
+  answers:
+    query: { kind: pokemon, where: { color: purple } }
+  masterball: pokemon:rattata
+  source: PokéAPI pokemon_colors (offizielle Pokédex-Farbe)
+
+- id: pokedex.color.pink
+  category: pokedex
+  group: color
+  difficulty: 2
+  prompt:
+    de: Nenne ein rosa Pokémon
+    en: Name a pink Pokémon
+  answers:
+    query: { kind: pokemon, where: { color: pink } }
+  masterball: pokemon:slowpoke
+  source: PokéAPI pokemon_colors (offizielle Pokédex-Farbe)
+
+- id: pokedex.color.gray
+  category: pokedex
+  group: color
+  difficulty: 2
+  prompt:
+    de: Nenne ein graues Pokémon
+    en: Name a gray Pokémon
+  answers:
+    query: { kind: pokemon, where: { color: gray } }
+  masterball: pokemon:machop
+  source: PokéAPI pokemon_colors (offizielle Pokédex-Farbe)
+
+- id: pokedex.color.black
+  category: pokedex
+  group: color
+  difficulty: 2
+  prompt:
+    de: Nenne ein schwarzes Pokémon
+    en: Name a black Pokémon
+  answers:
+    query: { kind: pokemon, where: { color: black } }
+  masterball: pokemon:snorlax
+  source: PokéAPI pokemon_colors (offizielle Pokédex-Farbe)

@@ -10,6 +10,7 @@ import path from "node:path";
 import { parse as parseYaml } from "yaml";
 import type { z } from "zod";
 import {
+  AliasFile,
   Entity,
   EntityFile,
   FamiliarityFile,
@@ -44,7 +45,19 @@ async function loadEntities(): Promise<Entity[]> {
   for (const id of Object.keys(overrides)) {
     if (!known.has(id)) throw new Error(`content/familiarity: unbekannte Entity ${id}`);
   }
-  return entities.map((e) => (overrides[e.id] ? { ...e, familiarity: overrides[e.id] } : e));
+  const extraAliases: Record<string, string[]> = {};
+  for (const file of await listFiles(rel("content", "aliases"), ".yaml")) {
+    for (const [id, aliases] of Object.entries(parseWith(AliasFile, file, parseYaml(await readFile(file, "utf8"))))) {
+      if (!known.has(id)) throw new Error(`${path.relative(ROOT, file)}: unbekannte Entity ${id}`);
+      extraAliases[id] = [...(extraAliases[id] ?? []), ...aliases];
+    }
+  }
+
+  return entities.map((e) => ({
+    ...e,
+    familiarity: overrides[e.id] ?? e.familiarity,
+    aliases: extraAliases[e.id] ? [...e.aliases, ...extraAliases[e.id]] : e.aliases,
+  }));
 }
 
 async function loadQuestions(): Promise<Question[]> {

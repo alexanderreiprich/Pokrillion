@@ -82,6 +82,8 @@ gh pr merge --squash --delete-branch
 ### 3. Release → `prod`
 
 ```bash
+npx supabase migration list --linked        # neue Migrationen? dann zuerst:
+npx supabase db push
 gh pr create --base prod --head staging --title "release: v0.2.0" --body "…"
 gh pr merge --merge                         # „Create a merge commit“ – OHNE --delete-branch!
 git fetch && git tag -a v0.2.0 origin/prod -m "…" && git push origin v0.2.0   # optional
@@ -107,15 +109,28 @@ gh pr merge --merge                         # Merge-Commit, NICHT squash
 ## Datenbank-Migrationen
 
 - Neue Migrationen kommen mit dem Arbeits-Branch in `supabase/migrations/`.
-- Sie werden zuerst auf die Staging-Datenbank angewendet und erst mit dem Release auf Prod.
+- Der Zeitstempel im Dateinamen muss neuer sein als die letzte bereits angewendete Migration, sonst lehnt `supabase db push` sie ab.
+- Neue Tabellen, Views und Funktionen bekommen explizit `grant … to service_role` (siehe Konzept §6, „Rechte“).
+- Bisher gibt es nur eine Cloud-Datenbank (Prod). Migrationen werden **vor** dem Merge des Release-PRs angewendet (`npx supabase db push`), laufen also kurz neben dem alten Code. Deshalb nur additiv ändern; Umbauten in zwei Releases aufteilen.
 - Migrationen nie nachträglich ändern, sondern eine neue Datei anlegen.
 
-## Deployment (geplant, siehe Konzept §11)
+## Deployment
 
 | Branch | Vercel | Supabase |
 |---|---|---|
-| `prod` | Production (Production Branch = `prod`), pokrillion.io | Projekt `pokrillion-prod` |
-| `staging` | Preview mit fester Domain, z. B. staging.pokrillion.io | Projekt `pokrillion-staging` |
-| Arbeits-Branches | automatische Preview-URLs | Staging-DB |
+| `prod` | Production (Production Branch = `prod`), pokrillion.vercel.app | Cloud-Projekt (Free Tier) |
+| `staging`, Arbeits-Branches | automatische Preview-URLs (hinter Vercel-Login) | keine eigene DB |
 
-Vercel Cron läuft nur auf Production. Für Staging plant man Rätsel per `npm run schedule` mit den Staging-Zugangsdaten.
+Sind die Supabase-Variablen in Vercel auch für *Preview* gesetzt, schreiben Previews in die Prod-Datenbank, und Spiele aus Previews zählen in die Statistik. Sonst funktionieren dort nur Seiten ohne DB-Zugriff.
+
+Environment Variables in Vercel (alle nur server-seitig, nie mit `NEXT_PUBLIC_`):
+
+| Variable | Wofür |
+|---|---|
+| `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | DB-Zugriff |
+| `CRON_SECRET` | schützt `/api/v1/cron/*`; Vercel Cron sendet es automatisch. Dient auch als Schlüssel für die IP-Hashes des Rate-Limits |
+| `ADMIN_PASSWORD` | Kuratierungsansicht `/admin`; leer = Ansicht deaktiviert |
+
+Vercel Cron (`vercel.json`) läuft nur auf Production, täglich 03:00 UTC. Nach einem frischen Setup einmal von Hand auslösen, damit sofort Rätsel da sind: `curl -H "Authorization: Bearer $CRON_SECRET" https://pokrillion.vercel.app/api/v1/cron/schedule`.
+
+**Geplant:** eigene Domain pokrillion.io, später ein getrenntes Staging-Projekt in Supabase.

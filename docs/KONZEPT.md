@@ -2,7 +2,7 @@
 
 > *Eins zu einer Pokrillion.* Ein tägliches Pokémon-Trivia, bei dem seltene richtige Antworten mehr Punkte geben als offensichtliche.
 
-Stand: 2026-10-21 · Status: Phase 1 lokal spielbar mit 99 aktiven Fragen; offen ist das Deployment
+Stand: 2026-10-24 · Status: Phase 1 live auf Vercel (pokrillion.vercel.app) mit 99 aktiven Fragen; offen sind Domain und Impressum/Datenschutz vor dem öffentlichen Go-live
 
 ---
 
@@ -252,6 +252,8 @@ rate_limits         Zähler für das Rate-Limit auf /guess (festes Fenster)
 
 **Sicherheit:** RLS ist auf allen Tabellen aktiv, ohne Policies für `anon`/`authenticated`. Zugriff gibt es nur über die Next.js-Route-Handler mit Service-Role-Key (`server-only`).
 
+**Rechte:** Supabase-Cloud-Projekte geben neue Tabellen und Funktionen nicht mehr automatisch für die API-Rollen frei. Ohne Rechte meldet der Server `Could not find the table … in the schema cache` bzw. `42501 permission denied`. `20261024000000_service_role_grants.sql` vergibt die Rechte für `service_role` und setzt Default Privileges; neue Migrationen schreiben die `grant … to service_role` trotzdem explizit dazu (lokal fällt ein fehlender Grant nicht auf).
+
 ---
 
 ## 7. API (Route Handlers, `/api/v1`)
@@ -431,7 +433,7 @@ Aufbau, Typografie und Komponenten folgen Krillion. Pokémon kommt über Szeneri
 
 ### Phase 1 – Spielbarer MVP
 - [x] Lokales Supabase (`npm run db:start`), `.env.local`
-- [ ] Supabase-Cloud-Projekt anlegen
+- [x] Supabase-Cloud-Projekt (Free Tier, eine Datenbank für Prod)
 - [x] Server-Logik (`src/lib/server/`) + Route Handlers aus Abschnitt 7, server-seitiger Timer
 - [x] Spiel-UI: Intro → 7× (Fragen-Karte mit Tipp-Effekt, Pokéradar-Timer, Eingabe, Ball-Wackeln) → Auswertung
 - [x] Design an Krillion angeglichen (HUD, Dock, Menü, Szenerie)
@@ -440,7 +442,8 @@ Aufbau, Typografie und Komponenten folgen Krillion. Pokémon kommt über Szeneri
 - [x] Rate-Limit auf `/guess` (30/min pro `pid`, 120/min pro IP)
 - [x] Content: 99 aktive Fragen (55 Pokédex, 44 Spiele) + Familiarity-Overrides für ~180 Pokémon, 70 Attacken, 43 Items, 26 Orte
 - [x] Footer mit Disclaimer (Impressum/Datenschutz erst bei öffentlichem Go-live)
-- [ ] Deployment Vercel + Domain pokrillion.io
+- [x] Deployment Vercel (pokrillion.vercel.app, Production Branch `prod`)
+- [ ] Domain pokrillion.io
 
 ### Phase 2 – Wachstum
 - Anime-Kategorie: Fragen kuratieren und prüfen (Begleiter, Ash-Pokémon …), Anime-Quote im Tagesmix aktivieren

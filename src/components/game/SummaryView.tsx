@@ -63,36 +63,43 @@ export function SummaryView({
   const statLine = (s: AnswerStat) => (
     <li key={s.entity.id} className="flex justify-between gap-2">
       <span className="truncate">{s.entity.names[lang]}</span>
-      <span className="shrink-0 text-drift">{formatPct(s.pct, lang)} %</span>
+      <span className="shrink-0 text-drift tabular-nums">{formatPct(s.pct, lang)} %</span>
     </li>
   );
 
   return (
-    <div className="flex flex-col gap-6">
-      <section className="flex flex-col items-center gap-2 text-center">
-        <h2 className="font-display text-2xl text-drift">
-          Pokrillion #{data.number} · {t.summary.title}
-        </h2>
-        <p className="text-7xl leading-none text-electric">{data.totalScore}</p>
-        <p className="text-drift">{fill(t.summary.total, { score: data.totalScore, max: MAX_SCORE })}</p>
-        <div className="h-3 w-full rounded-sm border-2 border-night-950 bg-night-800 p-px" aria-hidden>
-          <div
-            className="h-full rounded-[1px] bg-moonlight"
-            style={{ width: `${(100 * data.totalScore) / MAX_SCORE}%` }}
-          />
+    <div className="flex flex-col gap-10 pt-14 pb-24">
+      <section className="animate-card-in flex flex-col items-center gap-2 text-center">
+        <p className="chroma-sm text-[27px] leading-none tracking-[0.06em] uppercase">Pokrillion #{data.number}</p>
+        <p className="text-sm tracking-[0.3em] text-drift uppercase">{t.summary.title}</p>
+        <p className="glow mt-2 text-[96px] leading-[0.8] text-ball-red tabular-nums">{data.totalScore}</p>
+        <p className="text-base tracking-[0.14em] text-drift uppercase">
+          {fill(t.summary.total, { score: data.totalScore, max: MAX_SCORE })}
+        </p>
+
+        {/* EXP bar */}
+        <div className="mt-2 flex w-full max-w-sm items-center gap-2" aria-hidden>
+          <span className="text-sm tracking-[0.2em] text-moonlight">{t.summary.exp}</span>
+          <div className="h-2 flex-1 overflow-hidden bg-[#0a1322] shadow-[0_0_0_2px_var(--color-ink),0_0_0_4px_var(--color-line)]">
+            <div
+              className="h-full bg-moonlight shadow-[0_0_10px_var(--color-moonlight)]"
+              style={{ width: `${(100 * data.totalScore) / MAX_SCORE}%` }}
+            />
+          </div>
         </div>
-        <div className="mt-1 flex text-2xl" aria-hidden>
+
+        <div className="mt-2 flex gap-1.5" aria-hidden>
           {data.questions.map((q) => (
-            <Pokeball key={q.position} size={28} color={TIER_COLOR[q.yours.tier]} className="mx-0.5" />
+            <span key={q.position} style={{ filter: `drop-shadow(0 0 6px ${TIER_COLOR[q.yours.tier]})` }}>
+              <Pokeball size={28} color={TIER_COLOR[q.yours.tier]} />
+            </span>
           ))}
         </div>
-        <button
-          onClick={share}
-          className="pixel-button mt-2 bg-ball-red px-8 py-1.5 font-display text-2xl text-moon hover:brightness-110"
-        >
+
+        <button onClick={share} className="btn-primary mt-4 px-6 pt-3 pb-2.5 text-[19px]">
           {copied ? t.summary.copied : t.summary.share}
         </button>
-        <p className="text-drift">
+        <p className="mt-2 text-sm tracking-[0.14em] text-drift uppercase">
           {streak > 0 && (
             <>
               {fill(t.summary.streak, { n: streak, days: streak === 1 ? t.summary.day : t.summary.days })}
@@ -103,43 +110,58 @@ export function SummaryView({
         </p>
       </section>
 
-      <ol className="flex flex-col gap-4">
-        {data.questions.map((q) => (
-          <li key={q.position} className="rounded-md border-2 border-line bg-night-900/80 p-4">
-            <p className="text-lg text-drift">
-              {q.position}. {t.categories[q.category]} · {fill(t.summary.possible, { n: q.answerCount })}
-            </p>
-            <p className="mb-3 text-2xl leading-tight">{q.prompt[lang]}</p>
-
-            <div className="mb-3 flex items-center gap-3">
-              <Pokeball size={28} color={TIER_COLOR[q.yours.tier]} />
-              <div className="flex-1">
-                <p>{q.yours.entity ? q.yours.entity.names[lang] : t.summary.noAnswer}</p>
-                <p className="text-lg text-drift">
-                  <span style={{ color: TIER_COLOR[q.yours.tier] }}>{t.tiers[q.yours.tier]}</span>
-                  {q.yours.pct !== null && <> · {fill(t.summary.ofPlayers, { pct: formatPct(q.yours.pct, lang) })}</>}
+      <section className="flex flex-col gap-5">
+        <p className="fathom">{t.summary.catches}</p>
+        <ol className="flex flex-col gap-6">
+          {data.questions.map((q) => {
+            const color = TIER_COLOR[q.yours.tier];
+            return (
+              <li key={q.position} className="pod p-4">
+                <p className="text-sm tracking-[0.2em] text-drift uppercase">
+                  <span className="text-ball-red">{String(q.position).padStart(2, "0")}</span> ·{" "}
+                  {t.categories[q.category]} · {fill(t.summary.possible, { n: q.answerCount })}
                 </p>
-              </div>
-              <span className="text-3xl text-electric">+{q.yours.points}</span>
-            </div>
+                <p className="mt-1 mb-3 text-2xl leading-tight">{q.prompt[lang]}</p>
 
-            <div className="grid grid-cols-1 gap-3 text-lg sm:grid-cols-2">
-              <div>
-                <p className="text-drift">
-                  {t.summary.top} ({fill(q.players === 1 ? t.summary.player : t.summary.players, { n: q.players })})
-                </p>
-                <ul>{q.top.map(statLine)}</ul>
-              </div>
-              <div>
-                <p style={{ color: TIER_COLOR.masterball }}>{t.summary.masterball}</p>
-                <ul>{statLine(q.masterball)}</ul>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ol>
+                <div className="mb-3 flex items-center gap-3">
+                  <span style={{ filter: `drop-shadow(0 0 6px ${color})` }}>
+                    <Pokeball size={28} color={color} />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate">{q.yours.entity ? q.yours.entity.names[lang] : t.summary.noAnswer}</p>
+                    <p className="text-base tracking-[0.08em] text-drift">
+                      <span className="uppercase" style={{ color }}>
+                        {t.tiers[q.yours.tier]}
+                      </span>
+                      {q.yours.pct !== null && <> · {fill(t.summary.ofPlayers, { pct: formatPct(q.yours.pct, lang) })}</>}
+                    </p>
+                  </div>
+                  <span className="glow text-3xl tabular-nums" style={{ color }}>
+                    +{q.yours.points}
+                  </span>
+                </div>
 
-      <Link href={`/${lang}`} className="text-center text-moonlight hover:underline">
+                <div className="grid grid-cols-1 gap-3 border-t border-dashed border-line pt-3 text-lg sm:grid-cols-2">
+                  <div>
+                    <p className="text-sm tracking-[0.14em] text-drift uppercase">
+                      {t.summary.top} ({fill(q.players === 1 ? t.summary.player : t.summary.players, { n: q.players })})
+                    </p>
+                    <ul>{q.top.map(statLine)}</ul>
+                  </div>
+                  <div>
+                    <p className="text-sm tracking-[0.14em] uppercase" style={{ color: TIER_COLOR.masterball }}>
+                      {t.summary.masterball}
+                    </p>
+                    <ul>{statLine(q.masterball)}</ul>
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+      </section>
+
+      <Link href={`/${lang}`} className="btn-quiet self-center px-5 pt-2.5 pb-2 text-base">
         {t.summary.home}
       </Link>
     </div>

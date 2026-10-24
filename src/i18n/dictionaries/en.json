@@ -17,7 +17,9 @@
       "25 seconds per prompt. Wrong answers cost 3 seconds.",
       "One answer per prompt counts. The Master Ball answer scores 100."
     ],
-    "tiers": "Catch tiers"
+    "tiers": "Catch tiers",
+    "endless": "Endless mode",
+    "subline": "The daily Pokémon trivia"
   },
   "play": {
     "loading": "A wild quiz appeared!",
@@ -31,14 +33,17 @@
     "escaped": "Oh no! It got away!",
     "corrected": "(typo forgiven: “{input}”)",
     "wrongEntity": "{name} doesn't fit. −3 s",
+    "wrongEntityAs": "“{input}” read as {name} – doesn't fit. −3 s",
     "unknown": "The Pokédex doesn't know that one. −3 s",
     "duplicate": "You already tried that.",
     "timeUp": "Time's up!",
     "next": "Next",
     "toSummary": "See results",
-    "time": "HP",
+    "time": "Time",
     "question": "Prompt {current}/{total}",
-    "points": "{points} pts"
+    "points": "{points} pts",
+    "hint": "The rarer, the more points",
+    "score": "Score"
   },
   "tiers": {
     "miss": "Got away!",
@@ -69,7 +74,9 @@
     "day": "day",
     "days": "days",
     "nextIn": "Next Pokrillion in {time}",
-    "home": "Back to start"
+    "home": "Back to start",
+    "catches": "Your catches",
+    "exp": "EXP"
   },
   "categories": {
     "pokedex": "Pokédex",
@@ -81,5 +88,32 @@
     "network": "Can't reach the server.",
     "generic": "Something went wrong.",
     "retry": "Try again"
+  },
+  "endless": {
+    "title": "Endless mode",
+    "intro": "Random prompts, no end. When time runs out you lose one of your 3 Poké Balls.",
+    "start": "Let's go!",
+    "resume": "Continue run",
+    "newRun": "New run",
+    "question": "Prompt {n}",
+    "ballsLeft": "{n} balls left",
+    "lastBall": "Last ball!",
+    "noBalls": "Out of balls!",
+    "over": "Run over",
+    "summary": "{score} points in {n} prompts",
+    "best": "Best: {best}",
+    "newBest": "New best!",
+    "again": "Play again",
+    "masterball": "Master Ball",
+    "exhausted": "Wow – you answered every prompt!"
+  },
+  "menu": {
+    "open": "Open menu",
+    "close": "Close menu",
+    "title": "Menu",
+    "modes": "Game modes",
+    "daily": "Daily puzzle",
+    "endless": "Endless mode",
+    "language": "Language"
   }
 }

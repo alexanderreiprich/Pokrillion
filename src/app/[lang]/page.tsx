@@ -2,7 +2,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { DialogBox } from "@/components/DialogBox";
 import { Logo } from "@/components/Logo";
 import { TierList } from "@/components/TierList";
 import { TodayBadge } from "@/components/TodayBadge";
@@ -13,41 +12,57 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
   const dict = await getDictionary(lang);
 
   return (
-    <div className="flex flex-col gap-8">
+    <main className="mx-auto flex w-full max-w-xl flex-1 flex-col px-4 pt-24 pb-28">
       <Logo tagline={dict.brand.tagline} />
-
-      <section className="flex flex-col items-center gap-3">
-        <p className="text-2xl text-electric">
+      <p className="mt-3 text-center text-[clamp(14px,4vw,20px)] tracking-[0.08em] text-drift">
+        {dict.home.subline} ·{" "}
+        <span className="text-electric">
           <TodayBadge today={dict.home.today} comingSoon={dict.home.comingSoon} locale={lang} />
-        </p>
+        </span>
+      </p>
+
+      <div className="mt-14 flex flex-col items-center gap-7">
         <Link
           href={`/${lang}/play`}
-          className="pixel-button bg-ball-red px-10 py-2 font-display text-3xl text-moon hover:brightness-110"
+          className="btn-ring animate-bob px-10 pt-3.5 pb-3 text-[clamp(22px,6vw,28px)] [animation-duration:1.9s]"
         >
           {dict.home.play}
         </Link>
-      </section>
+        <Link href={`/${lang}/endless`} className="btn-quiet px-5 pt-2.5 pb-2 text-base">
+          ∞ {dict.home.endless}
+        </Link>
+      </div>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="font-display text-xl text-drift">{dict.home.howTo}</h2>
-        <DialogBox>
-          <ul className="flex flex-col gap-2 text-xl">
+      <div className="mt-14 flex flex-col gap-5">
+        <details className="group">
+          <summary className="cursor-pointer list-none text-sm [&::-webkit-details-marker]:hidden tracking-[0.18em] text-drift uppercase hover:text-moon">
+            <span className="group-open:hidden">▸ </span>
+            <span className="hidden group-open:inline">▾ </span>
+            {dict.home.howTo}
+          </summary>
+          <ul className="mt-3 flex flex-col gap-1.5 text-[15px] tracking-[0.06em] text-drift uppercase">
             {dict.home.rules.map((rule) => (
               <li key={rule} className="flex gap-2">
-                <span aria-hidden>▸</span>
+                <span aria-hidden className="text-ball-red">▸</span>
                 <span>{rule}</span>
               </li>
             ))}
           </ul>
-        </DialogBox>
-      </section>
+        </details>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="font-display text-xl text-drift">{dict.home.tiers}</h2>
-        <div className="rounded-md border-2 border-line bg-night-900/80 p-4">
-          <TierList labels={dict.tiers} />
-        </div>
-      </section>
-    </div>
+        <details className="group">
+          <summary className="cursor-pointer list-none text-sm [&::-webkit-details-marker]:hidden tracking-[0.18em] text-drift uppercase hover:text-moon">
+            <span className="group-open:hidden">▸ </span>
+            <span className="hidden group-open:inline">▾ </span>
+            {dict.home.tiers}
+          </summary>
+          <div className="mt-4">
+            <TierList labels={dict.tiers} />
+          </div>
+        </details>
+      </div>
+
+      <footer className="mt-auto pt-14 text-center text-sm leading-snug text-drift/60">{dict.footer.disclaimer}</footer>
+    </main>
   );
 }

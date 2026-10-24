@@ -150,3 +150,42 @@ export function loadPuzzle(date: string): Promise<Puzzle | null> {
     };
   });
 }
+
+// --- question catalog (endless mode) ----------------------------------------
+
+export interface CatalogQuestion extends Omit<PuzzleQuestion, "position"> {
+  active: boolean;
+}
+
+const catalogCache = new Map<string, { at: number; value: Promise<Map<string, CatalogQuestion>> }>();
+
+/** All questions by id. */
+export function questionCatalog(): Promise<Map<string, CatalogQuestion>> {
+  return cached(catalogCache, "all", async () => {
+    const rows = check(
+      await db().from("questions").select("id, category, prompt, time_limit_s, universe, masterball_entity_id, active"),
+    ) as {
+      id: string;
+      category: QuestionCategory;
+      prompt: Names;
+      time_limit_s: number;
+      universe: string[];
+      masterball_entity_id: string;
+      active: boolean;
+    }[];
+    return new Map(
+      rows.map((r) => [
+        r.id,
+        {
+          id: r.id,
+          category: r.category,
+          prompt: r.prompt,
+          timeLimitS: r.time_limit_s,
+          universe: r.universe,
+          masterballId: r.masterball_entity_id,
+          active: r.active,
+        },
+      ]),
+    );
+  });
+}

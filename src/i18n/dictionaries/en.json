@@ -17,7 +17,9 @@
       "25 seconds per prompt. Wrong answers cost 3 seconds.",
       "One answer per prompt counts. The Master Ball answer scores 100."
     ],
-    "tiers": "Catch tiers"
+    "tiers": "Catch tiers",
+    "endless": "Endless mode",
+    "subline": "The daily Pokémon trivia"
   },
   "play": {
     "loading": "A wild quiz appeared!",
@@ -31,14 +33,18 @@
     "escaped": "Oh no! It got away!",
     "corrected": "(typo forgiven: “{input}”)",
     "wrongEntity": "{name} doesn't fit. −3 s",
+    "wrongEntityAs": "“{input}” read as {name} – doesn't fit. −3 s",
     "unknown": "The Pokédex doesn't know that one. −3 s",
     "duplicate": "You already tried that.",
+    "rateLimited": "Not so fast! Take a breath and try again.",
     "timeUp": "Time's up!",
     "next": "Next",
     "toSummary": "See results",
-    "time": "HP",
+    "time": "Time",
     "question": "Prompt {current}/{total}",
-    "points": "{points} pts"
+    "points": "{points} pts",
+    "hint": "The rarer, the more points",
+    "score": "Score"
   },
   "tiers": {
     "miss": "Got away!",
@@ -69,7 +75,9 @@
     "day": "day",
     "days": "days",
     "nextIn": "Next Pokrillion in {time}",
-    "home": "Back to start"
+    "home": "Back to start",
+    "catches": "Your catches",
+    "exp": "EXP"
   },
   "categories": {
     "pokedex": "Pokédex",
@@ -81,5 +89,103 @@
     "network": "Can't reach the server.",
     "generic": "Something went wrong.",
     "retry": "Try again"
+  },
+  "endless": {
+    "title": "Endless mode",
+    "intro": "Random prompts, no end. When time runs out you lose one of your 3 Poké Balls.",
+    "start": "Let's go!",
+    "resume": "Continue run",
+    "newRun": "New run",
+    "question": "Prompt {n}",
+    "ballsLeft": "{n} balls left",
+    "lastBall": "Last ball!",
+    "noBalls": "Out of balls!",
+    "over": "Run over",
+    "summary": "{score} points in {n} prompts",
+    "best": "Best: {best}",
+    "newBest": "New best!",
+    "again": "Play again",
+    "masterball": "Master Ball",
+    "exhausted": "Wow – you answered every prompt!"
+  },
+  "menu": {
+    "open": "Open menu",
+    "close": "Close menu",
+    "title": "Menu",
+    "modes": "Game modes",
+    "daily": "Daily puzzle",
+    "endless": "Endless mode",
+    "language": "Language"
+  },
+  "admin": {
+    "title": "Curation",
+    "nav": {
+      "overview": "Overview",
+      "unknown": "Unknown inputs",
+      "disputed": "Disputed",
+      "questions": "Questions"
+    },
+    "range": {
+      "d7": "7 days",
+      "d30": "30 days",
+      "all": "All time"
+    },
+    "empty": "No data in this period yet.",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "inactive": "inactive",
+    "overview": {
+      "intro": "Play activity per day (UTC).",
+      "day": "Day",
+      "plays": "Daily started",
+      "finished": "finished",
+      "avgScore": "Avg. score",
+      "endlessRuns": "Endless runs",
+      "endlessAnswers": "Endless answers"
+    },
+    "unknown": {
+      "intro": "Inputs that matched no entity. Frequent typos → add a spelling in content/aliases/. Genuinely missing answers → add the entity or question.",
+      "input": "Input",
+      "count": "Count",
+      "where": "Asked on",
+      "suggestion": "Probably meant",
+      "none": "no similar entity – missing from the data?",
+      "yaml": "For content/aliases/{file}.yaml",
+      "elsewhere": "Exists as {name} ({id}) – wrong category, not a data gap"
+    },
+    "disputed": {
+      "intro": "Real Pokémon, places etc. that were named but don't count for the question. If they should: add them to the answer set (answers.include).",
+      "question": "Question",
+      "guess": "Named",
+      "count": "Count",
+      "yaml": "In content/questions/… for {question}"
+    },
+    "questions": {
+      "intro": "How the questions perform. Many timeouts = too hard, many wrong inputs = unclear prompt or missing answers.",
+      "question": "Question",
+      "played": "played",
+      "misses": "timed out",
+      "avgPoints": "Avg. points",
+      "distinct": "distinct answers",
+      "wrong": "wrong",
+      "unknown": "unknown",
+      "answers": "answers"
+    },
+    "detail": {
+      "back": "← All questions",
+      "intro": "Expected share (from familiarity) vs. actual share of players. Large gaps → adjust familiarity.",
+      "answer": "Answer",
+      "given": "named",
+      "observed": "Player share",
+      "prior": "Expected share",
+      "familiarity": "Familiarity",
+      "suggested": "Suggestion",
+      "pointsNow": "Points now",
+      "tooFew": "Suggestions are meaningful from {n} answers (so far {count}).",
+      "yaml": "Suggestions for content/familiarity/{file}.yaml",
+      "yamlNote": "Familiarity applies to all questions – sanity-check before applying.",
+      "noSuggestions": "No notable deviations.",
+      "masterball": "Master Ball"
+    }
   }
 }

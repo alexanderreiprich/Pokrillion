@@ -17,7 +17,9 @@
       "25 Sekunden pro Frage. Falsche Antworten kosten 3 Sekunden.",
       "Eine Antwort pro Frage zählt. Die Meisterball-Antwort gibt 100 Punkte."
     ],
-    "tiers": "Fangstufen"
+    "tiers": "Fangstufen",
+    "endless": "Endlos-Modus",
+    "subline": "Das tägliche Pokémon-Quiz"
   },
   "play": {
     "loading": "Ein wildes Quiz erscheint!",
@@ -31,14 +33,18 @@
     "escaped": "Mist! Es ist entkommen!",
     "corrected": "(Tippfehler verziehen: „{input}“)",
     "wrongEntity": "{name} passt leider nicht. −3 s",
+    "wrongEntityAs": "„{input}“ erkannt als {name} – passt leider nicht. −3 s",
     "unknown": "Das kennt der Pokédex nicht. −3 s",
     "duplicate": "Hast du schon probiert.",
+    "rateLimited": "Nicht so schnell! Kurz durchatmen und nochmal.",
     "timeUp": "Die Zeit ist um!",
     "next": "Weiter",
     "toSummary": "Zur Auswertung",
-    "time": "KP",
+    "time": "Zeit",
     "question": "Frage {current}/{total}",
-    "points": "{points} P"
+    "points": "{points} P",
+    "hint": "Je seltener, desto mehr Punkte",
+    "score": "Punkte"
   },
   "tiers": {
     "miss": "Entkommen!",
@@ -69,7 +75,9 @@
     "day": "Tag",
     "days": "Tage",
     "nextIn": "Nächstes Pokrillion in {time}",
-    "home": "Zur Startseite"
+    "home": "Zur Startseite",
+    "catches": "Deine Fänge",
+    "exp": "EP"
   },
   "categories": {
     "pokedex": "Pokédex",
@@ -81,5 +89,103 @@
     "network": "Keine Verbindung zum Server.",
     "generic": "Da ist etwas schiefgelaufen.",
     "retry": "Nochmal versuchen"
+  },
+  "endless": {
+    "title": "Endlos-Modus",
+    "intro": "Zufällige Fragen ohne Ende. Läuft die Zeit ab, verlierst du einen deiner 3 Pokébälle.",
+    "start": "Los geht's!",
+    "resume": "Runde fortsetzen",
+    "newRun": "Neue Runde",
+    "question": "Frage {n}",
+    "ballsLeft": "Noch {n} Bälle übrig",
+    "lastBall": "Letzter Ball!",
+    "noBalls": "Keine Bälle mehr!",
+    "over": "Runde vorbei",
+    "summary": "{score} Punkte in {n} Fragen",
+    "best": "Rekord: {best}",
+    "newBest": "Neuer Rekord!",
+    "again": "Nochmal",
+    "masterball": "Meisterball",
+    "exhausted": "Wow – du hast alle Fragen beantwortet!"
+  },
+  "menu": {
+    "open": "Menü öffnen",
+    "close": "Menü schließen",
+    "title": "Menü",
+    "modes": "Spielmodi",
+    "daily": "Tagesrätsel",
+    "endless": "Endlos-Modus",
+    "language": "Sprache"
+  },
+  "admin": {
+    "title": "Kuratierung",
+    "nav": {
+      "overview": "Übersicht",
+      "unknown": "Unbekannte Eingaben",
+      "disputed": "Umstritten",
+      "questions": "Fragen"
+    },
+    "range": {
+      "d7": "7 Tage",
+      "d30": "30 Tage",
+      "all": "Gesamt"
+    },
+    "empty": "Noch keine Daten in diesem Zeitraum.",
+    "copy": "Kopieren",
+    "copied": "Kopiert!",
+    "inactive": "inaktiv",
+    "overview": {
+      "intro": "Spielaktivität pro Tag (UTC).",
+      "day": "Tag",
+      "plays": "Tagesrätsel gestartet",
+      "finished": "beendet",
+      "avgScore": "Ø Punkte",
+      "endlessRuns": "Endlos-Runden",
+      "endlessAnswers": "Endlos-Antworten"
+    },
+    "unknown": {
+      "intro": "Eingaben, die keiner Entität zugeordnet werden konnten. Häufige Tippfehler → Schreibweise in content/aliases/ ergänzen. Echte fehlende Antworten → Entität oder Frage ergänzen.",
+      "input": "Eingabe",
+      "count": "Anzahl",
+      "where": "Gestellt bei",
+      "suggestion": "Vermutlich gemeint",
+      "none": "keine ähnliche Entität – fehlt sie in den Daten?",
+      "yaml": "Für content/aliases/{file}.yaml",
+      "elsewhere": "Existiert als {name} ({id}) – falsche Kategorie, keine Datenlücke"
+    },
+    "disputed": {
+      "intro": "Echte Pokémon, Orte usw., die genannt wurden, aber für die Frage nicht zählen. Gehören sie doch dazu: in die Lösungsmenge aufnehmen (answers.include).",
+      "question": "Frage",
+      "guess": "Genannt",
+      "count": "Anzahl",
+      "yaml": "In content/questions/… bei {question}"
+    },
+    "questions": {
+      "intro": "Wie die Fragen laufen. Viele Timeouts = zu schwer, viele Falsch-Eingaben = unklare Frage oder fehlende Antworten.",
+      "question": "Frage",
+      "played": "gespielt",
+      "misses": "Zeit abgelaufen",
+      "avgPoints": "Ø Punkte",
+      "distinct": "versch. Antworten",
+      "wrong": "falsch",
+      "unknown": "unbekannt",
+      "answers": "Lösungen"
+    },
+    "detail": {
+      "back": "← Alle Fragen",
+      "intro": "Erwarteter Anteil (aus Bekanntheit) gegen tatsächlichen Anteil der Spieler. Große Abweichungen → Bekanntheitswert anpassen.",
+      "answer": "Antwort",
+      "given": "genannt",
+      "observed": "Anteil Spieler",
+      "prior": "Anteil erwartet",
+      "familiarity": "Bekanntheit",
+      "suggested": "Vorschlag",
+      "pointsNow": "Punkte jetzt",
+      "tooFew": "Vorschläge erst ab {n} Antworten aussagekräftig (bisher {count}).",
+      "yaml": "Vorschläge für content/familiarity/{file}.yaml",
+      "yamlNote": "Bekanntheit gilt für alle Fragen – vor dem Übernehmen kurz plausibilisieren.",
+      "noSuggestions": "Keine deutlichen Abweichungen.",
+      "masterball": "Meisterball"
+    }
   }
 }

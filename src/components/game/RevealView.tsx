@@ -4,17 +4,18 @@ import { useEffect, useState } from "react";
 import type { QuestionResult } from "@/lib/api/types";
 import type { Locale } from "@/lib/content/schema";
 import { fill } from "@/i18n/fill";
-import { DialogBox } from "@/components/DialogBox";
 import { Pokeball } from "@/components/Pokeball";
 import { TIER_COLOR } from "@/components/tier-colors";
 import type { GameTexts } from "./Game";
+import { CatchLadder } from "./CatchLadder";
 
 const WOBBLE_MS = 1200;
 
-/** Ball wobbles, then: "Gotcha! Lunatone · Master Ball · 100 pts" (or "It got away!"). */
+/** Ball wobbles, then: "Gotcha! · MASTER BALL · Lunatone · +100 pts" (or "It got away!"). */
 export function RevealView({
   result,
   correctedFrom,
+  note,
   isLast,
   lang,
   t,
@@ -22,6 +23,8 @@ export function RevealView({
 }: {
   result: QuestionResult;
   correctedFrom: string | null;
+  /** Extra line under the result, e.g. "2 balls left" in endless mode. */
+  note?: string;
   isLast: boolean;
   lang: Locale;
   t: GameTexts;
@@ -37,46 +40,59 @@ export function RevealView({
   }, [caught]);
 
   return (
-    <div className="flex flex-col items-center gap-6 py-4">
-      <div className={settled && result.tier === "masterball" ? "animate-sparkle" : undefined}>
-        <Pokeball size={96} color={color} className={caught ? "animate-wobble" : "opacity-60"} />
-      </div>
+    <div className="flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col items-center justify-center gap-6 py-6 text-center">
+        <span className={settled && result.tier === "masterball" ? "animate-sparkle" : undefined}>
+          <span
+            className={`block ${caught ? "animate-wobble" : "opacity-60"}`}
+            style={{ filter: `drop-shadow(0 0 20px ${color})` }}
+          >
+            <Pokeball size={88} color={color} />
+          </span>
+        </span>
 
-      <div className="w-full" aria-live="polite">
-        {settled && (
-          <DialogBox arrow={false}>
-            <div className="animate-pop flex flex-col gap-1">
+        <div aria-live="polite" className="min-h-40 w-full">
+          {settled && (
+            <div className="animate-bloom flex flex-col items-center gap-1">
               {caught ? (
                 <>
-                  <span>
-                    {t.play.caught} <strong>{result.entity!.names[lang]}</strong>
-                  </span>
+                  <p className="text-sm tracking-[0.32em] text-drift uppercase">{t.play.caught}</p>
+                  <p
+                    className="text-[clamp(30px,9vw,46px)] leading-none tracking-[0.12em] uppercase"
+                    style={{ color, textShadow: `0 0 22px ${color}, 0 3px 0 rgb(0 0 0 / 0.6)` }}
+                  >
+                    {t.tiers[result.tier]}
+                  </p>
+                  <p className="mt-1 text-[22px] tracking-[0.08em]">{result.entity!.names[lang]}</p>
                   {correctedFrom && (
-                    <span className="text-lg opacity-70">{fill(t.play.corrected, { input: correctedFrom })}</span>
+                    <p className="text-base text-drift">{fill(t.play.corrected, { input: correctedFrom })}</p>
                   )}
                 </>
               ) : (
-                <span>{t.play.escaped}</span>
+                <p
+                  className="text-[clamp(26px,7.5vw,38px)] leading-tight tracking-[0.08em] uppercase"
+                  style={{ color: "var(--color-drift)", textShadow: "0 3px 0 rgb(0 0 0 / 0.6)" }}
+                >
+                  {t.play.escaped}
+                </p>
               )}
-              <span className="flex items-baseline justify-between">
-                <span style={{ color: result.tier === "miss" ? undefined : color }} className="font-display text-xl">
-                  {t.tiers[result.tier]}
-                </span>
-                <span className="text-4xl leading-none">+{result.points}</span>
-              </span>
+              <p className="glow mt-1 text-[26px] tabular-nums" style={{ color: caught ? color : "var(--color-drift)" }}>
+                {fill(t.play.points, { points: `+${result.points}` })}
+              </p>
+              {note && <p className="mt-1 text-base tracking-[0.14em] text-ball-red uppercase">{note}</p>}
             </div>
-          </DialogBox>
-        )}
+          )}
+        </div>
+
+        {settled && <CatchLadder tier={result.tier} />}
       </div>
 
       {settled && (
-        <button
-          autoFocus
-          onClick={onNext}
-          className="pixel-button animate-pop bg-ball-red px-8 py-1.5 font-display text-2xl text-moon hover:brightness-110"
-        >
-          {isLast ? t.play.toSummary : t.play.next}
-        </button>
+        <div className="animate-rise sticky bottom-0 flex justify-center pt-4 pb-3">
+          <button autoFocus onClick={onNext} className="btn-ring px-8 pt-3 pb-2.5 text-[22px]">
+            {isLast ? t.play.toSummary : t.play.next} ▸
+          </button>
+        </div>
       )}
     </div>
   );

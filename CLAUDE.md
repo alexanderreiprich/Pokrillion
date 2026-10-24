@@ -31,4 +31,4 @@ Tägliches Pokémon-Trivia nach dem Vorbild von krillion.io. **Konzept, Architek
 - DB-Zugriff nur über `src/lib/db/server.ts` (Service Role). RLS ist überall an, ohne Policies.
 - Entity-IDs haben die Form `<kind>:<slug>` (`pokemon:pikachu`). Neue Entity-Arten in `ENTITY_KINDS` eintragen.
 - Design-Tokens stehen in `src/app/globals.css` (`@theme`). Keine offiziellen Pokémon-Artworks oder Sprites einbinden (siehe Konzept §10).
-- Schemaänderungen nur als neue Datei in `supabase/migrations/`.
+- Schemaänderungen nur als neue Datei in `supabase/migrations/`. Neue Tabellen, Views und Funktionen explizit mit `grant … to service_role` freigeben (Supabase Cloud macht das nicht automatisch, lokal fällt es nicht auf).

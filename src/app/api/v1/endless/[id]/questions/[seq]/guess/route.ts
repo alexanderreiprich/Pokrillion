@@ -1,5 +1,6 @@
 import { ApiError, parsePosition, parseUuid, playerId, readJson, respond } from "@/lib/server/http";
 import { submitEndlessGuess } from "@/lib/server/endless";
+import { limitGuesses } from "@/lib/server/rate-limit";
 
 const MAX_SEQ = 1000;
 
@@ -9,6 +10,8 @@ export async function POST(request: Request, ctx: RouteContext<"/api/v1/endless/
     const { id, seq } = await ctx.params;
     const { input } = await readJson(request);
     if (typeof input !== "string") throw new ApiError("bad_request", "input fehlt");
-    return submitEndlessGuess(parseUuid(id), await playerId({ create: false }), parsePosition(seq, MAX_SEQ), input);
+    const player = await playerId({ create: false });
+    await limitGuesses(request.headers, player);
+    return submitEndlessGuess(parseUuid(id), player, parsePosition(seq, MAX_SEQ), input);
   });
 }

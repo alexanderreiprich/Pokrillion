@@ -36,6 +36,7 @@
     "wrongEntityAs": "„{input}“ erkannt als {name} – passt leider nicht. −3 s",
     "unknown": "Das kennt der Pokédex nicht. −3 s",
     "duplicate": "Hast du schon probiert.",
+    "rateLimited": "Nicht so schnell! Kurz durchatmen und nochmal.",
     "timeUp": "Die Zeit ist um!",
     "next": "Weiter",
     "toSummary": "Zur Auswertung",

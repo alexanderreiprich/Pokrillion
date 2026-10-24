@@ -83,6 +83,7 @@ export type ApiErrorCode =
   | "ended"
   | "exhausted"
   | "unauthorized"
+  | "rate_limited"
   | "internal";
 
 export interface ApiErrorBody {

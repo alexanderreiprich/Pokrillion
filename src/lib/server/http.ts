@@ -15,6 +15,7 @@ const STATUS: Record<ApiErrorCode, number> = {
   unfinished: 409,
   ended: 409,
   exhausted: 409,
+  rate_limited: 429,
   internal: 500,
 };
 

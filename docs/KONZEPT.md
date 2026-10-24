@@ -2,7 +2,7 @@
 
 > *Eins zu einer Pokrillion.* Ein tägliches Pokémon-Trivia, bei dem seltene richtige Antworten mehr Punkte geben als offensichtliche.
 
-Stand: 2026-10-21 · Status: Phase 1 lokal spielbar mit 99 aktiven Fragen; offen ist das Deployment
+Stand: 2026-10-24 · Status: Phase 1 live auf Vercel (pokrillion.vercel.app) mit 99 aktiven Fragen; offen sind Domain und Impressum/Datenschutz vor dem öffentlichen Go-live
 
 ---
 
@@ -240,6 +240,10 @@ play_questions      Fortschritt pro Frage (server-seitiger Timer)
 
 guesses             Jede Eingabe (auch falsche)
   id bigint PK, play_id FK, position, raw_input, normalized, entity_id null, result, points, created_at
+
+rate_limits         Zähler für das Rate-Limit auf /guess (festes Fenster)
+  key text PK         'pid:<uuid>' oder 'ip:<HMAC>'
+  window_start, hits
 ```
 
 **Statistik:** Die View `puzzle_answer_counts(puzzle_date, position, entity_id, n)` zählt die gültigen Antworten. Sie liefert `n(a)` und `N` für das Scoring und die Auswertung am Ende.
@@ -247,6 +251,8 @@ guesses             Jede Eingabe (auch falsche)
 **Antwort einloggen:** `lock_answer(play_id, position, entity_id)` setzt die Antwort atomar (nur wenn die Frage noch offen ist) und gibt `n` und `N` *inklusive* dieser Antwort zurück. Die Punkte berechnet danach `scoreAnswer()` in TypeScript, damit die Formel nur an einer Stelle existiert.
 
 **Sicherheit:** RLS ist auf allen Tabellen aktiv, ohne Policies für `anon`/`authenticated`. Zugriff gibt es nur über die Next.js-Route-Handler mit Service-Role-Key (`server-only`).
+
+**Rechte:** Supabase-Cloud-Projekte geben neue Tabellen und Funktionen nicht mehr automatisch für die API-Rollen frei. Ohne Rechte meldet der Server `Could not find the table … in the schema cache` bzw. `42501 permission denied`. `20261024000000_service_role_grants.sql` vergibt die Rechte für `service_role` und setzt Default Privileges; neue Migrationen schreiben die `grant … to service_role` trotzdem explizit dazu (lokal fällt ein fehlender Grant nicht auf).
 
 ---
 
@@ -265,7 +271,9 @@ guesses             Jede Eingabe (auch falsche)
 | `POST /endless/:id/next` | nächste Zufallsfrage aufdecken (oder offene fortsetzen) | wie `start` |
 | `POST /endless/:id/questions/:seq/guess` | Antwort prüfen | wie `guess` |
 | `POST /endless/:id/questions/:seq/timeout` | Zeit abgelaufen, ein Ball weniger | `{result, lives, finished}` |
-| `GET /cron/schedule` | (Vercel Cron, `Authorization: Bearer $CRON_SECRET`) Puzzles 15 Tage im Voraus planen | `{created: [dates]}` |
+| `GET /cron/schedule` | (Vercel Cron, `Authorization: Bearer $CRON_SECRET`) Puzzles 15 Tage im Voraus planen, alte Rate-Limit-Zeilen löschen | `{created: [dates], pruned}` |
+
+**Rate-Limit:** Beide `guess`-Routen zählen pro Minute höchstens 30 Eingaben pro `pid` und 120 pro IP (`GUESS_LIMIT` in `src/lib/server/rate-limit.ts`). Darüber antworten sie mit `429 rate_limited`, der Client zeigt dann nur einen Hinweis. Gezählt wird in Postgres (`hit_rate_limits`), weil Serverless-Instanzen keinen gemeinsamen Speicher haben. Die IP wird nur als HMAC mit `CRON_SECRET` gespeichert; der tägliche Cron löscht Zeilen, die älter als eine Stunde sind.
 
 Die Prompts werden **erst beim Start der Frage** ausgeliefert. Sonst könnte man alle 7 Fragen vorab googeln.
 
@@ -410,7 +418,7 @@ Aufbau, Typografie und Komponenten folgen Krillion. Pokémon kommt über Szeneri
 - **Name/Domain:** „Pokrillion“ enthält „Pok“. Das Risiko ist gering, aber vorhanden. Bei Abmahnung braucht es einen Ausweichnamen.
 - **Sprites:** Die PokéAPI-Sprites sind gerippte Spielgrafiken (Grauzone). Sie sind bewusst nicht im MVP.
 - **Datenschutz:** nur eine anonyme Zufalls-ID, keine personenbezogenen Daten, kein Tracking-Cookie. Datenschutzhinweis und Impressum werden vor dem Go-live trotzdem nötig (DE).
-- **Missbrauch:** Rate-Limit pro `pid`/IP auf `/guess`, ein Play pro `pid` und Tag. Cookie-Löschen erlaubt Mehrfachspielen. Das ist im MVP akzeptiert; Statistiken zählen nur abgeschlossene Plays.
+- **Missbrauch:** Rate-Limit pro `pid`/IP auf `/guess` (siehe §7), ein Play pro `pid` und Tag. Cookie-Löschen erlaubt Mehrfachspielen. Das ist im MVP akzeptiert; Statistiken zählen nur abgeschlossene Plays.
 
 ---
 
@@ -425,16 +433,17 @@ Aufbau, Typografie und Komponenten folgen Krillion. Pokémon kommt über Szeneri
 
 ### Phase 1 – Spielbarer MVP
 - [x] Lokales Supabase (`npm run db:start`), `.env.local`
-- [ ] Supabase-Cloud-Projekt anlegen
+- [x] Supabase-Cloud-Projekt (Free Tier, eine Datenbank für Prod)
 - [x] Server-Logik (`src/lib/server/`) + Route Handlers aus Abschnitt 7, server-seitiger Timer
 - [x] Spiel-UI: Intro → 7× (Fragen-Karte mit Tipp-Effekt, Pokéradar-Timer, Eingabe, Ball-Wackeln) → Auswertung
 - [x] Design an Krillion angeglichen (HUD, Dock, Menü, Szenerie)
 - [x] Share-Button, Resume nach Reload (Fortschritt liegt auf dem Server), Serie über localStorage, Countdown zum nächsten Rätsel
 - [x] Puzzle-Planer (`npm run schedule`) + Vercel Cron (`vercel.json`, täglich 03:00 UTC, 15 Tage Vorlauf)
-- [ ] Rate-Limit auf `/guess` (vor öffentlichem Go-live)
+- [x] Rate-Limit auf `/guess` (30/min pro `pid`, 120/min pro IP)
 - [x] Content: 99 aktive Fragen (55 Pokédex, 44 Spiele) + Familiarity-Overrides für ~180 Pokémon, 70 Attacken, 43 Items, 26 Orte
 - [x] Footer mit Disclaimer (Impressum/Datenschutz erst bei öffentlichem Go-live)
-- [ ] Deployment Vercel + Domain pokrillion.io
+- [x] Deployment Vercel (pokrillion.vercel.app, Production Branch `prod`)
+- [ ] Domain pokrillion.io
 
 ### Phase 2 – Wachstum
 - Anime-Kategorie: Fragen kuratieren und prüfen (Begleiter, Ash-Pokémon …), Anime-Quote im Tagesmix aktivieren

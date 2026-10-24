@@ -45,6 +45,15 @@ Danach `npm run dev` und http://localhost:3000/de/play öffnen (Endlos-Modus: `/
 
 Ein heutiges Spiel nochmal spielen (lokal): in Studio die Zeilen in `plays` löschen, oder `docker exec supabase_db_Pokrillion psql -U postgres -c "delete from plays;"`.
 
+## Deployment
+
+Vercel (Production Branch `prod`) und ein Supabase-Cloud-Projekt. Environment Variables, Cron und Release-Ablauf: [`docs/BRANCHING.md`](docs/BRANCHING.md#deployment).
+
+```bash
+npx supabase link --project-ref <ref>   # einmalig
+npx supabase db push                    # neue Migrationen vor dem Release anwenden
+```
+
 ## Struktur
 
 ```

@@ -108,6 +108,10 @@ export function QuestionView({
       setInput("");
     } catch (err) {
       if (err instanceof ApiClientError && err.code === "bad_request") return;
+      if (err instanceof ApiClientError && err.code === "rate_limited") {
+        setFeedback({ text: t.play.rateLimited, tone: "neutral" });
+        return;
+      }
       onError(err);
     } finally {
       setBusy(false);

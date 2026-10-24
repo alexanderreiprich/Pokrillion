@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { VT323 } from "next/font/google";
 import { LOCALES, hasLocale } from "@/i18n/config";
@@ -37,15 +38,18 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
     <html lang={lang} className={`${vt323.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <Backdrop />
-        <SiteMenu
-          lang={lang}
-          t={{
-            ...dict.menu,
-            tagline: dict.brand.tagline,
-            disclaimer: dict.footer.disclaimer,
-            otherLanguage: dict.footer.language,
-          }}
-        />
+        {/* usePathname() is runtime data on dynamic routes like /admin/questions/[id]. */}
+        <Suspense fallback={null}>
+          <SiteMenu
+            lang={lang}
+            t={{
+              ...dict.menu,
+              tagline: dict.brand.tagline,
+              disclaimer: dict.footer.disclaimer,
+              otherLanguage: dict.footer.language,
+            }}
+          />
+        </Suspense>
         {children}
       </body>
     </html>

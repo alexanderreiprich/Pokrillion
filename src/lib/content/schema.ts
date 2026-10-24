@@ -101,3 +101,5 @@ export type Question = z.infer<typeof Question>;
 export const QuestionFile = z.array(Question);
 export const EntityFile = z.array(Entity);
 export const FamiliarityFile = z.record(EntityId, z.number().int().min(1).max(100));
+/** Extra accepted spellings for any entity, including generated ones (content/aliases/*.yaml). */
+export const AliasFile = z.record(EntityId, z.array(z.string().min(1)).min(1));

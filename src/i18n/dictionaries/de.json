@@ -115,5 +115,76 @@
     "daily": "Tagesrätsel",
     "endless": "Endlos-Modus",
     "language": "Sprache"
+  },
+  "admin": {
+    "title": "Kuratierung",
+    "nav": {
+      "overview": "Übersicht",
+      "unknown": "Unbekannte Eingaben",
+      "disputed": "Umstritten",
+      "questions": "Fragen"
+    },
+    "range": {
+      "d7": "7 Tage",
+      "d30": "30 Tage",
+      "all": "Gesamt"
+    },
+    "empty": "Noch keine Daten in diesem Zeitraum.",
+    "copy": "Kopieren",
+    "copied": "Kopiert!",
+    "inactive": "inaktiv",
+    "overview": {
+      "intro": "Spielaktivität pro Tag (UTC).",
+      "day": "Tag",
+      "plays": "Tagesrätsel gestartet",
+      "finished": "beendet",
+      "avgScore": "Ø Punkte",
+      "endlessRuns": "Endlos-Runden",
+      "endlessAnswers": "Endlos-Antworten"
+    },
+    "unknown": {
+      "intro": "Eingaben, die keiner Entität zugeordnet werden konnten. Häufige Tippfehler → Schreibweise in content/aliases/ ergänzen. Echte fehlende Antworten → Entität oder Frage ergänzen.",
+      "input": "Eingabe",
+      "count": "Anzahl",
+      "where": "Gestellt bei",
+      "suggestion": "Vermutlich gemeint",
+      "none": "keine ähnliche Entität – fehlt sie in den Daten?",
+      "yaml": "Für content/aliases/{file}.yaml",
+      "elsewhere": "Existiert als {name} ({id}) – falsche Kategorie, keine Datenlücke"
+    },
+    "disputed": {
+      "intro": "Echte Pokémon, Orte usw., die genannt wurden, aber für die Frage nicht zählen. Gehören sie doch dazu: in die Lösungsmenge aufnehmen (answers.include).",
+      "question": "Frage",
+      "guess": "Genannt",
+      "count": "Anzahl",
+      "yaml": "In content/questions/… bei {question}"
+    },
+    "questions": {
+      "intro": "Wie die Fragen laufen. Viele Timeouts = zu schwer, viele Falsch-Eingaben = unklare Frage oder fehlende Antworten.",
+      "question": "Frage",
+      "played": "gespielt",
+      "misses": "Zeit abgelaufen",
+      "avgPoints": "Ø Punkte",
+      "distinct": "versch. Antworten",
+      "wrong": "falsch",
+      "unknown": "unbekannt",
+      "answers": "Lösungen"
+    },
+    "detail": {
+      "back": "← Alle Fragen",
+      "intro": "Erwarteter Anteil (aus Bekanntheit) gegen tatsächlichen Anteil der Spieler. Große Abweichungen → Bekanntheitswert anpassen.",
+      "answer": "Antwort",
+      "given": "genannt",
+      "observed": "Anteil Spieler",
+      "prior": "Anteil erwartet",
+      "familiarity": "Bekanntheit",
+      "suggested": "Vorschlag",
+      "pointsNow": "Punkte jetzt",
+      "tooFew": "Vorschläge erst ab {n} Antworten aussagekräftig (bisher {count}).",
+      "yaml": "Vorschläge für content/familiarity/{file}.yaml",
+      "yamlNote": "Bekanntheit gilt für alle Fragen – vor dem Übernehmen kurz plausibilisieren.",
+      "noSuggestions": "Keine deutlichen Abweichungen.",
+      "masterball": "Meisterball"
+    }
   }
 }

@@ -118,3 +118,27 @@ export function osaDistance(a: string, b: string, cutoff = Infinity): number {
   }
   return Math.min(prev[cols - 1], cutoff);
 }
+
+/**
+ * Closest entities for an input that matched nothing – for curation ("probably meant …").
+ * Unlike matchInput this ignores the length-based typo limit and returns several candidates.
+ */
+export function closestEntities(
+  index: MatchIndex,
+  input: string,
+  maxDistance = 3,
+  limit = 3,
+): { entityId: string; distance: number }[] {
+  const needle = normalize(input);
+  if (!needle) return [];
+  const best = new Map<string, number>();
+  for (const [alias, ids] of index.byAlias) {
+    const d = osaDistance(needle, alias, maxDistance + 1);
+    if (d > maxDistance) continue;
+    for (const id of ids) if (!best.has(id) || d < best.get(id)!) best.set(id, d);
+  }
+  return [...best.entries()]
+    .map(([entityId, distance]) => ({ entityId, distance }))
+    .sort((a, b) => a.distance - b.distance || a.entityId.localeCompare(b.entityId))
+    .slice(0, limit);
+}

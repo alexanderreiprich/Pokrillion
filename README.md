@@ -39,7 +39,9 @@ npm run db:reset            # content:build + Migration + Seed neu einspielen (l
 npm run schedule            # Tagesrätsel für die nächsten 15 Tage planen
 ```
 
-Danach `npm run dev` und http://localhost:3000/de/play öffnen. Supabase Studio (Daten ansehen): http://127.0.0.1:54323
+Danach `npm run dev` und http://localhost:3000/de/play öffnen (Endlos-Modus: `/de/endless`).
+
+**Kuratierung:** `ADMIN_PASSWORD=…` in `.env.local` setzen, Dev-Server neu starten, dann http://localhost:3000/de/admin (Benutzername egal). Ohne Passwort ist die Ansicht deaktiviert. Supabase Studio (Daten ansehen): http://127.0.0.1:54323
 
 Ein heutiges Spiel nochmal spielen (lokal): in Studio die Zeilen in `plays` löschen, oder `docker exec supabase_db_Pokrillion psql -U postgres -c "delete from plays;"`.
 

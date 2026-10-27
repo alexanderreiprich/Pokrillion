@@ -33,24 +33,29 @@ const indexCache = new Map<string, { at: number; value: Promise<MatchIndex> }>()
 export function universeIndex(kinds: string[]): Promise<MatchIndex> {
   const key = [...kinds].sort().join(",");
   return cached(indexCache, key, async () => {
-    const rows: { alias: string; entity_id: string }[] = [];
-    for (const kind of kinds) {
-      for (let from = 0; ; from += PAGE) {
-        const page = check(
-          await db()
-            .from("entity_aliases")
-            .select("alias, entity_id")
-            .like("entity_id", `${kind}:%`)
-            .order("alias")
-            .order("entity_id")
-            .range(from, from + PAGE - 1),
-        ) as { alias: string; entity_id: string }[];
-        rows.push(...page);
-        if (page.length < PAGE) break;
-      }
-    }
-    return indexFromAliases(rows);
+    const perKind = await Promise.all(kinds.map(kindAliases));
+    return indexFromAliases(perKind.flat());
   });
+}
+
+type AliasRow = { alias: string; entity_id: string };
+
+/** All aliases of one entity kind. The first page brings the row count, the rest load in parallel. */
+async function kindAliases(kind: string): Promise<AliasRow[]> {
+  const page = async (from: number, count?: "exact") => {
+    const result = await db()
+      .from("entity_aliases")
+      .select("alias, entity_id", { count })
+      .like("entity_id", `${kind}:%`)
+      .order("alias")
+      .order("entity_id")
+      .range(from, from + PAGE - 1);
+    return { rows: check(result) as AliasRow[], total: result.count ?? 0 };
+  };
+  const first = await page(0, "exact");
+  const rest: Promise<{ rows: AliasRow[] }>[] = [];
+  for (let from = PAGE; from < first.total; from += PAGE) rest.push(page(from));
+  return [first, ...(await Promise.all(rest))].flatMap((p) => p.rows);
 }
 
 // --- answer sets -------------------------------------------------------------
@@ -69,14 +74,25 @@ export function answerPriors(questionId: string): Promise<Map<string, number>> {
 
 // --- entity names ------------------------------------------------------------
 
+const refCache = new Map<string, { at: number; value: EntityRef }>();
+
 export async function entityRefs(ids: Iterable<string>): Promise<Map<string, EntityRef>> {
-  const unique = [...new Set(ids)];
   const out = new Map<string, EntityRef>();
-  for (let i = 0; i < unique.length; i += 200) {
-    const rows = check(
-      await db().from("entities").select("id, names").in("id", unique.slice(i, i + 200)),
-    ) as { id: string; names: Names }[];
-    for (const r of rows) out.set(r.id, r);
+  const missing: string[] = [];
+  for (const id of new Set(ids)) {
+    const hit = refCache.get(id);
+    if (hit && Date.now() - hit.at < TTL_MS) out.set(id, hit.value);
+    else missing.push(id);
+  }
+
+  const chunks: string[][] = [];
+  for (let i = 0; i < missing.length; i += 200) chunks.push(missing.slice(i, i + 200));
+  const pages = await Promise.all(
+    chunks.map(async (chunk) => check(await db().from("entities").select("id, names").in("id", chunk)) as EntityRef[]),
+  );
+  for (const r of pages.flat()) {
+    refCache.set(r.id, { at: Date.now(), value: r });
+    out.set(r.id, r);
   }
   return out;
 }

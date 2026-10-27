@@ -11,7 +11,12 @@ export async function POST(request: Request, ctx: RouteContext<"/api/v1/endless/
     const { input } = await readJson(request);
     if (typeof input !== "string") throw new ApiError("bad_request", "input fehlt");
     const player = await playerId({ create: false });
-    await limitGuesses(request.headers, player);
-    return submitEndlessGuess(parseUuid(id), player, parsePosition(seq, MAX_SEQ), input);
+    return submitEndlessGuess(
+      parseUuid(id),
+      player,
+      parsePosition(seq, MAX_SEQ),
+      input,
+      limitGuesses(request.headers, player),
+    );
   });
 }

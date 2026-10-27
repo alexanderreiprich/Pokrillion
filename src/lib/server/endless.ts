@@ -190,22 +190,24 @@ export async function nextQuestion(runId: string, playerId: string): Promise<Sta
   };
 }
 
-async function openQuestion(runId: string, playerId: string, seq: number) {
-  const run = await requireRun(runId, playerId);
+async function openQuestion(runId: string, playerId: string, seq: number, rateLimit: Promise<void>) {
+  const [run, rows] = await Promise.all([requireRun(runId, playerId), runQuestions(runId), rateLimit]);
   if (run.ended_at) throw new ApiError("ended", "Die Runde ist vorbei");
-  const row = (await runQuestions(runId)).find((r) => r.seq === seq);
+  const row = rows.find((r) => r.seq === seq);
   if (!row) throw new ApiError("not_started", "Frage wurde nicht gestartet");
   if (row.answered_at) throw new ApiError("already_answered", "Diese Frage ist schon beantwortet");
   return { run, row, q: await catalogEntry(row.question_id) };
 }
 
+/** `rateLimit` is the pending rate-limit check: reads run alongside it, writes wait for it. */
 export async function submitEndlessGuess(
   runId: string,
   playerId: string,
   seq: number,
   rawInput: string,
+  rateLimit: Promise<void>,
 ): Promise<GuessResponse> {
-  const { run, row, q } = await openQuestion(runId, playerId, seq);
+  const { run, row, q } = await openQuestion(runId, playerId, seq, rateLimit);
 
   if (isExpired(timerOf(row, q))) {
     const res = await timeoutEndless(runId, playerId, seq);
@@ -235,11 +237,16 @@ export async function submitEndlessGuess(
       count: counts[0].n - 1,
       total: counts[0].total - 1,
     });
-    check(await db().from("endless_questions").update({ points }).eq("run_id", runId).eq("seq", seq));
-    check(await db().from("endless_runs").update({ score: run.score + points }).eq("id", runId));
-    await logGuess("valid", points);
-
-    const refs = await entityRefs([outcome.entityId]);
+    const savePoints = async () =>
+      check(await db().from("endless_questions").update({ points }).eq("run_id", runId).eq("seq", seq));
+    const saveScore = async () =>
+      check(await db().from("endless_runs").update({ score: run.score + points }).eq("id", runId));
+    const [refs] = await Promise.all([
+      entityRefs([outcome.entityId]),
+      savePoints(),
+      saveScore(),
+      logGuess("valid", points),
+    ]);
     return {
       result: "valid",
       entity: refs.get(outcome.entityId)!,
@@ -250,23 +257,25 @@ export async function submitEndlessGuess(
     };
   }
 
+  // Read before logging this guess, or it would count as its own duplicate.
   const previous = check(
     await db().from("endless_guesses").select("normalized, entity_id").eq("run_id", runId).eq("seq", seq),
   ) as { normalized: string; entity_id: string | null }[];
   const duplicate = previous.some((g) => g.normalized === normalized || (entityId && g.entity_id === entityId));
 
-  let penaltyS = row.penalty_s;
-  if (!duplicate) {
-    penaltyS += WRONG_GUESS_PENALTY_S;
+  const penaltyS = duplicate ? row.penalty_s : row.penalty_s + WRONG_GUESS_PENALTY_S;
+  const addPenalty = async () =>
     check(await db().from("endless_questions").update({ penalty_s: penaltyS }).eq("run_id", runId).eq("seq", seq));
-  }
-  await logGuess(duplicate ? "duplicate_wrong" : outcome.result, null);
+  const [refs] = await Promise.all([
+    !duplicate && outcome.result === "wrong_entity" ? entityRefs([outcome.entityId]) : null,
+    duplicate ? null : addPenalty(),
+    logGuess(duplicate ? "duplicate_wrong" : outcome.result, null),
+  ]);
 
   const remainingS = Math.max(0, remainingSeconds({ ...timerOf(row, q), penaltyS }));
   if (duplicate) return { result: "duplicate_wrong", remainingS };
   if (outcome.result === "wrong_entity") {
-    const refs = await entityRefs([outcome.entityId]);
-    return { result: "wrong_entity", entity: refs.get(outcome.entityId)!, remainingS };
+    return { result: "wrong_entity", entity: refs!.get(outcome.entityId)!, remainingS };
   }
   return { result: "unknown", remainingS };
 }

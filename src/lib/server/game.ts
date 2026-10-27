@@ -183,16 +183,18 @@ export async function startQuestion(playId: string, playerId: string, position: 
   };
 }
 
+/** `rateLimit` is the pending rate-limit check: reads run alongside it, writes wait for it. */
 export async function submitGuess(
   playId: string,
   playerId: string,
   position: number,
   rawInput: string,
+  rateLimit: Promise<void>,
 ): Promise<GuessResponse> {
-  const play = await requirePlay(playId, playerId);
+  const [play, rows] = await Promise.all([requirePlay(playId, playerId), playQuestions(playId), rateLimit]);
   const puzzle = await requirePuzzle(play.puzzle_date);
   const q = questionAt(puzzle, position);
-  const row = (await playQuestions(playId)).find((r) => r.position === position);
+  const row = rows.find((r) => r.position === position);
   if (!row) throw new ApiError("not_started", "Frage wurde nicht gestartet");
   if (row.answered_at) throw new ApiError("already_answered", "Diese Frage ist schon beantwortet");
 
@@ -231,40 +233,48 @@ export async function submitGuess(
       count: counts[0].n - 1,
       total: counts[0].total - 1,
     });
-    check(await db().from("play_questions").update({ points }).eq("play_id", playId).eq("position", position));
-    await logGuess("valid", points);
-
-    const refs = await entityRefs([outcome.entityId]);
+    const savePoints = async () => {
+      check(await db().from("play_questions").update({ points }).eq("play_id", playId).eq("position", position));
+      // finish_play sums the points, so it has to wait for the update.
+      return finish(playId, puzzle.questions.length);
+    };
+    const [finished, refs] = await Promise.all([
+      savePoints(),
+      entityRefs([outcome.entityId]),
+      logGuess("valid", points),
+    ]);
     return {
       result: "valid",
       entity: refs.get(outcome.entityId)!,
       points,
       tier: tierForPoints(points).id,
       corrected: outcome.corrected,
-      finished: await finish(playId, puzzle.questions.length),
+      finished,
     };
   }
 
   // Wrong: the same input (or another name of the same entity) twice costs nothing extra.
+  // Read before logging this guess, or it would count as its own duplicate.
   const previous = check(
     await db().from("guesses").select("normalized, entity_id").eq("play_id", playId).eq("position", position),
   ) as { normalized: string; entity_id: string | null }[];
   const duplicate = previous.some((g) => g.normalized === normalized || (entityId && g.entity_id === entityId));
 
-  let penaltyS = row.penalty_s;
-  if (!duplicate) {
-    penaltyS += WRONG_GUESS_PENALTY_S;
+  const penaltyS = duplicate ? row.penalty_s : row.penalty_s + WRONG_GUESS_PENALTY_S;
+  const addPenalty = async () =>
     check(
       await db().from("play_questions").update({ penalty_s: penaltyS }).eq("play_id", playId).eq("position", position),
     );
-  }
-  await logGuess(duplicate ? "duplicate_wrong" : outcome.result, null);
+  const [refs] = await Promise.all([
+    !duplicate && outcome.result === "wrong_entity" ? entityRefs([outcome.entityId]) : null,
+    duplicate ? null : addPenalty(),
+    logGuess(duplicate ? "duplicate_wrong" : outcome.result, null),
+  ]);
 
   const remainingS = Math.max(0, remainingSeconds({ ...timerOf(row, q), penaltyS }));
   if (duplicate) return { result: "duplicate_wrong", remainingS };
   if (outcome.result === "wrong_entity") {
-    const refs = await entityRefs([outcome.entityId]);
-    return { result: "wrong_entity", entity: refs.get(outcome.entityId)!, remainingS };
+    return { result: "wrong_entity", entity: refs!.get(outcome.entityId)!, remainingS };
   }
   return { result: "unknown", remainingS };
 }

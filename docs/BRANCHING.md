@@ -131,6 +131,8 @@ Environment Variables in Vercel (alle nur server-seitig, nie mit `NEXT_PUBLIC_`)
 | `CRON_SECRET` | schützt `/api/v1/cron/*`; Vercel Cron sendet es automatisch. Dient auch als Schlüssel für die IP-Hashes des Rate-Limits |
 | `ADMIN_PASSWORD` | Kuratierungsansicht `/admin`; leer = Ansicht deaktiviert |
 
+Functions laufen in `fra1` (`regions` in `vercel.json`), in derselben Region wie die Supabase-Datenbank. Zieht die DB um, muss die Region mit.
+
 Vercel Cron (`vercel.json`) läuft nur auf Production, täglich 03:00 UTC. Nach einem frischen Setup einmal von Hand auslösen, damit sofort Rätsel da sind: `curl -H "Authorization: Bearer $CRON_SECRET" https://pokrillion.vercel.app/api/v1/cron/schedule`.
 
 **Geplant:** eigene Domain pokrillion.io, später ein getrenntes Staging-Projekt in Supabase.

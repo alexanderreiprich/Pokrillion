@@ -187,7 +187,7 @@ Unbekannte Eingaben werden geloggt. So findet die Kuratierung fehlende Aliase un
 | Content | YAML im Repo (`yaml`) | reviewbar per Git-Diff |
 | Tests | `vitest` | Spiellogik ist reine Funktionslogik |
 | Scripts | `tsx` | Import, Build und Planung |
-| Hosting | Vercel (Hobby) + Supabase (Free) | |
+| Hosting | Vercel (Hobby) + Supabase (Free), beide in Frankfurt | Functions laufen in `fra1` (`vercel.json`), nah an der DB (`eu-central-1`). Ein Guess macht mehrere DB-Aufrufe; im Vercel-Standard `iad1` kostete jeder ~300 ms über den Atlantik |
 
 ### Warum läuft das Matching auf dem Server?
 

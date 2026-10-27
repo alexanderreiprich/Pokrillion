@@ -10,7 +10,12 @@ export async function POST(request: Request, ctx: RouteContext<"/api/v1/play/[id
     const { input } = await readJson(request);
     if (typeof input !== "string") throw new ApiError("bad_request", "input fehlt");
     const player = await playerId({ create: false });
-    await limitGuesses(request.headers, player);
-    return submitGuess(parseUuid(id), player, parsePosition(pos, QUESTIONS_PER_PUZZLE), input);
+    return submitGuess(
+      parseUuid(id),
+      player,
+      parsePosition(pos, QUESTIONS_PER_PUZZLE),
+      input,
+      limitGuesses(request.headers, player),
+    );
   });
 }
